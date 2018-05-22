@@ -4,9 +4,9 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.danieldogeanu.android.inventoryapp.data.InventoryContract.InventoryEntry;
+import com.danieldogeanu.android.inventoryapp.data.Contract.InventoryEntry;
 
-public class InventoryDbHelper extends SQLiteOpenHelper {
+public class DbHelper extends SQLiteOpenHelper {
 
     // If you change the database schema, you must increment the database version.
     private static final int DB_VERSION = 1;
@@ -24,7 +24,7 @@ public class InventoryDbHelper extends SQLiteOpenHelper {
     private static final String SQL_DELETE_TABLE =
             "DROP TABLE IF EXISTS " + InventoryEntry.TABLE_NAME;
 
-    public InventoryDbHelper(Context context) {
+    public DbHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
 

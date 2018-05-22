@@ -2,7 +2,7 @@ package com.danieldogeanu.android.inventoryapp.data;
 
 import android.provider.BaseColumns;
 
-public final class InventoryContract {
+public final class Contract {
 
     public static abstract class InventoryEntry implements BaseColumns {
 
