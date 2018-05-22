@@ -2,7 +2,9 @@ package com.danieldogeanu.android.inventoryapp;
 
 public class Product {
 
-    private int mProductID;
+    private static final int NO_ID = -1;
+
+    private int mProductID = NO_ID;
     private String mProductName;
     private int mProductPrice;
     private int mProductQuantity;
@@ -11,6 +13,14 @@ public class Product {
 
     public Product(int productID, String productName, int price, int quantity, String supplierName, String supplierPhone) {
         mProductID = productID;
+        mProductName = productName;
+        mProductPrice = price;
+        mProductQuantity = quantity;
+        mSupplierName = supplierName;
+        mSupplierPhone = supplierPhone;
+    }
+
+    public Product(String productName, int price, int quantity, String supplierName, String supplierPhone) {
         mProductName = productName;
         mProductPrice = price;
         mProductQuantity = quantity;
@@ -40,6 +50,10 @@ public class Product {
 
     public String getSupplierPhone() {
         return mSupplierPhone;
+    }
+
+    public boolean hasID() {
+        return mProductID > NO_ID;
     }
 
     @Override

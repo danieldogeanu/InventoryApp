@@ -1,10 +1,14 @@
 package com.danieldogeanu.android.inventoryapp.data;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.danieldogeanu.android.inventoryapp.Product;
+import com.danieldogeanu.android.inventoryapp.R;
 import com.danieldogeanu.android.inventoryapp.data.Contract.InventoryEntry;
 
 import java.util.ArrayList;
@@ -72,6 +76,45 @@ public class Data {
         }
 
         return products;
+    }
+
+    public void insertData(Context context, Product product) {
+        // Get the database in write mode.
+        DbHelper dbHelper = new DbHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        // Extract data from product.
+        String productName = product.getProductName();
+        int productPrice = product.getProductPrice();
+        int productQuantity = product.getProductQuantity();
+        String productSupplierName = product.getSupplierName();
+        String productSupplierPhone = product.getSupplierPhone();
+
+        // Create the ContentValues object.
+        // Column names are the keys, product attributes are the values.
+        ContentValues values = new ContentValues();
+        values.put(InventoryEntry.COL_PRODUCT_NAME, productName);
+        values.put(InventoryEntry.COL_PRICE, productPrice);
+        values.put(InventoryEntry.COL_QUANTITY, productQuantity);
+        values.put(InventoryEntry.COL_SUPPLIER_NAME, productSupplierName);
+        values.put(InventoryEntry.COL_SUPPLIER_PHONE, productSupplierPhone);
+
+        // Insert a new row in the database, returning the ID of that new row.
+        long newRowID = db.insert(InventoryEntry.TABLE_NAME, null, values);
+
+        // Get messages for Toasts and Logs.
+        String successMsg = context.getString(R.string.insert_msg_success);
+        String errorMsg = context.getString(R.string.insert_msg_error);
+
+        // Show Toasts and Log the errors.
+        if (newRowID != -1) {
+            Log.i(LOG_TAG, successMsg + newRowID);
+            Toast.makeText(context, successMsg + newRowID, Toast.LENGTH_SHORT).show();
+        } else {
+            Log.e(LOG_TAG, errorMsg);
+            Toast.makeText(context, errorMsg, Toast.LENGTH_SHORT).show();
+        }
+
     }
 
 }
