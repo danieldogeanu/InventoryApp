@@ -7,7 +7,7 @@ public final class InventoryContract {
     public static abstract class InventoryEntry implements BaseColumns {
 
         // The name of the table.
-        public static final String TABLE_NAME = "inventory";
+        public static final String TABLE_NAME = "products";
 
         // The columns names for the table.
         public static final String _ID = BaseColumns._ID;
