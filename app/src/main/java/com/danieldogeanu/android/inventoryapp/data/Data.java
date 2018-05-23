@@ -5,10 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.danieldogeanu.android.inventoryapp.Product;
 import com.danieldogeanu.android.inventoryapp.R;
+import com.danieldogeanu.android.inventoryapp.Utils;
 import com.danieldogeanu.android.inventoryapp.data.Contract.TableEntry;
 
 import java.util.ArrayList;
@@ -115,10 +115,10 @@ public class Data {
             // Show Toasts and Log the errors.
             if (newRowID != -1) {
                 Log.i(LOG_TAG, successMsg + newRowID);
-                Toast.makeText(context, successMsg + newRowID, Toast.LENGTH_SHORT).show();
+                Utils.showToast(context, successMsg + newRowID);
             } else {
                 Log.e(LOG_TAG, errorMsg);
-                Toast.makeText(context, errorMsg, Toast.LENGTH_SHORT).show();
+                Utils.showToast(context, errorMsg);
             }
         }
 
