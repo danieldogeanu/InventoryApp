@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 import com.danieldogeanu.android.inventoryapp.Product;
 import com.danieldogeanu.android.inventoryapp.R;
-import com.danieldogeanu.android.inventoryapp.data.Contract.InventoryEntry;
+import com.danieldogeanu.android.inventoryapp.data.Contract.TableEntry;
 
 import java.util.ArrayList;
 
@@ -31,16 +31,17 @@ public class Data {
         ArrayList<Product> products = new ArrayList<>();
 
         String[] projection = {
-                InventoryEntry._ID,
-                InventoryEntry.COL_PRODUCT_NAME,
-                InventoryEntry.COL_PRICE,
-                InventoryEntry.COL_QUANTITY,
-                InventoryEntry.COL_SUPPLIER_NAME,
-                InventoryEntry.COL_SUPPLIER_PHONE
+                TableEntry._ID,
+                TableEntry.COL_PRODUCT_NAME,
+                TableEntry.COL_AUTHOR,
+                TableEntry.COL_PRICE,
+                TableEntry.COL_QUANTITY,
+                TableEntry.COL_SUPPLIER_NAME,
+                TableEntry.COL_SUPPLIER_PHONE
         };
 
         Cursor cursor = db.query(
-                InventoryEntry.TABLE_NAME,
+                TableEntry.TABLE_NAME,
                 projection,
                 null,
                 null,
@@ -51,25 +52,27 @@ public class Data {
 
         try {
             // Get the index of each column.
-            int indexColID = cursor.getColumnIndex(InventoryEntry._ID);
-            int indexColProductName = cursor.getColumnIndex(InventoryEntry.COL_PRODUCT_NAME);
-            int indexColPrice = cursor.getColumnIndex(InventoryEntry.COL_PRICE);
-            int indexColQuantity = cursor.getColumnIndex(InventoryEntry.COL_QUANTITY);
-            int indexColSupplierName = cursor.getColumnIndex(InventoryEntry.COL_SUPPLIER_NAME);
-            int indexColSupplierPhone = cursor.getColumnIndex(InventoryEntry.COL_SUPPLIER_PHONE);
+            int indexColID = cursor.getColumnIndex(TableEntry._ID);
+            int indexColProductName = cursor.getColumnIndex(TableEntry.COL_PRODUCT_NAME);
+            int indexColAuthor = cursor.getColumnIndex(TableEntry.COL_AUTHOR);
+            int indexColPrice = cursor.getColumnIndex(TableEntry.COL_PRICE);
+            int indexColQuantity = cursor.getColumnIndex(TableEntry.COL_QUANTITY);
+            int indexColSupplierName = cursor.getColumnIndex(TableEntry.COL_SUPPLIER_NAME);
+            int indexColSupplierPhone = cursor.getColumnIndex(TableEntry.COL_SUPPLIER_PHONE);
 
             // Iterate through all the returned rows in the cursor.
             while (cursor.moveToNext()) {
                 // Extract values at current column index.
                 int currentID = cursor.getInt(indexColID);
                 String currentProductName = cursor.getString(indexColProductName);
+                String currentAuthor = cursor.getString(indexColAuthor);
                 int currentPrice = cursor.getInt(indexColPrice);
                 int currentQuantity = cursor.getInt(indexColQuantity);
                 String currentSupplierName = cursor.getString(indexColSupplierName);
                 String currentSupplierPhone = cursor.getString(indexColSupplierPhone);
 
                 // Add the values to the products ArrayList.
-                products.add(new Product(currentID, currentProductName, currentPrice, currentQuantity, currentSupplierName, currentSupplierPhone));
+                products.add(new Product(currentID, currentProductName, currentAuthor, currentPrice, currentQuantity, currentSupplierName, currentSupplierPhone));
             }
         } finally {
             cursor.close();
@@ -87,12 +90,10 @@ public class Data {
         String successMsg = context.getResources().getString(R.string.insert_msg_success);
         String errorMsg = context.getResources().getString(R.string.insert_msg_error);
 
-        for (int i = 0; i < products.length; i++) {
-            // Get current product.
-            Product product = products[i];
-
+        for (Product product : products) {
             // Extract data from product.
             String productName = product.getProductName();
+            String productAuthor = product.getProductAuthor();
             int productPrice = product.getProductPrice();
             int productQuantity = product.getProductQuantity();
             String productSupplierName = product.getSupplierName();
@@ -101,14 +102,15 @@ public class Data {
             // Create the ContentValues object.
             // Column names are the keys, product attributes are the values.
             ContentValues values = new ContentValues();
-            values.put(InventoryEntry.COL_PRODUCT_NAME, productName);
-            values.put(InventoryEntry.COL_PRICE, productPrice);
-            values.put(InventoryEntry.COL_QUANTITY, productQuantity);
-            values.put(InventoryEntry.COL_SUPPLIER_NAME, productSupplierName);
-            values.put(InventoryEntry.COL_SUPPLIER_PHONE, productSupplierPhone);
+            values.put(TableEntry.COL_PRODUCT_NAME, productName);
+            values.put(TableEntry.COL_AUTHOR, productAuthor);
+            values.put(TableEntry.COL_PRICE, productPrice);
+            values.put(TableEntry.COL_QUANTITY, productQuantity);
+            values.put(TableEntry.COL_SUPPLIER_NAME, productSupplierName);
+            values.put(TableEntry.COL_SUPPLIER_PHONE, productSupplierPhone);
 
             // Insert a new row in the database, returning the ID of that new row.
-            long newRowID = db.insert(InventoryEntry.TABLE_NAME, null, values);
+            long newRowID = db.insert(TableEntry.TABLE_NAME, null, values);
 
             // Show Toasts and Log the errors.
             if (newRowID != -1) {
@@ -137,12 +139,12 @@ public class Data {
         for (int i = 0; i < dummyProductTitles.length; i++) {
             products[i] = new Product(
                     dummyProductTitles[i],
+                    dummyProductAuthors[i],
                     Integer.parseInt(dummyProductPrices[i]),
                     Integer.parseInt(dummyProductQuantities[i]),
                     dummySupplierNames[i],
                     dummySupplierPhones[i]
             );
-            // TODO: Add Authors as a column in the table and field in the Product.
         }
 
         // Insert dummy data into the database.

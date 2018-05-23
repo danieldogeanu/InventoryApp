@@ -6,22 +6,25 @@ public class Product {
 
     private int mProductID = NO_ID;
     private String mProductName;
+    private String mProductAuthor;
     private int mProductPrice;
     private int mProductQuantity;
     private String mSupplierName;
     private String mSupplierPhone;
 
-    public Product(int productID, String productName, int price, int quantity, String supplierName, String supplierPhone) {
+    public Product(int productID, String productName, String productAuthor, int price, int quantity, String supplierName, String supplierPhone) {
         mProductID = productID;
         mProductName = productName;
+        mProductAuthor = productAuthor;
         mProductPrice = price;
         mProductQuantity = quantity;
         mSupplierName = supplierName;
         mSupplierPhone = supplierPhone;
     }
 
-    public Product(String productName, int price, int quantity, String supplierName, String supplierPhone) {
+    public Product(String productName, String productAuthor, int price, int quantity, String supplierName, String supplierPhone) {
         mProductName = productName;
+        mProductAuthor = productAuthor;
         mProductPrice = price;
         mProductQuantity = quantity;
         mSupplierName = supplierName;
@@ -34,6 +37,10 @@ public class Product {
 
     public String getProductName() {
         return mProductName;
+    }
+
+    public String getProductAuthor() {
+        return mProductAuthor;
     }
 
     public int getProductPrice() {
@@ -61,6 +68,7 @@ public class Product {
         return "Product {" +
                 "mProductID=" + mProductID + ", " +
                 "mProductName='" + mProductName + "', " +
+                "mProductAuthor='" + mProductAuthor + "', " +
                 "mProductPrice=" + mProductPrice + ", " +
                 "mProductQuantity=" + mProductQuantity + ", " +
                 "mSupplierName='" + mSupplierName + "', " +
