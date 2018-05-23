@@ -1,8 +1,19 @@
 <resources>
     <string name="app_name">Inventory App</string>
 
-    <string name="editor_activity_title">Edit Product</string>
-
     <string name="insert_msg_success">Product saved with id: </string>
     <string name="insert_msg_error">Error with saving product.</string>
+
+    <!--EDITOR ACTIVITY-->
+    <string name="empty_editor_title">Add Product</string>
+    <string name="full_editor_title">Edit Product</string>
+    <string name="product_section_title">Product Details</string>
+    <string name="supplier_section_title">Supplier Details</string>
+    <string name="hint_product_name">Product Name</string>
+    <string name="hint_product_author">Author</string>
+    <string name="hint_product_price">Price</string>
+    <string name="hint_product_price_currency">$</string>
+    <string name="hint_product_quantity">Quantity</string>
+    <string name="hint_supplier_name">Supplier Name</string>
+    <string name="hint_supplier_phone">Supplier Phone</string>
 </resources>

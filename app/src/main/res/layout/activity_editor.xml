@@ -2,8 +2,112 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    style="@style/EditorActivity"
     tools:context=".EditorActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/editor_layout"
+            style="@style/EditorLayout">
+
+            <RelativeLayout
+                android:id="@+id/product_details"
+                style="@style/SectionContainer">
+
+                <View
+                    android:id="@+id/product_section_title_line"
+                    style="@style/SectionTitleLine" />
+
+                <TextView
+                    android:id="@+id/product_section_title"
+                    android:text="@string/product_section_title"
+                    style="@style/SectionTitle" />
+
+                <LinearLayout
+                    android:id="@+id/product_fields"
+                    android:layout_below="@id/product_section_title"
+                    style="@style/FieldsContainer">
+
+                    <EditText
+                        android:id="@+id/product_name"
+                        android:inputType="textCapWords"
+                        android:hint="@string/hint_product_name"
+                        style="@style/FieldStyle" />
+
+                    <EditText
+                        android:id="@+id/product_author"
+                        android:inputType="textCapWords"
+                        android:hint="@string/hint_product_author"
+                        style="@style/FieldStyle" />
+
+                    <RelativeLayout style="@style/PriceFieldContainer">
+
+                        <EditText
+                            android:id="@+id/product_price"
+                            android:inputType="numberDecimal"
+                            android:hint="@string/hint_product_price"
+                            style="@style/PriceFieldStyle" />
+
+                        <TextView
+                            android:text="@string/hint_product_price_currency"
+                            style="@style/FieldUnitOverlay" />
+
+                    </RelativeLayout>
+
+                    <EditText
+                        android:id="@+id/product_quantity"
+                        android:inputType="number"
+                        android:hint="@string/hint_product_quantity"
+                        style="@style/FieldStyle" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/supplier_details"
+                style="@style/SectionContainer">
+
+                <View
+                    android:id="@+id/supplier_section_title_line"
+                    style="@style/SectionTitleLine" />
+
+                <TextView
+                    android:id="@+id/supplier_section_title"
+                    android:text="@string/supplier_section_title"
+                    style="@style/SectionTitle" />
+
+                <LinearLayout
+                    android:id="@+id/supplier_fields"
+                    android:layout_below="@id/supplier_section_title"
+                    style="@style/FieldsContainer">
+
+                    <EditText
+                        android:id="@+id/supplier_name"
+                        android:inputType="textCapWords"
+                        android:hint="@string/hint_supplier_name"
+                        style="@style/FieldStyle" />
+
+                    <EditText
+                        android:id="@+id/supplier_phone"
+                        android:inputType="phone"
+                        android:hint="@string/hint_supplier_phone"
+                        style="@style/FieldStyle" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/inventory_fab"
+        app:srcCompat="@drawable/btn_save_fab"
+        style="@style/InventoryFab" />
 
 </RelativeLayout>
