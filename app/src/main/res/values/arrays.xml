@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--DUMMY DATA-->
+    <string-array name="dummy_prod_titles">
+        <item>The Speed of Sound</item>
+        <item>Children of Time</item>
+        <item>Columbus Day: Expeditionary Force</item>
+        <item>Ready Player One</item>
+        <item>More Than Human</item>
+    </string-array>
+    <string-array name="dummy_prod_authors">
+        <item>Eric Bernt</item>
+        <item>Adrian Tchaikovsky</item>
+        <item>Craig Alanson</item>
+        <item>Ernest Cline</item>
+        <item>Theodore Sturgeon</item>
+    </string-array>
+    <string-array name="dummy_prod_prices">
+        <item>9.99</item>
+        <item>12.58</item>
+        <item>5.37</item>
+        <item>9.59</item>
+        <item>13.25</item>
+    </string-array>
+    <string-array name="dummy_prod_quantity">
+        <item>1</item>
+        <item>88</item>
+        <item>5</item>
+        <item>223</item>
+        <item>109</item>
+    </string-array>
+    <string-array name="dummy_supl_names">
+        <item>Thomas &#38; Mercer</item>
+        <item>Audible Studios</item>
+        <item>Podium Publishing</item>
+        <item>Random House</item>
+        <item>Open Road Media</item>
+    </string-array>
+    <string-array name="dummy_supl_phones">
+        <item>+1&#8211;202&#8211;555&#8211;0131</item>
+        <item>+1&#8211;202&#8211;555&#8211;0148</item>
+        <item>+1&#8211;202&#8211;555&#8211;0160</item>
+        <item>+1&#8211;202&#8211;555&#8211;0101</item>
+        <item>+1&#8211;202&#8211;555&#8211;0179</item>
+    </string-array>
+</resources>

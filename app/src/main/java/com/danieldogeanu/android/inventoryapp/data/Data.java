@@ -122,4 +122,33 @@ public class Data {
 
     }
 
+    public void insertDummyData(Context context) {
+        Product[] products = new Product[5];
+
+        // Get dummy data string arrays.
+        String[] dummyProductTitles = context.getResources().getStringArray(R.array.dummy_prod_titles);
+        String[] dummyProductAuthors = context.getResources().getStringArray(R.array.dummy_prod_authors);
+        String[] dummyProductPrices = context.getResources().getStringArray(R.array.dummy_prod_prices);
+        String[] dummyProductQuantities = context.getResources().getStringArray(R.array.dummy_prod_quantity);
+        String[] dummySupplierNames = context.getResources().getStringArray(R.array.dummy_supl_names);
+        String[] dummySupplierPhones = context.getResources().getStringArray(R.array.dummy_supl_phones);
+
+        // Extract dummy data for each product.
+        for (int i = 0; i < dummyProductTitles.length; i++) {
+            products[i] = new Product(
+                    dummyProductTitles[i],
+                    Integer.parseInt(dummyProductPrices[i]),
+                    Integer.parseInt(dummyProductQuantities[i]),
+                    dummySupplierNames[i],
+                    dummySupplierPhones[i]
+            );
+            // TODO: Add Authors as a column in the table and field in the Product.
+        }
+
+        // Insert dummy data into the database.
+        if (products.length != 0) {
+            insertData(context, products);
+        }
+    }
+
 }
