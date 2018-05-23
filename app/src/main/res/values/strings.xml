@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Inventory App</string>
 
+    <string name="editor_activity_title">Edit Product</string>
+
     <string name="insert_msg_success">Product saved with id: </string>
     <string name="insert_msg_error">Error with saving product.</string>
 </resources>

@@ -17,6 +17,7 @@
         </activity>
         <activity
             android:name=".EditorActivity"
+            android:label="@string/editor_activity_title"
             android:parentActivityName=".InventoryActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
