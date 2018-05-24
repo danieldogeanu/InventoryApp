@@ -88,7 +88,9 @@ public class Data {
 
         // Get messages for Toasts and Logs.
         String successMsg = context.getResources().getString(R.string.insert_msg_success);
+        String successMsgMultiple = context.getResources().getString(R.string.insert_msg_success_multiple);
         String errorMsg = context.getResources().getString(R.string.insert_msg_error);
+        int timesDisplayed = 0;
 
         for (Product product : products) {
             // Extract data from product.
@@ -115,7 +117,12 @@ public class Data {
             // Show Toasts and Log the errors.
             if (newRowID != -1) {
                 Log.i(LOG_TAG, successMsg + newRowID);
-                Utils.showToast(context, successMsg + newRowID);
+                if (products.length == 1) {
+                    Utils.showToast(context, successMsg + newRowID);
+                } else if ((products.length > 1) && (timesDisplayed == 0)) {
+                    Utils.showToast(context, successMsgMultiple);
+                    timesDisplayed++;
+                }
             } else {
                 Log.e(LOG_TAG, errorMsg);
                 Utils.showToast(context, errorMsg);

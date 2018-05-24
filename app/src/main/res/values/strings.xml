@@ -3,6 +3,7 @@
 
     <string name="insert_msg_success">Product saved with id: </string>
     <string name="insert_msg_error">Error with saving product.</string>
+    <string name="insert_msg_success_multiple">Products saved in the database.</string>
 
     <!--EDITOR ACTIVITY-->
     <string name="empty_editor_title">Add Product</string>
