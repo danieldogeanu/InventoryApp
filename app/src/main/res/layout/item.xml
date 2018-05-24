@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="16dp"
+    android:padding="16dp"
+    android:background="@drawable/item_bg"
+    >
+
+    <LinearLayout
+        android:id="@+id/item_top_left_section"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@id/item_top_right_section">
+
+        <TextView
+            android:id="@+id/item_product_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:maxLines="2"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="@color/colorAltoWhite"
+            android:textSize="20sp"
+            tools:text="Columbus Day: Expeditionary Task Force" />
+
+        <TextView
+            android:id="@+id/item_product_author"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorAltoTransparent"
+            android:textSize="16sp"
+            tools:text="Craig Alanson" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/item_top_right_section"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="80dp"
+        android:gravity="end"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@id/item_section_divider">
+
+        <TextView
+            android:id="@+id/item_product_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:textColor="@color/colorAltoWhite"
+            android:textSize="16sp"
+            tools:text="$15.37" />
+
+        <TextView
+            android:id="@+id/item_product_quantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignEnd="@id/item_product_price"
+            android:textColor="@color/colorAltoTransparent"
+            android:textSize="16sp"
+            tools:text="5233" />
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/item_section_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_below="@id/item_top_left_section"
+        android:background="@color/colorAltoTransparent" />
+
+    <RelativeLayout
+        android:id="@+id/item_bottom_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/item_section_divider">
+
+        <TextView
+            android:id="@+id/item_supplier_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@id/item_supplier_phone"
+            android:textColor="@color/colorAltoWhite"
+            android:textSize="16sp"
+            tools:text="Podium Publishing" />
+
+        <TextView
+            android:id="@+id/item_supplier_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:textColor="@color/colorAltoTransparent"
+            android:textSize="16sp"
+            tools:text="+1-202-555-0160" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
