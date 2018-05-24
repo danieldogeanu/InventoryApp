@@ -7,12 +7,12 @@ public class Product {
     private int mProductID = NO_ID;
     private String mProductName;
     private String mProductAuthor;
-    private int mProductPrice;
+    private float mProductPrice;
     private int mProductQuantity;
     private String mSupplierName;
     private String mSupplierPhone;
 
-    public Product(int productID, String productName, String productAuthor, int price, int quantity, String supplierName, String supplierPhone) {
+    public Product(int productID, String productName, String productAuthor, float price, int quantity, String supplierName, String supplierPhone) {
         mProductID = productID;
         mProductName = productName;
         mProductAuthor = productAuthor;
@@ -22,7 +22,7 @@ public class Product {
         mSupplierPhone = supplierPhone;
     }
 
-    public Product(String productName, String productAuthor, int price, int quantity, String supplierName, String supplierPhone) {
+    public Product(String productName, String productAuthor, float price, int quantity, String supplierName, String supplierPhone) {
         mProductName = productName;
         mProductAuthor = productAuthor;
         mProductPrice = price;
@@ -43,7 +43,7 @@ public class Product {
         return mProductAuthor;
     }
 
-    public int getProductPrice() {
+    public float getProductPrice() {
         return mProductPrice;
     }
 

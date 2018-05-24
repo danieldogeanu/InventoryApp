@@ -14,21 +14,24 @@ import java.util.ArrayList;
 
 public class InventoryActivity extends AppCompatActivity {
 
+    ListView mListView;
+    Data mData;
+    ArrayList<Product> mProducts;
+    ProductAdapter mAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory);
 
         // Get List View
-        ListView listView = findViewById(R.id.inventory_list);
+        mListView = findViewById(R.id.inventory_list);
 
-        // Get Data
-        Data data = Data.getInstance();
-        ArrayList<Product> products = data.queryData(InventoryActivity.this);
+        // Get Data Class Instance
+        mData = Data.getInstance();
 
-        // Set the Adapter
-        ProductAdapter adapter = new ProductAdapter(InventoryActivity.this, products);
-        listView.setAdapter(adapter);
+        // Get Data and Set the Adapter
+        displayData();
 
         FloatingActionButton fab = findViewById(R.id.inventory_fab);
         fab.setOnClickListener(view -> {
@@ -36,6 +39,12 @@ public class InventoryActivity extends AppCompatActivity {
             startActivity(editorIntent);
         });
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        displayData();
     }
 
     @Override
@@ -48,12 +57,21 @@ public class InventoryActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_add_dummy_data:
-                // Do Stuff
+                mData.insertDummyData(InventoryActivity.this);
+                displayData();
                 return true;
             case R.id.action_delete_all_data:
                 // Do Stuff
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void displayData() {
+        // Get Data
+        mProducts = mData.queryData(InventoryActivity.this);
+        // Set the Adapter
+        mAdapter = new ProductAdapter(InventoryActivity.this, mProducts);
+        mListView.setAdapter(mAdapter);
     }
 }

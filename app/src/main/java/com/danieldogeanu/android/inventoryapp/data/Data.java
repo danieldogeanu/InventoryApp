@@ -94,7 +94,7 @@ public class Data {
             // Extract data from product.
             String productName = product.getProductName();
             String productAuthor = product.getProductAuthor();
-            int productPrice = product.getProductPrice();
+            float productPrice = product.getProductPrice();
             int productQuantity = product.getProductQuantity();
             String productSupplierName = product.getSupplierName();
             String productSupplierPhone = product.getSupplierPhone();
@@ -140,7 +140,7 @@ public class Data {
             products[i] = new Product(
                     dummyProductTitles[i],
                     dummyProductAuthors[i],
-                    Integer.parseInt(dummyProductPrices[i]),
+                    Float.parseFloat(dummyProductPrices[i]),
                     Integer.parseInt(dummyProductQuantities[i]),
                     dummySupplierNames[i],
                     dummySupplierPhones[i]

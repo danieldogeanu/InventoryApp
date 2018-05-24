@@ -39,8 +39,8 @@ public class ProductAdapter extends ArrayAdapter<Product> {
 
         viewHolder.productNameTextView.setText(currentProduct.getProductName());
         viewHolder.productAuthorTextView.setText(currentProduct.getProductAuthor());
-        viewHolder.productPriceTextView.setText(currentProduct.getProductPrice());
-        viewHolder.productQuantityTextView.setText(currentProduct.getProductQuantity());
+        viewHolder.productPriceTextView.setText(Utils.formatPrice(currentProduct.getProductPrice()));
+        viewHolder.productQuantityTextView.setText(Utils.formatQuantity(currentProduct.getProductQuantity()));
         viewHolder.supplierNameTextView.setText(currentProduct.getSupplierName());
         viewHolder.supplierPhoneTextView.setText(currentProduct.getSupplierPhone());
 
