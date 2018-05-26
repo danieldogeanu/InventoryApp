@@ -19,4 +19,5 @@
     <color name="colorMercuryWhite">#e5e5e5</color>
     <color name="colorGalleryWhite">#eeeeee</color>
     <color name="colorSeashellWhite">#f1f1f1</color>
+    <color name="colorTransparentWhite">#14f1f1f1</color>
 </resources>
