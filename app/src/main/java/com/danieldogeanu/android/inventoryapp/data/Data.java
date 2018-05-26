@@ -66,7 +66,7 @@ public class Data {
                 int currentID = cursor.getInt(indexColID);
                 String currentProductName = cursor.getString(indexColProductName);
                 String currentAuthor = cursor.getString(indexColAuthor);
-                int currentPrice = cursor.getInt(indexColPrice);
+                float currentPrice = cursor.getFloat(indexColPrice);
                 int currentQuantity = cursor.getInt(indexColQuantity);
                 String currentSupplierName = cursor.getString(indexColSupplierName);
                 String currentSupplierPhone = cursor.getString(indexColSupplierPhone);
