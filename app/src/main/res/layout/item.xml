@@ -1,118 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:paddingTop="4dp"
-    android:paddingBottom="4dp"
-    android:paddingStart="8dp"
-    android:paddingEnd="8dp">
+    style="@style/Item">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:background="@drawable/item_bg">
+    <RelativeLayout style="@style/ItemContainer">
 
         <LinearLayout
             android:id="@+id/item_top_left_section"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true"
-            android:layout_toStartOf="@id/item_top_right_section">
+            android:layout_toStartOf="@id/item_top_right_section"
+            style="@style/ItemTopLeftSection">
 
             <TextView
                 android:id="@+id/item_product_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:maxLines="2"
-                android:fontFamily="sans-serif-medium"
-                android:textColor="@color/colorAltoWhite"
-                android:textSize="20sp"
+                style="@style/ItemProductName"
                 tools:text="Columbus Day: Expeditionary Task Force" />
 
             <TextView
                 android:id="@+id/item_product_author"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorAltoTransparent"
-                android:textSize="16sp"
+                style="@style/ItemProductAuthor"
                 tools:text="Craig Alanson" />
 
         </LinearLayout>
 
         <RelativeLayout
             android:id="@+id/item_top_right_section"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minWidth="80dp"
-            android:gravity="end"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_above="@id/item_section_divider">
+            android:layout_above="@id/item_section_divider"
+            style="@style/ItemTopRightSection">
 
             <TextView
                 android:id="@+id/item_product_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:textColor="@color/colorAltoWhite"
-                android:textSize="16sp"
+                style="@style/ItemProductPrice"
                 tools:text="$15.37" />
 
             <TextView
                 android:id="@+id/item_product_quantity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
                 android:layout_alignEnd="@id/item_product_price"
-                android:textColor="@color/colorAltoTransparent"
-                android:textSize="16sp"
+                style="@style/ItemProductQuantity"
                 tools:text="5233" />
 
         </RelativeLayout>
 
         <View
             android:id="@+id/item_section_divider"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
             android:layout_below="@id/item_top_left_section"
-            android:background="@color/colorTransparentWhite" />
+            style="@style/ItemSectionDivider" />
 
         <RelativeLayout
             android:id="@+id/item_bottom_section"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_below="@id/item_section_divider">
+            android:layout_below="@id/item_section_divider"
+            style="@style/ItemBottomSection">
 
             <TextView
                 android:id="@+id/item_supplier_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentStart="true"
                 android:layout_toStartOf="@id/item_supplier_phone"
-                android:textColor="@color/colorAltoWhite"
-                android:textSize="16sp"
+                style="@style/ItemSupplierName"
                 tools:text="Podium Publishing" />
 
             <TextView
                 android:id="@+id/item_supplier_phone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:textColor="@color/colorAltoTransparent"
-                android:textSize="16sp"
+                style="@style/ItemSupplierPhone"
                 tools:text="+1-202-555-0160" />
 
         </RelativeLayout>

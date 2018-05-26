@@ -110,4 +110,91 @@
         <item name="android:layout_marginBottom">0dp</item>
     </style>
 
+    <style name="Item">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="android:paddingStart">8dp</item>
+        <item name="android:paddingEnd">8dp</item>
+    </style>
+    <style name="ItemContainer">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:background">@drawable/item_bg</item>
+    </style>
+    <style name="ItemTopLeftSection">
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentTop">true</item>
+        <item name="android:layout_alignParentStart">true</item>
+    </style>
+    <style name="ItemTopRightSection">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minWidth">80dp</item>
+        <item name="android:gravity">end</item>
+        <item name="android:layout_alignParentTop">true</item>
+        <item name="android:layout_alignParentEnd">true</item>
+    </style>
+    <style name="ItemBottomSection">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentBottom">true</item>
+    </style>
+    <style name="ItemSectionDivider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:layout_marginBottom">16dp</item>
+        <item name="android:background">@color/colorTransparentWhite</item>
+    </style>
+    <style name="ItemProductLeftText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="ItemProductName" parent="ItemProductLeftText">
+        <item name="android:layout_marginBottom">4dp</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">@color/colorAltoWhite</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+    <style name="ItemProductAuthor" parent="ItemProductLeftText">
+        <item name="android:textColor">@color/colorAltoTransparent</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="ItemProductRightText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="ItemProductPrice" parent="ItemProductRightText">
+        <item name="android:layout_alignParentTop">true</item>
+        <item name="android:textColor">@color/colorAltoWhite</item>
+    </style>
+    <style name="ItemProductQuantity" parent="ItemProductRightText">
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:textColor">@color/colorAltoTransparent</item>
+    </style>
+    <style name="ItemSupplierText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentTop">true</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:maxLines">1</item>
+    </style>
+    <style name="ItemSupplierName" parent="ItemSupplierText">
+        <item name="android:layout_alignParentStart">true</item>
+        <item name="android:textColor">@color/colorAltoWhite</item>
+    </style>
+    <style name="ItemSupplierPhone" parent="ItemSupplierText">
+        <item name="android:layout_alignParentEnd">true</item>
+        <item name="android:textColor">@color/colorAltoTransparent</item>
+    </style>
 </resources>
