@@ -69,7 +69,7 @@ public class InventoryActivity extends AppCompatActivity {
 
     private void displayData() {
         // Get Data
-        mProducts = mData.queryData(InventoryActivity.this);
+        mProducts = mData.getData(InventoryActivity.this);
         // Set the Adapter
         mAdapter = new ProductAdapter(InventoryActivity.this, mProducts);
         mListView.setAdapter(mAdapter);

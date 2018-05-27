@@ -25,10 +25,14 @@ public class Data {
         return INSTANCE;
     }
 
-    public ArrayList<Product> queryData(Context context) {
+    public ArrayList<Product> getData(Context context) {
+        Cursor cursor = queryData(context);
+        return extractData(cursor);
+    }
+
+    private Cursor queryData(Context context) {
         DbHelper dbHelper = new DbHelper(context);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        ArrayList<Product> products = new ArrayList<>();
 
         String[] projection = {
                 TableEntry._ID,
@@ -49,6 +53,12 @@ public class Data {
                 null,
                 null
         );
+
+        return cursor;
+    }
+
+    private ArrayList<Product> extractData(Cursor cursor) {
+        ArrayList<Product> products = new ArrayList<>();
 
         try {
             // Get the index of each column.
