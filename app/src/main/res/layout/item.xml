@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/Item">
 
-    <RelativeLayout style="@style/ItemContainer">
+    <RelativeLayout
+        android:id="@+id/item_card"
+        style="@style/ItemContainer">
 
         <LinearLayout
             android:id="@+id/item_top_left_section"
