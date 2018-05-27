@@ -16,6 +16,7 @@ import java.util.ArrayList;
 public class Data {
 
     private static final String LOG_TAG = Data.class.getSimpleName();
+    private static final int NO_ID = -1;
 
     private static Data INSTANCE = new Data();
 
@@ -26,13 +27,20 @@ public class Data {
     }
 
     public ArrayList<Product> getData(Context context) {
-        Cursor cursor = queryData(context);
+        Cursor cursor = queryData(context, NO_ID);
         return extractData(cursor);
     }
 
-    private Cursor queryData(Context context) {
+    public Product getData(Context context, int productId) {
+        Cursor cursor = queryData(context, productId);
+        ArrayList<Product> products = extractData(cursor);
+        return products.get(0);
+    }
+
+    private Cursor queryData(Context context, int productId) {
         DbHelper dbHelper = new DbHelper(context);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor = null;
 
         String[] projection = {
                 TableEntry._ID,
@@ -44,15 +52,30 @@ public class Data {
                 TableEntry.COL_SUPPLIER_PHONE
         };
 
-        Cursor cursor = db.query(
-                TableEntry.TABLE_NAME,
-                projection,
-                null,
-                null,
-                null,
-                null,
-                null
-        );
+        String selection = TableEntry._ID + " = ?";
+        String[] selectionArgs = { Integer.toString(productId) };
+
+        if (productId > NO_ID) {
+            cursor = db.query(
+                    TableEntry.TABLE_NAME,
+                    projection,
+                    selection,
+                    selectionArgs,
+                    null,
+                    null,
+                    null
+            );
+        } else {
+            cursor = db.query(
+                    TableEntry.TABLE_NAME,
+                    projection,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+            );
+        }
 
         return cursor;
     }
