@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.danieldogeanu.android.inventoryapp.data.Data;
 
@@ -19,6 +20,8 @@ public class EditorActivity extends AppCompatActivity {
     private EditText mProductQuantityEditText;
     private EditText mSupplierNameEditText;
     private EditText mSupplierPhoneEditText;
+
+    private boolean mExistingProduct = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +37,17 @@ public class EditorActivity extends AppCompatActivity {
         mSupplierNameEditText = findViewById(R.id.supplier_name);
         mSupplierPhoneEditText = findViewById(R.id.supplier_phone);
 
+        if (getIntent().hasExtra("product_id")) {
+            mExistingProduct = true;
+            int productId = (int) getIntent().getSerializableExtra("product_id");
+            openExistingProduct(productId);
+        }
+
         FloatingActionButton saveFab = findViewById(R.id.save_fab);
         saveFab.setOnClickListener(view -> {
-            saveProduct();
+            if (!mExistingProduct) saveProduct();
             finish();
         });
-
     }
 
     @Override
@@ -52,7 +60,7 @@ public class EditorActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_save:
-                saveProduct();
+                if (!mExistingProduct) saveProduct();
                 finish();
                 return true;
             case R.id.action_delete:
@@ -75,6 +83,17 @@ public class EditorActivity extends AppCompatActivity {
 
         Product product = new Product(productNameString, productAuthorString, productPriceFloat, productQuantityInt, supplierNameString, supplierPhoneString);
         mData.insertData(EditorActivity.this, product);
+    }
+
+    private void openExistingProduct(int productID) {
+        Product product = mData.getData(EditorActivity.this, productID);
+
+        mProductNameEditText.setText(product.getProductName(), TextView.BufferType.EDITABLE);
+        mProductAuthorEditText.setText(product.getProductAuthor(), TextView.BufferType.EDITABLE);
+        mProductPriceEditText.setText(Float.toString(product.getProductPrice()), TextView.BufferType.EDITABLE);
+        mProductQuantityEditText.setText(Integer.toString(product.getProductQuantity()), TextView.BufferType.EDITABLE);
+        mSupplierNameEditText.setText(product.getSupplierName(), TextView.BufferType.EDITABLE);
+        mSupplierPhoneEditText.setText(product.getSupplierPhone(), TextView.BufferType.EDITABLE);
     }
 
 }
