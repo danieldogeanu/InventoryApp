@@ -198,6 +198,10 @@ public class Data {
         DbHelper dbHelper = new DbHelper(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
+        // Get messages for Toasts and Logs.
+        String successMsg = context.getResources().getString(R.string.update_msg_success);
+        String errorMsg = context.getResources().getString(R.string.update_msg_error);
+
         // Extract data from product.
         String productId = Integer.toString(product.getProductID());
         String productName = product.getProductName();
@@ -221,7 +225,7 @@ public class Data {
         String selection = TableEntry._ID + " = ?";
         String[] selectionArgs = { productId };
 
-        // Insert a new row in the database, returning the ID of that new row.
+        // Update the existing row in the database, returning the numbers of rows affected.
         int count = db.update(
                 TableEntry.TABLE_NAME,
                 values,
@@ -230,17 +234,44 @@ public class Data {
         );
 
         // Show Toasts and Log the errors.
-        if (count != -1) {
-            String successMsg = context.getResources().getString(R.string.update_msg_success);
-            String formattedSuccessMsg = String.format(successMsg, Integer.toString(count));
-            Log.i(LOG_TAG, formattedSuccessMsg);
-            Utils.showToast(context, formattedSuccessMsg);
+        if (count != 0) {
+            Log.i(LOG_TAG, successMsg);
+            Utils.showToast(context, successMsg);
         } else {
-            String errorMsg = context.getResources().getString(R.string.update_msg_error);
             Log.e(LOG_TAG, errorMsg);
             Utils.showToast(context, errorMsg);
         }
 
+    }
+
+    public void deleteData(Context context, int productId) {
+        // Get the database in write mode.
+        DbHelper dbHelper = new DbHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        // Get messages for Toasts and Logs.
+        String successMsg = context.getResources().getString(R.string.delete_msg_success);
+        String errorMsg = context.getResources().getString(R.string.delete_msg_error);
+
+        // Delete row, based on product ID.
+        String selection = TableEntry._ID + " = ?";
+        String[] selectionArgs = { Integer.toString(productId) };
+
+        // Delete the existing row in the database, returning the number of rows deleted.
+        int deleted = db.delete(
+                TableEntry.TABLE_NAME,
+                selection,
+                selectionArgs
+        );
+
+        // Show Toasts and Log the errors.
+        if (deleted != 0) {
+            Log.i(LOG_TAG, successMsg);
+            Utils.showToast(context, successMsg);
+        } else {
+            Log.e(LOG_TAG, errorMsg);
+            Utils.showToast(context, errorMsg);
+        }
     }
 
 }

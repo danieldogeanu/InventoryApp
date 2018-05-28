@@ -66,7 +66,8 @@ public class EditorActivity extends AppCompatActivity {
                 finish();
                 return true;
             case R.id.action_delete:
-                // Do Stuff
+                if (mExistingProductID > NO_ID) deleteProduct();
+                finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -115,6 +116,10 @@ public class EditorActivity extends AppCompatActivity {
                 supplierPhoneString
         );
         mData.updateData(EditorActivity.this, product);
+    }
+
+    private void deleteProduct() {
+        mData.deleteData(EditorActivity.this, mExistingProductID);
     }
 
     private void openExistingProduct(int productID) {
