@@ -1,9 +1,14 @@
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Inventory App</string>
 
+    <!--INSERT MESSAGES-->
     <string name="insert_msg_success">Product saved with id: </string>
     <string name="insert_msg_error">Error with saving product.</string>
     <string name="insert_msg_success_multiple">Products saved in the database.</string>
+
+    <!--UPDATE MESSAGES-->
+    <string name="update_msg_success">Product updated successfully.\n<xliff:g id="rows">%1$s</xliff:g> row affected.</string>
+    <string name="update_msg_error">Error with updating product.</string>
 
     <!--EDITOR ACTIVITY-->
     <string name="empty_editor_title">Add Product</string>

@@ -193,4 +193,54 @@ public class Data {
         }
     }
 
+    public void updateData(Context context, Product product) {
+        // Get the database in write mode.
+        DbHelper dbHelper = new DbHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        // Extract data from product.
+        String productId = Integer.toString(product.getProductID());
+        String productName = product.getProductName();
+        String productAuthor = product.getProductAuthor();
+        float productPrice = product.getProductPrice();
+        int productQuantity = product.getProductQuantity();
+        String productSupplierName = product.getSupplierName();
+        String productSupplierPhone = product.getSupplierPhone();
+
+        // Create the ContentValues object.
+        // Column names are the keys, product attributes are the values.
+        ContentValues values = new ContentValues();
+        values.put(TableEntry.COL_PRODUCT_NAME, productName);
+        values.put(TableEntry.COL_AUTHOR, productAuthor);
+        values.put(TableEntry.COL_PRICE, productPrice);
+        values.put(TableEntry.COL_QUANTITY, productQuantity);
+        values.put(TableEntry.COL_SUPPLIER_NAME, productSupplierName);
+        values.put(TableEntry.COL_SUPPLIER_PHONE, productSupplierPhone);
+
+        // Update row, based on product ID.
+        String selection = TableEntry._ID + " = ?";
+        String[] selectionArgs = { productId };
+
+        // Insert a new row in the database, returning the ID of that new row.
+        int count = db.update(
+                TableEntry.TABLE_NAME,
+                values,
+                selection,
+                selectionArgs
+        );
+
+        // Show Toasts and Log the errors.
+        if (count != -1) {
+            String successMsg = context.getResources().getString(R.string.update_msg_success);
+            String formattedSuccessMsg = String.format(successMsg, Integer.toString(count));
+            Log.i(LOG_TAG, formattedSuccessMsg);
+            Utils.showToast(context, formattedSuccessMsg);
+        } else {
+            String errorMsg = context.getResources().getString(R.string.update_msg_error);
+            Log.e(LOG_TAG, errorMsg);
+            Utils.showToast(context, errorMsg);
+        }
+
+    }
+
 }

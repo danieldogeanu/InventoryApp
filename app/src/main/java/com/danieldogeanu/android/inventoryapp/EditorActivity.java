@@ -21,7 +21,8 @@ public class EditorActivity extends AppCompatActivity {
     private EditText mSupplierNameEditText;
     private EditText mSupplierPhoneEditText;
 
-    private boolean mExistingProduct = false;
+    private static final int NO_ID = -1;
+    private int mExistingProductID = NO_ID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,14 +39,14 @@ public class EditorActivity extends AppCompatActivity {
         mSupplierPhoneEditText = findViewById(R.id.supplier_phone);
 
         if (getIntent().hasExtra("product_id")) {
-            mExistingProduct = true;
-            int productId = (int) getIntent().getSerializableExtra("product_id");
-            openExistingProduct(productId);
+            mExistingProductID = (int) getIntent().getSerializableExtra("product_id");
+            openExistingProduct(mExistingProductID);
         }
 
         FloatingActionButton saveFab = findViewById(R.id.save_fab);
         saveFab.setOnClickListener(view -> {
-            if (!mExistingProduct) saveProduct();
+            if (mExistingProductID > NO_ID) updateProduct(mExistingProductID);
+            else saveProduct();
             finish();
         });
     }
@@ -60,7 +61,8 @@ public class EditorActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_save:
-                if (!mExistingProduct) saveProduct();
+                if (mExistingProductID > NO_ID) updateProduct(mExistingProductID);
+                else saveProduct();
                 finish();
                 return true;
             case R.id.action_delete:
@@ -81,8 +83,38 @@ public class EditorActivity extends AppCompatActivity {
         float productPriceFloat = Float.parseFloat(productPriceString);
         int productQuantityInt = Integer.parseInt(productQuantityString);
 
-        Product product = new Product(productNameString, productAuthorString, productPriceFloat, productQuantityInt, supplierNameString, supplierPhoneString);
+        Product product = new Product(
+                productNameString,
+                productAuthorString,
+                productPriceFloat,
+                productQuantityInt,
+                supplierNameString,
+                supplierPhoneString
+        );
         mData.insertData(EditorActivity.this, product);
+    }
+
+    private void updateProduct(int existingProductId) {
+        String productNameString = mProductNameEditText.getText().toString().trim();
+        String productAuthorString = mProductAuthorEditText.getText().toString().trim();
+        String productPriceString = mProductPriceEditText.getText().toString().trim();
+        String productQuantityString = mProductQuantityEditText.getText().toString().trim();
+        String supplierNameString = mSupplierNameEditText.getText().toString().trim();
+        String supplierPhoneString = mSupplierPhoneEditText.getText().toString().trim();
+
+        float productPriceFloat = Float.parseFloat(productPriceString);
+        int productQuantityInt = Integer.parseInt(productQuantityString);
+
+        Product product = new Product(
+                existingProductId,
+                productNameString,
+                productAuthorString,
+                productPriceFloat,
+                productQuantityInt,
+                supplierNameString,
+                supplierPhoneString
+        );
+        mData.updateData(EditorActivity.this, product);
     }
 
     private void openExistingProduct(int productID) {
