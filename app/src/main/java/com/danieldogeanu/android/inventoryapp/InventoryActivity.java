@@ -61,7 +61,8 @@ public class InventoryActivity extends AppCompatActivity {
                 displayData();
                 return true;
             case R.id.action_delete_all_data:
-                // Do Stuff
+                mData.deleteAllData(InventoryActivity.this);
+                displayData();
                 return true;
         }
         return super.onOptionsItemSelected(item);

@@ -13,6 +13,7 @@
     <!--DELETE MESSAGES-->
     <string name="delete_msg_success">Product deleted successfully.</string>
     <string name="delete_msg_error">Error with deleting product.</string>
+    <string name="delete_msg_all">All products deleted successfully.</string>
 
     <!--EDITOR ACTIVITY-->
     <string name="empty_editor_title">Add Product</string>

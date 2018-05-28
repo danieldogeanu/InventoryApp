@@ -274,4 +274,17 @@ public class Data {
         }
     }
 
+    public void deleteAllData(Context context) {
+        // Get the database in write mode.
+        DbHelper dbHelper = new DbHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        // Drop the old table and create a new one.
+        dbHelper.onUpgrade(db, 0, 1);
+
+        // Show Toast
+        String deletionMsg = context.getResources().getString(R.string.delete_msg_all);
+        Utils.showToast(context, deletionMsg);
+    }
+
 }
