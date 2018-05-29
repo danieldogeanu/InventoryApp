@@ -100,32 +100,11 @@ public class EditorActivity extends AppCompatActivity {
     }
 
     /**
-     * Method to get the text entered by the user in the EditText fields
-     * and to save it in the database as a new product.
+     * Method to save the data into the database as a new product.
      */
     private void saveProduct() {
-        // Get the text from EditText fields.
-        String productNameString = mProductNameEditText.getText().toString().trim();
-        String productAuthorString = mProductAuthorEditText.getText().toString().trim();
-        String productPriceString = mProductPriceEditText.getText().toString().trim();
-        String productQuantityString = mProductQuantityEditText.getText().toString().trim();
-        String supplierNameString = mSupplierNameEditText.getText().toString().trim();
-        String supplierPhoneString = mSupplierPhoneEditText.getText().toString().trim();
-
-        // Convert the text to appropriate types.
-        float productPriceFloat = Float.parseFloat(productPriceString);
-        int productQuantityInt = Integer.parseInt(productQuantityString);
-
-        // Create a new Product with the text entered by the user.
-        Product product = new Product(
-                productNameString,
-                productAuthorString,
-                productPriceFloat,
-                productQuantityInt,
-                supplierNameString,
-                supplierPhoneString
-        );
-
+        // Get data from the EditText fields.
+        Product product = getEditTextData(NO_ID);
         // Insert the new product into the database.
         mData.insertData(EditorActivity.this, product);
     }
@@ -135,6 +114,25 @@ public class EditorActivity extends AppCompatActivity {
      * @param existingProductId The ID of the product that needs to be updated.
      */
     private void updateProduct(int existingProductId) {
+        // Get data from the EditText fields.
+        Product product = getEditTextData(existingProductId);
+        // Update the existing product from the database with the new data.
+        mData.updateData(EditorActivity.this, product);
+    }
+
+    /** Method to delete the product from the database. */
+    private void deleteProduct() {
+        mData.deleteData(EditorActivity.this, mExistingProductID);
+    }
+
+    /**
+     * Method to extract the text entered by the user into the EditText fields.
+     * @param productID The ID of the Product, in case it's an existing one.
+     * @return Returns a new Product to insert into the database.
+     */
+    private Product getEditTextData(int productID) {
+        Product product;
+
         // Get the text from EditText fields.
         String productNameString = mProductNameEditText.getText().toString().trim();
         String productAuthorString = mProductAuthorEditText.getText().toString().trim();
@@ -147,24 +145,30 @@ public class EditorActivity extends AppCompatActivity {
         float productPriceFloat = Float.parseFloat(productPriceString);
         int productQuantityInt = Integer.parseInt(productQuantityString);
 
-        // Create a new Product with the updated text modified by the user.
-        Product product = new Product(
-                existingProductId,
-                productNameString,
-                productAuthorString,
-                productPriceFloat,
-                productQuantityInt,
-                supplierNameString,
-                supplierPhoneString
-        );
+        // Create a new Product with the text entered/modified by the user.
+        if (productID == NO_ID) {
+            product = new Product(
+                    productNameString,
+                    productAuthorString,
+                    productPriceFloat,
+                    productQuantityInt,
+                    supplierNameString,
+                    supplierPhoneString
+            );
+        } else {
+            product = new Product(
+                    productID,
+                    productNameString,
+                    productAuthorString,
+                    productPriceFloat,
+                    productQuantityInt,
+                    supplierNameString,
+                    supplierPhoneString
+            );
+        }
 
-        // Update the existing product from the database with the new data.
-        mData.updateData(EditorActivity.this, product);
-    }
-
-    /** Method to delete the product from the database. */
-    private void deleteProduct() {
-        mData.deleteData(EditorActivity.this, mExistingProductID);
+        // Return the Product with the new data.
+        return product;
     }
 
     /**
