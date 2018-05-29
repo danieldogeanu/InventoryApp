@@ -28,6 +28,7 @@
     <string name="hint_supplier_name">Supplier Name</string>
     <string name="hint_supplier_phone">Supplier Phone</string>
     <string name="can_not_save">Could not save product.\nSome fields are empty.</string>
+    <string name="number_too_large">The number is too large.</string>
 
     <!--MENU ACTIONS-->
     <string name="action_add_dummy_data">Add Dummy Data</string>

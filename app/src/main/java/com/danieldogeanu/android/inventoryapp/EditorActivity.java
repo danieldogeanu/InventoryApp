@@ -66,10 +66,10 @@ public class EditorActivity extends AppCompatActivity {
             if (canSave()) {
                 if (isExistingProduct()) updateProduct(mExistingProductID);
                 else saveProduct();
+                finish();
             } else {
                 showError();
             }
-            finish();
         });
     }
 
@@ -98,13 +98,13 @@ public class EditorActivity extends AppCompatActivity {
                 if (canSave()) {
                     if (isExistingProduct()) updateProduct(mExistingProductID);
                     else saveProduct();
+                    finish();
                 } else {
                     showError();
                 }
-                finish();
                 return true;
             case R.id.action_delete:
-                if (mExistingProductID > NO_ID) deleteProduct();
+                if (isExistingProduct()) deleteProduct();
                 finish();
                 return true;
         }
@@ -154,10 +154,11 @@ public class EditorActivity extends AppCompatActivity {
         String supplierPhoneString = mSupplierPhoneEditText.getText().toString().trim();
 
         // Convert the text to appropriate types.
-        if (productPriceString.isEmpty()) productPriceString = "0";
-        if (productQuantityString.isEmpty()) productQuantityString = "0";
-        float productPriceFloat = Float.parseFloat(productPriceString);
-        int productQuantityInt = Integer.parseInt(productQuantityString);
+        final String EMPTY_STR = "0";
+        if (productPriceString.isEmpty()) productPriceString = EMPTY_STR;
+        if (productQuantityString.isEmpty()) productQuantityString = EMPTY_STR;
+        float productPriceFloat = Float.parseFloat(limitChars(productPriceString, 9));
+        int productQuantityInt = Integer.parseInt(limitChars(productQuantityString, 9));
 
         // Create a new Product with the text entered/modified by the user.
         if (productID == NO_ID) {
@@ -240,6 +241,26 @@ public class EditorActivity extends AppCompatActivity {
         String errorMsg = getString(R.string.can_not_save);
         Utils.showToast(EditorActivity.this, errorMsg);
         Log.e(LOG_TAG, errorMsg);
+    }
+
+    /**
+     * Method to limit the length of the string that is
+     * intended to be converted to float or int.
+     * @param string The String to limit.
+     * @param limit The limit to set.
+     * @return Returns the limited String.
+     */
+    public String limitChars(String string, int limit) {
+        String limitedStr;
+        String errorMsg = getString(R.string.number_too_large);
+        if (string.length() > limit) {
+            limitedStr = string.substring(0, limit);
+            Utils.showToast(EditorActivity.this, errorMsg);
+            Log.e(LOG_TAG, errorMsg);
+        } else {
+            limitedStr = string;
+        }
+        return limitedStr;
     }
 
 }
