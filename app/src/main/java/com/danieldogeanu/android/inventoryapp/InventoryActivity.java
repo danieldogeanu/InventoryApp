@@ -12,20 +12,23 @@ import com.danieldogeanu.android.inventoryapp.data.Data;
 
 import java.util.ArrayList;
 
+/**
+ * Displays a list of products that were entered and stored in the app.
+ * This is the main entry point for the app.
+ */
 public class InventoryActivity extends AppCompatActivity {
 
-    ListView mListView;
-    Data mData;
-    ArrayList<Product> mProducts;
-    ProductAdapter mAdapter;
+    // Data Holder
+    private Data mData;
 
+    /**
+     * Overrides the onCreate method to assemble and display the Inventory Activity.
+     * @param savedInstanceState The saved instance state Bundle.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory);
-
-        // Get List View
-        mListView = findViewById(R.id.inventory_list);
 
         // Get Data Class Instance
         mData = Data.getInstance();
@@ -33,6 +36,7 @@ public class InventoryActivity extends AppCompatActivity {
         // Get Data and Set the Adapter
         displayData();
 
+        // Attach Intent to open the Editor Activity.
         FloatingActionButton fab = findViewById(R.id.inventory_fab);
         fab.setOnClickListener(view -> {
             Intent editorIntent = new Intent(InventoryActivity.this, EditorActivity.class);
@@ -41,18 +45,31 @@ public class InventoryActivity extends AppCompatActivity {
 
     }
 
+    /** Override the onStart method to refresh the displayed data. */
     @Override
     protected void onStart() {
         super.onStart();
         displayData();
     }
 
+    /**
+     * Override the onCreateOptionsMenu method in order to
+     * create the options menu for Inventory Activity.
+     * @param menu The menu to create.
+     * @return Returns true if the menu was created successfully.
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_inventory, menu);
         return true;
     }
 
+    /**
+     * Override the onOptionsItemSelected method in order to
+     * detect which menu item was clicked and to execute the selected action.
+     * @param item The item that was clicked in the menu.
+     * @return Executes the action and returns the clicked item from the menu.
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -68,11 +85,17 @@ public class InventoryActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Method to display data from the database.
+     * Gets all products from the database and adds them to the ProductAdapter.
+     */
     private void displayData() {
         // Get Data
-        mProducts = mData.getData(InventoryActivity.this);
-        // Set the Adapter
-        mAdapter = new ProductAdapter(InventoryActivity.this, mProducts);
-        mListView.setAdapter(mAdapter);
+        ArrayList<Product> products = mData.getData(InventoryActivity.this);
+
+        // Get the ListView and set the Adapter
+        ListView listView = findViewById(R.id.inventory_list);
+        ProductAdapter adapter = new ProductAdapter(InventoryActivity.this, products);
+        listView.setAdapter(adapter);
     }
 }
