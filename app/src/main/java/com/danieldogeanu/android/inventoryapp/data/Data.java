@@ -13,35 +13,66 @@ import com.danieldogeanu.android.inventoryapp.data.Contract.TableEntry;
 
 import java.util.ArrayList;
 
+/**
+ * Singleton class that interfaces between the app and the database.
+ */
 public class Data {
 
+    // Constant used for debugging.
     private static final String LOG_TAG = Data.class.getSimpleName();
+
+    // Constant used to indicate that no product ID is present.
     private static final int NO_ID = -1;
 
+    // Class instance initialized as soon as possible to be thread-safe.
     private static Data INSTANCE = new Data();
 
+    /**
+     * Private constructor, so it can't be accessed from outside.
+     * We need only one instance of this class to provide data for the entire app.
+     */
     private Data() {}
 
+    /** @return Returns the existing class instance. */
     public static Data getInstance() {
         return INSTANCE;
     }
 
+    /**
+     * Method to get all data from the database.
+     * @param context The context in which this method is called.
+     * @return Returns an ArrayList of Products.
+     */
     public ArrayList<Product> getData(Context context) {
         Cursor cursor = queryData(context, NO_ID);
         return extractData(cursor);
     }
 
+    /**
+     * Method overload to get a single Product from the database.
+     * @param context The context in which this method is called.
+     * @param productId The ID of the Product to be retrieved.
+     * @return Returns the Product from the database.
+     */
     public Product getData(Context context, int productId) {
         Cursor cursor = queryData(context, productId);
         ArrayList<Product> products = extractData(cursor);
         return products.get(0);
     }
 
+    /**
+     * Method to query (read) the database and return containing data.
+     * @param context The context in which this method is called.
+     * @param productId The ID of the Product to be retrieved, if we need a single product.
+     * @return Returns a Cursor object with the data retrieved.
+     */
     private Cursor queryData(Context context, int productId) {
+        // Get the database in read mode.
         DbHelper dbHelper = new DbHelper(context);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor cursor = null;
+        Cursor cursor;
 
+        // Select which columns to return from the database.
         String[] projection = {
                 TableEntry._ID,
                 TableEntry.COL_PRODUCT_NAME,
@@ -52,10 +83,13 @@ public class Data {
                 TableEntry.COL_SUPPLIER_PHONE
         };
 
+        // Filter the results by ID, if we need a single product.
         String selection = TableEntry._ID + " = ?";
         String[] selectionArgs = { Integer.toString(productId) };
 
+        // Query the database with selected options.
         if (productId > NO_ID) {
+            // Query for the case in which we filter by ID.
             cursor = db.query(
                     TableEntry.TABLE_NAME,
                     projection,
@@ -66,6 +100,7 @@ public class Data {
                     null
             );
         } else {
+            // Query to return all data from database.
             cursor = db.query(
                     TableEntry.TABLE_NAME,
                     projection,
@@ -77,12 +112,20 @@ public class Data {
             );
         }
 
+        // Cursor object with data retrieved.
         return cursor;
     }
 
+    /**
+     * Method to extract the data from the Cursor object provided by the queryData method.
+     * @param cursor The Cursor object to extract data from.
+     * @return Returns an ArrayList of Products.
+     */
     private ArrayList<Product> extractData(Cursor cursor) {
+        // Initialize the Products ArrayList.
         ArrayList<Product> products = new ArrayList<>();
 
+        // Extract data from Cursor.
         try {
             // Get the index of each column.
             int indexColID = cursor.getColumnIndex(TableEntry._ID);
@@ -104,16 +147,23 @@ public class Data {
                 String currentSupplierName = cursor.getString(indexColSupplierName);
                 String currentSupplierPhone = cursor.getString(indexColSupplierPhone);
 
-                // Add the values to the products ArrayList.
+                // Create a new Product and add the values to the Products ArrayList.
                 products.add(new Product(currentID, currentProductName, currentAuthor, currentPrice, currentQuantity, currentSupplierName, currentSupplierPhone));
             }
         } finally {
+            // Close the cursor.
             cursor.close();
         }
 
+        // Return the ArrayList of Products.
         return products;
     }
 
+    /**
+     * Method to insert data into the database.
+     * @param context The context in which this method is called.
+     * @param products A Product or an array of Products to insert into the database.
+     */
     public void insertData(Context context, Product ...products) {
         // Get the database in write mode.
         DbHelper dbHelper = new DbHelper(context);
@@ -125,8 +175,9 @@ public class Data {
         String errorMsg = context.getResources().getString(R.string.insert_msg_error);
         int timesDisplayed = 0;
 
+        // Iterate through all the products and insert them into the database.
         for (Product product : products) {
-            // Extract data from product.
+            // Extract data from the Product object.
             String productName = product.getProductName();
             String productAuthor = product.getProductAuthor();
             float productPrice = product.getProductPrice();
@@ -161,10 +212,14 @@ public class Data {
                 Utils.showToast(context, errorMsg);
             }
         }
-
     }
 
+    /**
+     * Method to insert dummy (demo) data into the database.
+     * @param context The context in which this method is called.
+     */
     public void insertDummyData(Context context) {
+        // Initialize the products array.
         Product[] products = new Product[5];
 
         // Get dummy data string arrays.
@@ -193,6 +248,11 @@ public class Data {
         }
     }
 
+    /**
+     * Method to update the Product data in the database.
+     * @param context The context in which this method is called.
+     * @param product The Product that we want to update.
+     */
     public void updateData(Context context, Product product) {
         // Get the database in write mode.
         DbHelper dbHelper = new DbHelper(context);
@@ -202,7 +262,7 @@ public class Data {
         String successMsg = context.getResources().getString(R.string.update_msg_success);
         String errorMsg = context.getResources().getString(R.string.update_msg_error);
 
-        // Extract data from product.
+        // Extract data from the Product object.
         String productId = Integer.toString(product.getProductID());
         String productName = product.getProductName();
         String productAuthor = product.getProductAuthor();
@@ -221,7 +281,7 @@ public class Data {
         values.put(TableEntry.COL_SUPPLIER_NAME, productSupplierName);
         values.put(TableEntry.COL_SUPPLIER_PHONE, productSupplierPhone);
 
-        // Update row, based on product ID.
+        // Select which row to update, based on the Product ID.
         String selection = TableEntry._ID + " = ?";
         String[] selectionArgs = { productId };
 
@@ -241,9 +301,14 @@ public class Data {
             Log.e(LOG_TAG, errorMsg);
             Utils.showToast(context, errorMsg);
         }
-
     }
 
+    /**
+     * Method to delete data from the database.
+     * This method is used to delete a single row (product).
+     * @param context The context in which this method is called.
+     * @param productId The ID of the Product we need to delete.
+     */
     public void deleteData(Context context, int productId) {
         // Get the database in write mode.
         DbHelper dbHelper = new DbHelper(context);
@@ -253,7 +318,7 @@ public class Data {
         String successMsg = context.getResources().getString(R.string.delete_msg_success);
         String errorMsg = context.getResources().getString(R.string.delete_msg_error);
 
-        // Delete row, based on product ID.
+        // Select the row to delete, based on product ID.
         String selection = TableEntry._ID + " = ?";
         String[] selectionArgs = { Integer.toString(productId) };
 
@@ -274,6 +339,11 @@ public class Data {
         }
     }
 
+    /**
+     * Method to delete all the data from the database.
+     * This method is used to drop the current table and create a new one.
+     * @param context The context in which this method is called.
+     */
     public void deleteAllData(Context context) {
         // Get the database in write mode.
         DbHelper dbHelper = new DbHelper(context);
@@ -282,9 +352,10 @@ public class Data {
         // Drop the old table and create a new one.
         dbHelper.onUpgrade(db, 0, 1);
 
-        // Show Toast
+        // Show Toast and Log the message.
         String deletionMsg = context.getResources().getString(R.string.delete_msg_all);
         Utils.showToast(context, deletionMsg);
+        Log.i(LOG_TAG, deletionMsg);
     }
 
 }
