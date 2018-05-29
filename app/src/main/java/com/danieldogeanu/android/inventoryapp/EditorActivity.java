@@ -3,6 +3,7 @@ package com.danieldogeanu.android.inventoryapp;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -14,6 +15,9 @@ import com.danieldogeanu.android.inventoryapp.data.Data;
  * Activity class that allows the user to create a new product, or edit an existing one.
  */
 public class EditorActivity extends AppCompatActivity {
+
+    // Constant used for debugging.
+    private static final String LOG_TAG = EditorActivity.class.getSimpleName();
 
     // Data Holder
     private Data mData;
@@ -59,8 +63,12 @@ public class EditorActivity extends AppCompatActivity {
         // Save or update the product and exit the Editor Activity.
         FloatingActionButton saveFab = findViewById(R.id.save_fab);
         saveFab.setOnClickListener(view -> {
-            if (mExistingProductID > NO_ID) updateProduct(mExistingProductID);
-            else saveProduct();
+            if (canSave()) {
+                if (isExistingProduct()) updateProduct(mExistingProductID);
+                else saveProduct();
+            } else {
+                showError();
+            }
             finish();
         });
     }
@@ -87,8 +95,12 @@ public class EditorActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_save:
-                if (mExistingProductID > NO_ID) updateProduct(mExistingProductID);
-                else saveProduct();
+                if (canSave()) {
+                    if (isExistingProduct()) updateProduct(mExistingProductID);
+                    else saveProduct();
+                } else {
+                    showError();
+                }
                 finish();
                 return true;
             case R.id.action_delete:
@@ -190,6 +202,44 @@ public class EditorActivity extends AppCompatActivity {
         mProductQuantityEditText.setText(Integer.toString(product.getProductQuantity()), TextView.BufferType.EDITABLE);
         mSupplierNameEditText.setText(product.getSupplierName(), TextView.BufferType.EDITABLE);
         mSupplierPhoneEditText.setText(product.getSupplierPhone(), TextView.BufferType.EDITABLE);
+    }
+
+    /**
+     * Method to check if this is an existing product.
+     * @return Returns true, if we have a product ID.
+     */
+    private boolean isExistingProduct() {
+        return mExistingProductID > NO_ID;
+    }
+
+    /**
+     * Method to check if there aren't empty fields so we can save the data into the database.
+     * @return Returns true if there aren't empty fields, false if there are.
+     */
+    private boolean canSave() {
+        // Initialize canSave to true.
+        boolean canSave = true;
+
+        // Get the Product from user data.
+        Product product = getEditTextData(NO_ID);
+
+        // Check if the Product fields are empty.
+        if (product.getProductName().isEmpty()) canSave = false;
+        if (product.getProductAuthor().isEmpty()) canSave = false;
+        if (product.getProductPrice() == 0) canSave = false;
+        if (product.getProductQuantity() == 0) canSave = false;
+        if (product.getSupplierName().isEmpty()) canSave = false;
+        if (product.getSupplierPhone().isEmpty()) canSave = false;
+
+        // Return the canSave value.
+        return canSave;
+    }
+
+    /** Method to show the error message in case we can't save. */
+    private void showError() {
+        String errorMsg = getString(R.string.can_not_save);
+        Utils.showToast(EditorActivity.this, errorMsg);
+        Log.e(LOG_TAG, errorMsg);
     }
 
 }
