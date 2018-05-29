@@ -142,6 +142,8 @@ public class EditorActivity extends AppCompatActivity {
         String supplierPhoneString = mSupplierPhoneEditText.getText().toString().trim();
 
         // Convert the text to appropriate types.
+        if (productPriceString.isEmpty()) productPriceString = "0";
+        if (productQuantityString.isEmpty()) productQuantityString = "0";
         float productPriceFloat = Float.parseFloat(productPriceString);
         int productQuantityInt = Integer.parseInt(productQuantityString);
 

@@ -12,7 +12,7 @@ import com.danieldogeanu.android.inventoryapp.data.Contract.TableEntry;
 public class DbHelper extends SQLiteOpenHelper {
 
     // If you change the database schema, you must increment the database version.
-    private static final int DB_VERSION = 3;
+    private static final int DB_VERSION = 4;
     private static final String DB_NAME = "inventory.db";
 
     // SQL for table creation and deletion.
@@ -21,7 +21,7 @@ public class DbHelper extends SQLiteOpenHelper {
                     TableEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     TableEntry.COL_PRODUCT_NAME + " TEXT NOT NULL," +
                     TableEntry.COL_AUTHOR + " TEXT," +
-                    TableEntry.COL_PRICE + " REAL," +
+                    TableEntry.COL_PRICE + " REAL NOT NULL DEFAULT 0," +
                     TableEntry.COL_QUANTITY + " INTEGER NOT NULL DEFAULT 0," +
                     TableEntry.COL_SUPPLIER_NAME + " TEXT," +
                     TableEntry.COL_SUPPLIER_PHONE + " TEXT NOT NULL)";
