@@ -2,6 +2,9 @@ package com.danieldogeanu.android.inventoryapp.data;
 
 import android.provider.BaseColumns;
 
+/**
+ * Static class that defines the table and columns names for the database.
+ */
 public final class Contract {
 
     public static abstract class TableEntry implements BaseColumns {
