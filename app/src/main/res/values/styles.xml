@@ -168,11 +168,13 @@
     <style name="ItemProductAuthor" parent="ItemProductLeftText">
         <item name="android:textColor">@color/colorAltoTransparent</item>
         <item name="android:textSize">16sp</item>
+        <item name="android:maxLines">1</item>
     </style>
     <style name="ItemProductRightText">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">16sp</item>
+        <item name="android:maxLines">1</item>
     </style>
     <style name="ItemProductPrice" parent="ItemProductRightText">
         <item name="android:layout_alignParentTop">true</item>
