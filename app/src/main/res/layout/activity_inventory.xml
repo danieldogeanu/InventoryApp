@@ -12,6 +12,6 @@
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/inventory_fab"
         app:srcCompat="@drawable/btn_add_fab"
-        style="@style/InventoryFab" />
+        style="@style/FabButton" />
 
 </RelativeLayout>

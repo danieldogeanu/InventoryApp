@@ -30,6 +30,19 @@
     <string name="can_not_save">Could not save product.\nSome fields are empty.</string>
     <string name="number_too_large">The number is too large.</string>
 
+    <!--DETAILS ACTIVITY-->
+    <string name="details_activity_title">Product Details</string>
+    <string name="details_product_section_title">Product Details</string>
+    <string name="details_supplier_section_title">Supplier Details</string>
+    <string name="details_btn_up_description">Increment Quantity Button</string>
+    <string name="details_btn_down_description">Decrement Quantity Button</string>
+    <string name="details_label_author">Author</string>
+    <string name="details_label_price">Price</string>
+    <string name="details_label_quantity">Quantity</string>
+    <string name="details_label_buttons">More / Less</string>
+    <string name="details_label_phone">Phone</string>
+    <string name="details_call_btn">Call Supplier</string>
+
     <!--MENU ACTIONS-->
     <string name="action_add_dummy_data">Add Dummy Data</string>
     <string name="action_delete_all_data">Delete All Entries</string>

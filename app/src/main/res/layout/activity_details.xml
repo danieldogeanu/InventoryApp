@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/DetailsActivity"
+    tools:context=".DetailsActivity">
+
+    <ScrollView style="@style/ScrollView">
+
+        <LinearLayout
+            android:id="@+id/details_layout"
+            style="@style/DetailsLayout">
+
+            <RelativeLayout
+                android:id="@+id/details_product_section"
+                style="@style/SectionContainer">
+
+                <View
+                    android:id="@+id/details_product_section_title_line"
+                    style="@style/SectionTitleLine" />
+
+                <TextView
+                    android:id="@+id/details_product_section_title"
+                    android:text="@string/details_product_section_title"
+                    style="@style/SectionTitle" />
+
+                <LinearLayout
+                    android:id="@+id/details_product_card"
+                    android:layout_below="@id/details_product_section_title"
+                    style="@style/DetailsCard">
+
+                    <TextView
+                        android:id="@+id/details_product_name"
+                        style="@style/DetailsTextProductTitle"
+                        tools:text="The Speed of Sound" />
+
+                    <View style="@style/DetailsCardSeparator" />
+
+                    <LinearLayout style="@style/DetailsRow">
+
+                        <TextView
+                            style="@style/DetailsTextLabel"
+                            android:text="@string/details_label_author" />
+
+                        <TextView
+                            android:id="@+id/details_author_name"
+                            style="@style/DetailsTextMain"
+                            tools:text="Eric Bernt" />
+
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/DetailsRow">
+
+                        <TextView
+                            style="@style/DetailsTextLabel"
+                            android:text="@string/details_label_price"/>
+
+                        <TextView
+                            android:id="@+id/details_price_name"
+                            style="@style/DetailsTextMain"
+                            tools:text="$9.99" />
+
+                    </LinearLayout>
+
+                    <LinearLayout style="@style/DetailsRow">
+
+                        <TextView
+                            style="@style/DetailsTextLabel"
+                            android:text="@string/details_label_quantity"/>
+
+                        <TextView
+                            android:id="@+id/details_quantity_name"
+                            style="@style/DetailsTextMain"
+                            tools:text="286" />
+
+                    </LinearLayout>
+
+                    <View style="@style/DetailsCardSeparator" />
+
+                    <LinearLayout
+                        android:gravity="end"
+                        style="@style/DetailsRow">
+
+                        <TextView
+                            style="@style/DetailsTextButtonsLabel"
+                            android:text="@string/details_label_buttons" />
+
+                        <ImageButton
+                            android:id="@+id/details_incr_btn"
+                            app:srcCompat="@drawable/btn_up"
+                            android:contentDescription="@string/details_btn_up_description"
+                            style="@style/DetailsImageButton" />
+
+                        <ImageButton
+                            android:id="@+id/details_decr_btn"
+                            app:srcCompat="@drawable/btn_down"
+                            android:contentDescription="@string/details_btn_down_description"
+                            style="@style/DetailsImageButton" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/details_supplier_section"
+                style="@style/SectionContainer">
+
+                <View
+                    android:id="@+id/details_supplier_section_title_line"
+                    style="@style/SectionTitleLine" />
+
+                <TextView
+                    android:id="@+id/details_supplier_section_title"
+                    android:text="@string/details_supplier_section_title"
+                    style="@style/SectionTitle" />
+
+                <LinearLayout
+                    android:id="@+id/details_supplier_card"
+                    android:layout_below="@id/details_supplier_section_title"
+                    style="@style/DetailsCard">
+
+                    <TextView
+                        android:id="@+id/details_supplier_name"
+                        style="@style/DetailsTextSupplierTitle"
+                        tools:text="Thomas &#38; Mercer" />
+
+                    <View style="@style/DetailsCardSeparator" />
+
+                    <LinearLayout style="@style/DetailsRow">
+
+                        <TextView
+                            style="@style/DetailsTextLabel"
+                            android:text="@string/details_label_phone" />
+
+                        <TextView
+                            android:id="@+id/details_supplier_phone"
+                            style="@style/DetailsTextMain"
+                            tools:text="+1-202-555-0131" />
+
+                    </LinearLayout>
+
+                    <View style="@style/DetailsCardSeparator" />
+
+                    <LinearLayout
+                        android:gravity="end"
+                        style="@style/DetailsRow">
+
+                        <Button
+                            android:id="@+id/details_call_btn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/call_btn_bg"
+                            android:text="@string/details_call_btn" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/edit_fab"
+        app:srcCompat="@drawable/btn_edit_fab"
+        style="@style/FabButton" />
+
+</RelativeLayout>

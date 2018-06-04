@@ -60,7 +60,7 @@ public class ProductAdapter extends ArrayAdapter<Product> {
 
         // Set Intent to open the current Product in the EditorActivity.
         viewHolder.itemCard.setOnClickListener(view -> {
-            Intent editorIntent = new Intent(getContext(), EditorActivity.class);
+            Intent editorIntent = new Intent(getContext(), DetailsActivity.class);
             editorIntent.putExtra("product_id", currentProduct.getProductID());
             getContext().startActivity(editorIntent);
         });

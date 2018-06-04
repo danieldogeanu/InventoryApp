@@ -108,6 +108,6 @@
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/save_fab"
         app:srcCompat="@drawable/btn_save_fab"
-        style="@style/InventoryFab" />
+        style="@style/FabButton" />
 
 </RelativeLayout>

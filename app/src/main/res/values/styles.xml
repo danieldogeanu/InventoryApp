@@ -25,7 +25,8 @@
         <item name="android:divider">@null</item>
         <item name="android:dividerHeight">0dp</item>
     </style>
-    <style name="InventoryFab">
+
+    <style name="FabButton">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_margin">24dp</item>
@@ -45,6 +46,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:padding">16dp</item>
     </style>
+
     <style name="SectionContainer">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -73,6 +75,7 @@
         <item name="android:textColor">@color/colorAltoTransparent</item>
         <item name="android:background">@color/colorNevadaGray</item>
     </style>
+
     <style name="FieldsContainer">
         <item name="android:orientation">vertical</item>
         <item name="android:layout_width">match_parent</item>
@@ -108,6 +111,79 @@
         <item name="android:layout_alignParentTop">true</item>
         <item name="android:layout_alignParentStart">true</item>
         <item name="android:layout_marginBottom">0dp</item>
+    </style>
+
+    <style name="DetailsActivity">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+    <style name="DetailsLayout">
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">16dp</item>
+    </style>
+    <style name="DetailsCard">
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:background">@drawable/card_bg</item>
+    </style>
+    <style name="DetailsRow">
+        <item name="android:orientation">horizontal</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+    <style name="DetailsText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorAltoWhite</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:maxLines">1</item>
+    </style>
+    <style name="DetailsTextProductTitle" parent="DetailsText">
+        <item name="android:layout_weight">1</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="android:maxLines">4</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">22sp</item>
+    </style>
+    <style name="DetailsTextSupplierTitle" parent="DetailsTextProductTitle">
+        <item name="android:textSize">18sp</item>
+    </style>
+    <style name="DetailsTextMain" parent="DetailsText">
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">end</item>
+    </style>
+    <style name="DetailsTextLabel" parent="DetailsText">
+        <item name="android:layout_width">80dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/colorAltoTransparent</item>
+    </style>
+    <style name="DetailsTextButtonsLabel" parent="DetailsTextLabel">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">start</item>
+        <item name="android:layout_gravity">center_vertical</item>
+    </style>
+    <style name="DetailsCardSeparator">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_marginTop">12dp</item>
+        <item name="android:layout_marginBottom">12dp</item>
+        <item name="android:background">@color/colorTransparentWhite</item>
+    </style>
+    <style name="DetailsImageButton">
+        <item name="android:layout_width">30dp</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:background">?android:attr/selectableItemBackgroundBorderless</item>
     </style>
 
     <style name="Item">
@@ -198,5 +274,10 @@
     <style name="ItemSupplierPhone" parent="ItemSupplierText">
         <item name="android:layout_alignParentEnd">true</item>
         <item name="android:textColor">@color/colorAltoTransparent</item>
+    </style>
+
+    <style name="ScrollView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
     </style>
 </resources>

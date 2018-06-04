@@ -12,12 +12,21 @@
         <activity android:name=".InventoryActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".EditorActivity"
             android:label="@string/empty_editor_title"
+            android:parentActivityName=".InventoryActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".InventoryActivity" />
+        </activity>
+        <activity
+            android:name=".DetailsActivity"
+            android:label="@string/details_activity_title"
             android:parentActivityName=".InventoryActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
