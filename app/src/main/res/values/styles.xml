@@ -275,6 +275,14 @@
         <item name="android:layout_alignParentEnd">true</item>
         <item name="android:textColor">@color/colorAltoTransparent</item>
     </style>
+    <style name="ItemSaleButton">
+        <item name="android:layout_width">60dp</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:layout_alignParentEnd">true</item>
+        <item name="android:background">@drawable/sale_btn_bg</item>
+        <item name="android:textColor">@color/colorAltoTransparent</item>
+        <item name="android:textSize">13sp</item>
+    </style>
 
     <style name="ScrollView">
         <item name="android:layout_width">match_parent</item>

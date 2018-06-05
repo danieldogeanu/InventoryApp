@@ -54,14 +54,14 @@
 
             <TextView
                 android:id="@+id/item_supplier_name"
-                android:layout_toStartOf="@id/item_supplier_phone"
+                android:layout_toStartOf="@id/item_sale_btn"
                 style="@style/ItemSupplierName"
                 tools:text="Podium Publishing" />
 
-            <TextView
-                android:id="@+id/item_supplier_phone"
-                style="@style/ItemSupplierPhone"
-                tools:text="+1-202-555-0160" />
+            <Button
+                android:id="@+id/item_sale_btn"
+                android:text="@string/item_sale_button"
+                style="@style/ItemSaleButton" />
 
         </RelativeLayout>
 

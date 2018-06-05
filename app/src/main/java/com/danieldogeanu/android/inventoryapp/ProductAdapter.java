@@ -49,7 +49,6 @@ public class ProductAdapter extends ArrayAdapter<Product> {
             viewHolder.productPriceTextView = convertView.findViewById(R.id.item_product_price);
             viewHolder.productQuantityTextView = convertView.findViewById(R.id.item_product_quantity);
             viewHolder.supplierNameTextView = convertView.findViewById(R.id.item_supplier_name);
-            viewHolder.supplierPhoneTextView = convertView.findViewById(R.id.item_supplier_phone);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -71,7 +70,6 @@ public class ProductAdapter extends ArrayAdapter<Product> {
         viewHolder.productPriceTextView.setText(Utils.formatPrice(currentProduct.getProductPrice()));
         viewHolder.productQuantityTextView.setText(Utils.formatQuantity(currentProduct.getProductQuantity()));
         viewHolder.supplierNameTextView.setText(currentProduct.getSupplierName());
-        viewHolder.supplierPhoneTextView.setText(currentProduct.getSupplierPhone());
 
         // Return the fully assembled item.
         return convertView;
@@ -84,8 +82,7 @@ public class ProductAdapter extends ArrayAdapter<Product> {
                 productAuthorTextView,
                 productPriceTextView,
                 productQuantityTextView,
-                supplierNameTextView,
-                supplierPhoneTextView;
+                supplierNameTextView;
     }
 
 }
