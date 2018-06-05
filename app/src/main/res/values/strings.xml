@@ -47,5 +47,6 @@
     <string name="action_add_dummy_data">Add Dummy Data</string>
     <string name="action_delete_all_data">Delete All Entries</string>
     <string name="action_save">Save Product</string>
+    <string name="action_edit">Edit Product</string>
     <string name="action_delete">Delete Product</string>
 </resources>
