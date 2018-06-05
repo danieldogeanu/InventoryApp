@@ -46,6 +46,12 @@
     <string name="details_label_phone">Phone</string>
     <string name="details_call_btn">Call Supplier</string>
 
+    <!--EMPTY STATE VIEW-->
+    <string name="empty_view_title">No Products Found</string>
+    <string name="empty_view_img">Empty Book Shop</string>
+    <string name="empty_view_instructions">Please add a product to the inventory, by tapping the plus button below, or by adding Dummy Data from the menu, above.</string>
+    <string name="empty_view_more_instructions">The Product Name and Supplier Phone fields are required. It\'s also recommended that you fill the Price and Quantity fields.</string>
+
     <!--MENU ACTIONS-->
     <string name="action_add_dummy_data">Add Dummy Data</string>
     <string name="action_delete_all_data">Delete All Entries</string>

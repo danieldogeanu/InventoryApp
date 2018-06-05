@@ -289,4 +289,43 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+
+    <style name="EmptyStateView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:visibility">gone</item>
+    </style>
+    <style name="EmptyStateLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+    <style name="EmptyStateImage">
+        <item name="android:layout_width">128dp</item>
+        <item name="android:layout_height">128dp</item>
+        <item name="android:layout_alignParentTop">true</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:src">@drawable/ic_store</item>
+        <item name="android:scaleType">centerInside</item>
+    </style>
+    <style name="EmptyStateText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingStart">28dp</item>
+        <item name="android:paddingEnd">28dp</item>
+        <item name="android:textColor">@color/colorAltoTransparent</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="EmptyStateTitle" parent="EmptyStateText">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">@color/colorAltoWhite</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+    <style name="EmptyStateInstructions" parent="EmptyStateText">
+        <item name="android:textSize">14sp</item>
+    </style>
 </resources>

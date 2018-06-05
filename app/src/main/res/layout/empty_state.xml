@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/EmptyStateLayout">
+
+    <ImageView
+        android:id="@+id/empty_view_img"
+        android:contentDescription="@string/empty_view_img"
+        style="@style/EmptyStateImage" />
+
+    <TextView
+        android:id="@+id/empty_view_title"
+        android:layout_below="@id/empty_view_img"
+        android:text="@string/empty_view_title"
+        style="@style/EmptyStateTitle" />
+
+    <TextView
+        android:id="@+id/empty_view_instructions"
+        android:layout_below="@id/empty_view_title"
+        android:text="@string/empty_view_instructions"
+        style="@style/EmptyStateText" />
+
+    <TextView
+        android:id="@+id/empty_view_more_instructions"
+        android:layout_below="@id/empty_view_instructions"
+        android:text="@string/empty_view_more_instructions"
+        style="@style/EmptyStateInstructions" />
+
+</RelativeLayout>

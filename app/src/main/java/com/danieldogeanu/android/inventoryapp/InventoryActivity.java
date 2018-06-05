@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 
 import com.danieldogeanu.android.inventoryapp.data.Data;
@@ -95,7 +96,9 @@ public class InventoryActivity extends AppCompatActivity {
 
         // Get the ListView and set the Adapter
         ListView listView = findViewById(R.id.inventory_list);
+        View emptyView = findViewById(R.id.empty_state_view);
         ProductAdapter adapter = new ProductAdapter(InventoryActivity.this, products);
         listView.setAdapter(adapter);
+        listView.setEmptyView(emptyView);
     }
 }
