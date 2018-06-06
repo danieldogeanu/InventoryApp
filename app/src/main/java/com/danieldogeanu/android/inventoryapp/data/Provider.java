@@ -8,6 +8,8 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.danieldogeanu.android.inventoryapp.data.Contract.TableEntry;
+
 public class Provider extends ContentProvider {
 
     // Tag for Log messages.
@@ -47,12 +49,6 @@ public class Provider extends ContentProvider {
 
     @Nullable
     @Override
-    public String getType(@NonNull Uri uri) {
-        return null;
-    }
-
-    @Nullable
-    @Override
     public Uri insert(@NonNull Uri uri, @Nullable ContentValues contentValues) {
         return null;
     }
@@ -65,5 +61,20 @@ public class Provider extends ContentProvider {
     @Override
     public int delete(@NonNull Uri uri, @Nullable String s, @Nullable String[] strings) {
         return 0;
+    }
+
+    /** Returns the MIME type of data for the content URI. */
+    @Nullable
+    @Override
+    public String getType(@NonNull Uri uri) {
+        final int match = sUriMatcher.match(uri);
+        switch (match) {
+            case CODE_PRODUCTS:
+                return TableEntry.CONTENT_LIST_TYPE;
+            case CODE_PRODUCT:
+                return TableEntry.CONTENT_ITEM_TYPE;
+            default:
+                throw new IllegalStateException("Unknown URI " + uri + " with match " + match);
+        }
     }
 }
