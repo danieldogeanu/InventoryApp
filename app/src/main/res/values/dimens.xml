@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="inventory_list_padding">4dp</dimen>
+    <dimen name="inventory_list_divider_height">0dp</dimen>
+
+    <dimen name="fab_btn_margin">24dp</dimen>
+
+    <dimen name="editor_layout_padding">16dp</dimen>
+
+    <dimen name="section_container_margin_top">8dp</dimen>
+    <dimen name="section_container_margin_bottom">24dp</dimen>
+    <dimen name="section_title_line_height">1dp</dimen>
+    <dimen name="section_title_line_margin">8dp</dimen>
+    <dimen name="section_title_height">16dp</dimen>
+    <dimen name="section_title_margin_start">32dp</dimen>
+    <dimen name="section_title_margin_top">-1dp</dimen>
+    <dimen name="section_title_padding">8dp</dimen>
+    <dimen name="section_title_text_size">12sp</dimen>
+
+    <dimen name="fields_container_margin_top">16dp</dimen>
+    <dimen name="fields_style_margin_bottom">8dp</dimen>
+    <dimen name="fields_style_padding">16dp</dimen>
+    <dimen name="field_unit_overlay_margin_end">16dp</dimen>
+    <dimen name="field_unit_overlay_text_size">16sp</dimen>
+    <dimen name="price_field_container_margin_bottom">8dp</dimen>
+    <dimen name="price_field_style_margin_bottom">0dp</dimen>
+    <dimen name="price_field_style_padding_end">40dp</dimen>
+
+    <dimen name="details_layout_padding">16dp</dimen>
+    <dimen name="details_card_margin_top">16dp</dimen>
+    <dimen name="details_card_padding">16dp</dimen>
+    <dimen name="details_row_padding">4dp</dimen>
+    <dimen name="details_text_size">16sp</dimen>
+    <dimen name="details_text_prod_title_padding">4dp</dimen>
+    <dimen name="details_text_prod_title_text_size">22sp</dimen>
+    <dimen name="details_text_suppl_title_text_size">18sp</dimen>
+    <dimen name="details_text_label_width">80dp</dimen>
+    <dimen name="details_text_label_text_size">14sp</dimen>
+    <dimen name="details_text_buttons_label_width">0dp</dimen>
+    <dimen name="details_card_separator_height">1dp</dimen>
+    <dimen name="details_card_separator_margin">12dp</dimen>
+    <dimen name="details_image_btn_size">30dp</dimen>
+    <dimen name="details_image_btn_margin_start">16dp</dimen>
+
+    <dimen name="item_padding_vertical">4dp</dimen>
+    <dimen name="item_padding_horizontal">8dp</dimen>
+    <dimen name="item_container_padding">16dp</dimen>
+    <dimen name="item_right_section_min_width">80dp</dimen>
+    <dimen name="item_section_divider_height">1dp</dimen>
+    <dimen name="item_section_divider_margin">16dp</dimen>
+    <dimen name="item_prod_name_margin_bottom">4dp</dimen>
+    <dimen name="item_prod_name_text_size">20sp</dimen>
+    <dimen name="item_prod_author_text_size">16sp</dimen>
+    <dimen name="item_prod_right_text_size">16sp</dimen>
+    <dimen name="item_suppl_text_size">16sp</dimen>
+    <dimen name="item_sale_btn_width">60dp</dimen>
+    <dimen name="item_sale_btn_height">30dp</dimen>
+    <dimen name="item_sale_btn_text_size">13sp</dimen>
+
+    <dimen name="empty_img_size">128dp</dimen>
+    <dimen name="empty_text_margin_top">16dp</dimen>
+    <dimen name="empty_text_padding">28dp</dimen>
+    <dimen name="empty_text_size">16sp</dimen>
+    <dimen name="empty_title_text_size">20sp</dimen>
+    <dimen name="empty_instructions_text_size">14sp</dimen>
+    <dimen name="empty_layout_land_padding">32dp</dimen>
+    <dimen name="empty_img_land_size">128dp</dimen>
+    <dimen name="empty_text_land_margin_bottom">16dp</dimen>
+    <dimen name="empty_text_land_padding">32dp</dimen>
+    <dimen name="empty_text_land_size">16sp</dimen>
+    <dimen name="empty_title_land_text_size">20sp</dimen>
+    <dimen name="empty_instructions_land_text_size">14sp</dimen>
+</resources>

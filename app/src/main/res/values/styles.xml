@@ -19,17 +19,17 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_alignParentTop">true</item>
         <item name="android:layout_alignParentStart">true</item>
-        <item name="android:paddingTop">4dp</item>
-        <item name="android:paddingBottom">4dp</item>
+        <item name="android:paddingTop">@dimen/inventory_list_padding</item>
+        <item name="android:paddingBottom">@dimen/inventory_list_padding</item>
         <item name="android:listSelector">@android:color/transparent</item>
         <item name="android:divider">@null</item>
-        <item name="android:dividerHeight">0dp</item>
+        <item name="android:dividerHeight">@dimen/inventory_list_divider_height</item>
     </style>
 
     <style name="FabButton">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_margin">24dp</item>
+        <item name="android:layout_margin">@dimen/fab_btn_margin</item>
         <item name="android:layout_alignParentBottom">true</item>
         <item name="android:layout_alignParentEnd">true</item>
         <item name="android:clickable">true</item>
@@ -44,34 +44,34 @@
         <item name="android:orientation">vertical</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:padding">16dp</item>
+        <item name="android:padding">@dimen/editor_layout_padding</item>
     </style>
 
     <style name="SectionContainer">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">8dp</item>
-        <item name="android:layout_marginBottom">24dp</item>
+        <item name="android:layout_marginTop">@dimen/section_container_margin_top</item>
+        <item name="android:layout_marginBottom">@dimen/section_container_margin_bottom</item>
     </style>
     <style name="SectionTitleLine">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">1dp</item>
-        <item name="android:layout_marginTop">8dp</item>
-        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:layout_height">@dimen/section_title_line_height</item>
+        <item name="android:layout_marginTop">@dimen/section_title_line_margin</item>
+        <item name="android:layout_marginBottom">@dimen/section_title_line_margin</item>
         <item name="android:layout_alignParentTop">true</item>
         <item name="android:background">@color/colorTransparentWhite</item>
     </style>
     <style name="SectionTitle">
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">16dp</item>
-        <item name="android:layout_marginStart">32dp</item>
-        <item name="android:layout_marginTop">-1dp</item>
+        <item name="android:layout_height">@dimen/section_title_height</item>
+        <item name="android:layout_marginStart">@dimen/section_title_margin_start</item>
+        <item name="android:layout_marginTop">@dimen/section_title_margin_top</item>
         <item name="android:layout_alignParentTop">true</item>
         <item name="android:layout_alignParentStart">true</item>
-        <item name="android:paddingStart">8dp</item>
-        <item name="android:paddingEnd">8dp</item>
+        <item name="android:paddingStart">@dimen/section_title_padding</item>
+        <item name="android:paddingEnd">@dimen/section_title_padding</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">@dimen/section_title_text_size</item>
         <item name="android:textColor">@color/colorAltoTransparent</item>
         <item name="android:background">@color/colorNevadaGray</item>
     </style>
@@ -80,13 +80,13 @@
         <item name="android:orientation">vertical</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:layout_marginTop">@dimen/fields_container_margin_top</item>
     </style>
     <style name="FieldStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginBottom">8dp</item>
-        <item name="android:padding">16dp</item>
+        <item name="android:layout_marginBottom">@dimen/fields_style_margin_bottom</item>
+        <item name="android:padding">@dimen/fields_style_padding</item>
         <item name="android:fontFamily">sans-serif-light</item>
         <item name="android:textColor">@color/colorAltoWhite</item>
         <item name="android:textColorHint">@color/colorAltoTransparent</item>
@@ -97,21 +97,21 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_alignParentEnd">true</item>
         <item name="android:layout_centerVertical">true</item>
-        <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:layout_marginEnd">@dimen/field_unit_overlay_margin_end</item>
         <item name="android:fontFamily">sans-serif-light</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">@dimen/field_unit_overlay_text_size</item>
         <item name="android:textColor">@color/colorAltoTransparent</item>
     </style>
     <style name="PriceFieldContainer">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:layout_marginBottom">@dimen/price_field_container_margin_bottom</item>
     </style>
     <style name="PriceFieldStyle" parent="FieldStyle">
         <item name="android:layout_alignParentTop">true</item>
         <item name="android:layout_alignParentStart">true</item>
-        <item name="android:layout_marginBottom">0dp</item>
-        <item name="android:paddingEnd">40dp</item>
+        <item name="android:layout_marginBottom">@dimen/price_field_style_margin_bottom</item>
+        <item name="android:paddingEnd">@dimen/price_field_style_padding_end</item>
     </style>
 
     <style name="DetailsActivity">
@@ -122,68 +122,68 @@
         <item name="android:orientation">vertical</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:padding">16dp</item>
+        <item name="android:padding">@dimen/details_layout_padding</item>
     </style>
     <style name="DetailsCard">
         <item name="android:orientation">vertical</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">16dp</item>
-        <item name="android:padding">16dp</item>
+        <item name="android:layout_marginTop">@dimen/details_card_margin_top</item>
+        <item name="android:padding">@dimen/details_card_padding</item>
         <item name="android:background">@drawable/card_bg</item>
     </style>
     <style name="DetailsRow">
         <item name="android:orientation">horizontal</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:paddingTop">4dp</item>
-        <item name="android:paddingBottom">4dp</item>
+        <item name="android:paddingTop">@dimen/details_row_padding</item>
+        <item name="android:paddingBottom">@dimen/details_row_padding</item>
         <item name="android:gravity">center_vertical</item>
     </style>
     <style name="DetailsText">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/colorAltoWhite</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">@dimen/details_text_size</item>
         <item name="android:maxLines">1</item>
     </style>
     <style name="DetailsTextProductTitle" parent="DetailsText">
         <item name="android:layout_weight">1</item>
-        <item name="android:paddingTop">4dp</item>
-        <item name="android:paddingBottom">4dp</item>
-        <item name="android:maxLines">4</item>
+        <item name="android:paddingTop">@dimen/details_text_prod_title_padding</item>
+        <item name="android:paddingBottom">@dimen/details_text_prod_title_padding</item>
+        <item name="android:maxLines">3</item>
         <item name="android:fontFamily">sans-serif-medium</item>
-        <item name="android:textSize">22sp</item>
+        <item name="android:textSize">@dimen/details_text_prod_title_text_size</item>
     </style>
     <style name="DetailsTextSupplierTitle" parent="DetailsTextProductTitle">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">@dimen/details_text_suppl_title_text_size</item>
     </style>
     <style name="DetailsTextMain" parent="DetailsText">
         <item name="android:layout_weight">1</item>
         <item name="android:gravity">end</item>
     </style>
     <style name="DetailsTextLabel" parent="DetailsText">
-        <item name="android:layout_width">80dp</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:layout_width">@dimen/details_text_label_width</item>
+        <item name="android:textSize">@dimen/details_text_label_text_size</item>
         <item name="android:textColor">@color/colorAltoTransparent</item>
     </style>
     <style name="DetailsTextButtonsLabel" parent="DetailsTextLabel">
-        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_width">@dimen/details_text_buttons_label_width</item>
         <item name="android:layout_weight">1</item>
         <item name="android:gravity">start</item>
         <item name="android:layout_gravity">center_vertical</item>
     </style>
     <style name="DetailsCardSeparator">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">1dp</item>
-        <item name="android:layout_marginTop">12dp</item>
-        <item name="android:layout_marginBottom">12dp</item>
+        <item name="android:layout_height">@dimen/details_card_separator_height</item>
+        <item name="android:layout_marginTop">@dimen/details_card_separator_margin</item>
+        <item name="android:layout_marginBottom">@dimen/details_card_separator_margin</item>
         <item name="android:background">@color/colorTransparentWhite</item>
     </style>
     <style name="DetailsImageButton">
-        <item name="android:layout_width">30dp</item>
-        <item name="android:layout_height">30dp</item>
-        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_width">@dimen/details_image_btn_size</item>
+        <item name="android:layout_height">@dimen/details_image_btn_size</item>
+        <item name="android:layout_marginStart">@dimen/details_image_btn_margin_start</item>
         <item name="android:background">?android:attr/selectableItemBackgroundBorderless</item>
     </style>
 
@@ -191,15 +191,15 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:orientation">vertical</item>
-        <item name="android:paddingTop">4dp</item>
-        <item name="android:paddingBottom">4dp</item>
-        <item name="android:paddingStart">8dp</item>
-        <item name="android:paddingEnd">8dp</item>
+        <item name="android:paddingTop">@dimen/item_padding_vertical</item>
+        <item name="android:paddingBottom">@dimen/item_padding_vertical</item>
+        <item name="android:paddingStart">@dimen/item_padding_horizontal</item>
+        <item name="android:paddingEnd">@dimen/item_padding_horizontal</item>
     </style>
     <style name="ItemContainer">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:padding">16dp</item>
+        <item name="android:padding">@dimen/item_container_padding</item>
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
         <item name="android:background">@drawable/item_bg</item>
@@ -214,7 +214,7 @@
     <style name="ItemTopRightSection">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:minWidth">80dp</item>
+        <item name="android:minWidth">@dimen/item_right_section_min_width</item>
         <item name="android:gravity">end</item>
         <item name="android:layout_alignParentTop">true</item>
         <item name="android:layout_alignParentEnd">true</item>
@@ -226,9 +226,9 @@
     </style>
     <style name="ItemSectionDivider">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">1dp</item>
-        <item name="android:layout_marginTop">16dp</item>
-        <item name="android:layout_marginBottom">16dp</item>
+        <item name="android:layout_height">@dimen/item_section_divider_height</item>
+        <item name="android:layout_marginTop">@dimen/item_section_divider_margin</item>
+        <item name="android:layout_marginBottom">@dimen/item_section_divider_margin</item>
         <item name="android:background">@color/colorTransparentWhite</item>
     </style>
     <style name="ItemProductLeftText">
@@ -236,21 +236,21 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
     <style name="ItemProductName" parent="ItemProductLeftText">
-        <item name="android:layout_marginBottom">4dp</item>
+        <item name="android:layout_marginBottom">@dimen/item_prod_name_margin_bottom</item>
         <item name="android:maxLines">2</item>
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textColor">@color/colorAltoWhite</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">@dimen/item_prod_name_text_size</item>
     </style>
     <style name="ItemProductAuthor" parent="ItemProductLeftText">
         <item name="android:textColor">@color/colorAltoTransparent</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">@dimen/item_prod_author_text_size</item>
         <item name="android:maxLines">1</item>
     </style>
     <style name="ItemProductRightText">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">@dimen/item_prod_right_text_size</item>
         <item name="android:maxLines">1</item>
     </style>
     <style name="ItemProductPrice" parent="ItemProductRightText">
@@ -265,7 +265,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_alignParentTop">true</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">@dimen/item_suppl_text_size</item>
         <item name="android:maxLines">1</item>
     </style>
     <style name="ItemSupplierName" parent="ItemSupplierText">
@@ -277,12 +277,12 @@
         <item name="android:textColor">@color/colorAltoTransparent</item>
     </style>
     <style name="ItemSaleButton">
-        <item name="android:layout_width">60dp</item>
-        <item name="android:layout_height">30dp</item>
+        <item name="android:layout_width">@dimen/item_sale_btn_width</item>
+        <item name="android:layout_height">@dimen/item_sale_btn_height</item>
         <item name="android:layout_alignParentEnd">true</item>
         <item name="android:background">@drawable/sale_btn_bg</item>
         <item name="android:textColor">@color/colorAltoTransparent</item>
-        <item name="android:textSize">13sp</item>
+        <item name="android:textSize">@dimen/item_sale_btn_text_size</item>
     </style>
 
     <style name="ScrollView">
@@ -302,8 +302,8 @@
         <item name="android:layout_gravity">center</item>
     </style>
     <style name="EmptyStateImage">
-        <item name="android:layout_width">128dp</item>
-        <item name="android:layout_height">128dp</item>
+        <item name="android:layout_width">@dimen/empty_img_size</item>
+        <item name="android:layout_height">@dimen/empty_img_size</item>
         <item name="android:layout_alignParentTop">true</item>
         <item name="android:layout_centerHorizontal">true</item>
         <item name="android:src">@drawable/ic_store</item>
@@ -312,32 +312,32 @@
     <style name="EmptyStateText">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:layout_marginTop">@dimen/empty_text_margin_top</item>
         <item name="android:layout_centerHorizontal">true</item>
         <item name="android:gravity">center</item>
-        <item name="android:paddingStart">28dp</item>
-        <item name="android:paddingEnd">28dp</item>
+        <item name="android:paddingStart">@dimen/empty_text_padding</item>
+        <item name="android:paddingEnd">@dimen/empty_text_padding</item>
         <item name="android:textColor">@color/colorAltoTransparent</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">@dimen/empty_text_size</item>
     </style>
     <style name="EmptyStateTitle" parent="EmptyStateText">
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textColor">@color/colorAltoWhite</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">@dimen/empty_title_text_size</item>
     </style>
     <style name="EmptyStateInstructions" parent="EmptyStateText">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">@dimen/empty_instructions_text_size</item>
     </style>
     <style name="EmptyStateLayoutLandscape">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:paddingStart">32dp</item>
-        <item name="android:paddingEnd">32dp</item>
+        <item name="android:paddingStart">@dimen/empty_layout_land_padding</item>
+        <item name="android:paddingEnd">@dimen/empty_layout_land_padding</item>
         <item name="android:layout_gravity">center</item>
     </style>
     <style name="EmptyStateImageLandscape">
-        <item name="android:layout_width">128dp</item>
-        <item name="android:layout_height">128dp</item>
+        <item name="android:layout_width">@dimen/empty_img_land_size</item>
+        <item name="android:layout_height">@dimen/empty_img_land_size</item>
         <item name="android:layout_alignParentStart">true</item>
         <item name="android:layout_centerVertical">true</item>
         <item name="android:src">@drawable/ic_store</item>
@@ -346,18 +346,18 @@
     <style name="EmptyStateTextLandscape">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginBottom">16dp</item>
-        <item name="android:paddingStart">32dp</item>
-        <item name="android:paddingEnd">32dp</item>
+        <item name="android:layout_marginBottom">@dimen/empty_text_land_margin_bottom</item>
+        <item name="android:paddingStart">@dimen/empty_text_land_padding</item>
+        <item name="android:paddingEnd">@dimen/empty_text_land_padding</item>
         <item name="android:textColor">@color/colorAltoTransparent</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">@dimen/empty_text_land_size</item>
     </style>
     <style name="EmptyStateTitleLandscape" parent="EmptyStateTextLandscape">
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textColor">@color/colorAltoWhite</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">@dimen/empty_title_land_text_size</item>
     </style>
     <style name="EmptyStateInstructionsLandscape" parent="EmptyStateTextLandscape">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">@dimen/empty_instructions_land_text_size</item>
     </style>
 </resources>
