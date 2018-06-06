@@ -104,4 +104,49 @@ public class Provider extends ContentProvider {
                 throw new IllegalStateException("Unknown URI " + uri + " with match " + match);
         }
     }
+
+    /**
+     * Method used to validate the data before entering it to the database.
+     * @param values The ContentValues to put into the database.
+     * @return Returns the validated ContentValues.
+     */
+    private ContentValues validateData(ContentValues values) {
+        // If there's no values, then we don't need to proceed with validation.
+        if (values.size() == 0) return null;
+
+        // Check that the product name is not be null or empty.
+        if (values.containsKey(TableEntry.COL_PRODUCT_NAME)) {
+            String prodName = values.getAsString(TableEntry.COL_PRODUCT_NAME);
+            if (prodName == null || prodName.isEmpty()) {
+                throw new IllegalArgumentException("The product requires a name.");
+            }
+        }
+
+        // Check that the product price doesn't have a negative value or beyond the Float max value.
+        if (values.containsKey(TableEntry.COL_PRICE)) {
+            Float prodPrice = values.getAsFloat(TableEntry.COL_PRICE);
+            if ((prodPrice != null) && (prodPrice < 0 || prodPrice > Float.MAX_VALUE)) {
+                throw new IllegalArgumentException("The product requires a valid price.");
+            }
+        }
+
+        // Check that the product quantity doesn't have a negative value or beyond the Integer max value.
+        if (values.containsKey(TableEntry.COL_QUANTITY)) {
+            Integer prodQuantity = values.getAsInteger(TableEntry.COL_QUANTITY);
+            if ((prodQuantity != null) && (prodQuantity < 0 || prodQuantity > Integer.MAX_VALUE)) {
+                throw new IllegalArgumentException("The product requires a valid quantity.");
+            }
+        }
+
+        // Check that the supplier phone is not be null or empty.
+        if (values.containsKey(TableEntry.COL_SUPPLIER_PHONE)) {
+            String prodSupplPhone = values.getAsString(TableEntry.COL_SUPPLIER_PHONE);
+            if (prodSupplPhone == null || prodSupplPhone.isEmpty()) {
+                throw new IllegalArgumentException("The product requires a phone number for the supplier.");
+            }
+        }
+
+        // If the values are OK, we return them for further processing.
+        return values;
+    }
 }
