@@ -1,9 +1,11 @@
 package com.danieldogeanu.android.inventoryapp.data;
 
 import android.content.ContentProvider;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -41,10 +43,35 @@ public class Provider extends ContentProvider {
         return true;
     }
 
+    /** Perform the query for the given URI. Use the given projection, selection, selection arguments, and sort order. */
     @Nullable
     @Override
-    public Cursor query(@NonNull Uri uri, @Nullable String[] strings, @Nullable String s, @Nullable String[] strings1, @Nullable String s1) {
-        return null;
+    public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
+        // Get readable database and declare the cursor.
+        SQLiteDatabase database = mDbHelper.getReadableDatabase();
+        Cursor cursor;
+
+        // Figure out if the URI matcher can match the URI to a specific code.
+        int match = sUriMatcher.match(uri);
+        switch (match) {
+            case CODE_PRODUCTS:
+                cursor = database.query(TableEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
+                break;
+            case CODE_PRODUCT:
+                selection = TableEntry._ID + "=?";
+                selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
+                cursor = database.query(TableEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
+                break;
+            default:
+                throw new IllegalArgumentException("Cannot query unknown URI " + uri);
+        }
+
+        // Set notification URI on the Cursor, so we know what content URI the Cursor was created for.
+        // If the data at this URI changes, then we know we need to update the Cursor.
+        cursor.setNotificationUri(getContext().getContentResolver(), uri);
+
+        // Return the cursor.
+        return cursor;
     }
 
     @Nullable
