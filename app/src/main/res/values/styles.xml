@@ -328,4 +328,36 @@
     <style name="EmptyStateInstructions" parent="EmptyStateText">
         <item name="android:textSize">14sp</item>
     </style>
+    <style name="EmptyStateLayoutLandscape">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingStart">32dp</item>
+        <item name="android:paddingEnd">32dp</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+    <style name="EmptyStateImageLandscape">
+        <item name="android:layout_width">128dp</item>
+        <item name="android:layout_height">128dp</item>
+        <item name="android:layout_alignParentStart">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:src">@drawable/ic_store</item>
+        <item name="android:scaleType">centerInside</item>
+    </style>
+    <style name="EmptyStateTextLandscape">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">16dp</item>
+        <item name="android:paddingStart">32dp</item>
+        <item name="android:paddingEnd">32dp</item>
+        <item name="android:textColor">@color/colorAltoTransparent</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="EmptyStateTitleLandscape" parent="EmptyStateTextLandscape">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">@color/colorAltoWhite</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+    <style name="EmptyStateInstructionsLandscape" parent="EmptyStateTextLandscape">
+        <item name="android:textSize">14sp</item>
+    </style>
 </resources>
