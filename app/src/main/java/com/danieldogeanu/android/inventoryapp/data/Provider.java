@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.danieldogeanu.android.inventoryapp.data.Contract.TableEntry;
 
@@ -74,10 +75,37 @@ public class Provider extends ContentProvider {
         return cursor;
     }
 
+    /** Insert new data into the provider with the given ContentValues. */
     @Nullable
     @Override
     public Uri insert(@NonNull Uri uri, @Nullable ContentValues contentValues) {
-        return null;
+        // Figure out if the URI matcher can match the URI to a specific code.
+        final int match = sUriMatcher.match(uri);
+        switch (match) {
+            case CODE_PRODUCTS:
+                // Validate the data before sending it to the database.
+                ContentValues validatedValues = validateData(contentValues);
+
+                // Gets the database in write mode.
+                SQLiteDatabase database = mDbHelper.getWritableDatabase();
+
+                // Insert a new row for our product in the database, returning the ID of that new row.
+                long id = database.insert(TableEntry.TABLE_NAME, null, validatedValues);
+
+                // If the ID is -1, then the insertion failed. Log an error and return null.
+                if (id == -1) {
+                    Log.e(LOG_TAG, "Failed to insert row for " + uri);
+                    return null;
+                }
+
+                // Notify all listeners that the data has changed for the product content URI.
+                getContext().getContentResolver().notifyChange(uri, null);
+
+                // Return the new URI with the ID (of the newly inserted row) appended at the end.
+                return ContentUris.withAppendedId(uri, id);
+            default:
+                throw new IllegalArgumentException("Insertion is not supported for " + uri);
+        }
     }
 
     @Override
@@ -112,37 +140,38 @@ public class Provider extends ContentProvider {
      */
     private ContentValues validateData(ContentValues values) {
         // If there's no values, then we don't need to proceed with validation.
-        if (values.size() == 0) return null;
+        if ((values != null) && (values.size() > 0)) {
 
-        // Check that the product name is not be null or empty.
-        if (values.containsKey(TableEntry.COL_PRODUCT_NAME)) {
-            String prodName = values.getAsString(TableEntry.COL_PRODUCT_NAME);
-            if (prodName == null || prodName.isEmpty()) {
-                throw new IllegalArgumentException("The product requires a name.");
+            // Check that the product name is not be null or empty.
+            if (values.containsKey(TableEntry.COL_PRODUCT_NAME)) {
+                String prodName = values.getAsString(TableEntry.COL_PRODUCT_NAME);
+                if (prodName == null || prodName.isEmpty()) {
+                    throw new IllegalArgumentException("The product requires a name.");
+                }
             }
-        }
 
-        // Check that the product price doesn't have a negative value or beyond the Float max value.
-        if (values.containsKey(TableEntry.COL_PRICE)) {
-            Float prodPrice = values.getAsFloat(TableEntry.COL_PRICE);
-            if ((prodPrice != null) && (prodPrice < 0 || prodPrice > Float.MAX_VALUE)) {
-                throw new IllegalArgumentException("The product requires a valid price.");
+            // Check that the product price doesn't have a negative value or beyond the Float max value.
+            if (values.containsKey(TableEntry.COL_PRICE)) {
+                Float prodPrice = values.getAsFloat(TableEntry.COL_PRICE);
+                if ((prodPrice != null) && (prodPrice < 0 || prodPrice > Float.MAX_VALUE)) {
+                    throw new IllegalArgumentException("The product requires a valid price.");
+                }
             }
-        }
 
-        // Check that the product quantity doesn't have a negative value or beyond the Integer max value.
-        if (values.containsKey(TableEntry.COL_QUANTITY)) {
-            Integer prodQuantity = values.getAsInteger(TableEntry.COL_QUANTITY);
-            if ((prodQuantity != null) && (prodQuantity < 0 || prodQuantity > Integer.MAX_VALUE)) {
-                throw new IllegalArgumentException("The product requires a valid quantity.");
+            // Check that the product quantity doesn't have a negative value or beyond the Integer max value.
+            if (values.containsKey(TableEntry.COL_QUANTITY)) {
+                Integer prodQuantity = values.getAsInteger(TableEntry.COL_QUANTITY);
+                if ((prodQuantity != null) && (prodQuantity < 0 || prodQuantity > Integer.MAX_VALUE)) {
+                    throw new IllegalArgumentException("The product requires a valid quantity.");
+                }
             }
-        }
 
-        // Check that the supplier phone is not be null or empty.
-        if (values.containsKey(TableEntry.COL_SUPPLIER_PHONE)) {
-            String prodSupplPhone = values.getAsString(TableEntry.COL_SUPPLIER_PHONE);
-            if (prodSupplPhone == null || prodSupplPhone.isEmpty()) {
-                throw new IllegalArgumentException("The product requires a phone number for the supplier.");
+            // Check that the supplier phone is not be null or empty.
+            if (values.containsKey(TableEntry.COL_SUPPLIER_PHONE)) {
+                String prodSupplPhone = values.getAsString(TableEntry.COL_SUPPLIER_PHONE);
+                if (prodSupplPhone == null || prodSupplPhone.isEmpty()) {
+                    throw new IllegalArgumentException("The product requires a phone number for the supplier.");
+                }
             }
         }
 
