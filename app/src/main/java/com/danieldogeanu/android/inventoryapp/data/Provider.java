@@ -108,9 +108,20 @@ public class Provider extends ContentProvider {
         }
     }
 
+    /** Updates the data at the given selection and selection arguments, with the new ContentValues. */
     @Override
-    public int update(@NonNull Uri uri, @Nullable ContentValues contentValues, @Nullable String s, @Nullable String[] strings) {
-        return 0;
+    public int update(@NonNull Uri uri, @Nullable ContentValues contentValues, @Nullable String selection, @Nullable String[] selectionArgs) {
+        final int match = sUriMatcher.match(uri);
+        switch (match) {
+            case CODE_PRODUCTS:
+                return updateProduct(uri, contentValues, selection, selectionArgs);
+            case CODE_PRODUCT:
+                selection = TableEntry._ID + "=?";
+                selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
+                return updateProduct(uri, contentValues, selection, selectionArgs);
+            default:
+                throw new IllegalArgumentException("Update is not supported for " + uri);
+        }
     }
 
     @Override
@@ -177,5 +188,29 @@ public class Provider extends ContentProvider {
 
         // If the values are OK, we return them for further processing.
         return values;
+    }
+
+    /**
+     * Method to update the products in the database with the given content values. Apply the changes to the rows
+     * specified in the selection and selection arguments (which could be 0 or 1 or more products).
+     * @return Returns the number of rows that were successfully updated.
+     */
+    private int updateProduct(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+        // Validate the data before sending it to the database.
+        ContentValues validatedValues = validateData(values);
+
+        // Get writable database to update the data.
+        SQLiteDatabase database = mDbHelper.getWritableDatabase();
+
+        // Returns the number of database rows affected by the update statement
+        int rowsUpdated = database.update(TableEntry.TABLE_NAME, validatedValues, selection, selectionArgs);
+
+        // If 1 or more rows were updated, then notify all listeners that the data at the given URI has changed.
+        if (rowsUpdated > 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+
+        // Return the number of rows updated.
+        return rowsUpdated;
     }
 }
