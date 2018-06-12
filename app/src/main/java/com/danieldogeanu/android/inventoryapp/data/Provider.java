@@ -124,9 +124,37 @@ public class Provider extends ContentProvider {
         }
     }
 
+    /** Delete the data at the given selection and selection arguments. */
     @Override
-    public int delete(@NonNull Uri uri, @Nullable String s, @Nullable String[] strings) {
-        return 0;
+    public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
+        // Get writable database.
+        SQLiteDatabase database = mDbHelper.getWritableDatabase();
+
+        // Track the number of rows that were deleted.
+        int rowsDeleted;
+
+        final int match = sUriMatcher.match(uri);
+        switch (match) {
+            case CODE_PRODUCTS:
+                // Delete all rows that match the selection and selection args.
+                rowsDeleted = database.delete(TableEntry.TABLE_NAME, selection, selectionArgs);
+                break;
+            case CODE_PRODUCT:
+                // Delete a single row given by the ID in the URI.
+                selection = TableEntry._ID + "=?";
+                selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
+                rowsDeleted = database.delete(TableEntry.TABLE_NAME, selection, selectionArgs);
+                break;
+            default:
+                throw new IllegalArgumentException("Deletion is not supported for " + uri);
+        }
+
+        // If 1 or more rows were deleted, then notify all listeners that the data at given URI has changed.
+        if (rowsDeleted > 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+
+        return rowsDeleted;
     }
 
     /** Returns the MIME type of data for the content URI. */
