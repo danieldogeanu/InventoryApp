@@ -70,7 +70,8 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_edit:
-                // Do something.
+                launchEditorActivity(DetailsActivity.this);
+                finish();
                 return true;
             case R.id.action_delete:
                 // Do something.
