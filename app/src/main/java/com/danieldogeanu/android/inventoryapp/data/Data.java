@@ -171,7 +171,7 @@ public class Data {
 
         // Get messages for Toasts and Logs.
         String successMsg = context.getResources().getString(R.string.insert_msg_success);
-        String successMsgMultiple = context.getResources().getString(R.string.insert_msg_success_multiple);
+        String successMsgMultiple = context.getResources().getString(R.string.insert_msg_dummy);
         String errorMsg = context.getResources().getString(R.string.insert_msg_error);
         int timesDisplayed = 0;
 

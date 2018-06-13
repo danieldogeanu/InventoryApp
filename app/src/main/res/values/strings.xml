@@ -4,7 +4,7 @@
     <!--INSERT MESSAGES-->
     <string name="insert_msg_success">Product saved with id: </string>
     <string name="insert_msg_error">Error with saving product.</string>
-    <string name="insert_msg_success_multiple">Products saved in the database.</string>
+    <string name="insert_msg_dummy">Dummy products added to the database.</string>
 
     <!--UPDATE MESSAGES-->
     <string name="update_msg_success">Product updated successfully.</string>

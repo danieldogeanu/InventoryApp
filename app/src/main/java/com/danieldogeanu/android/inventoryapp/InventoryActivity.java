@@ -1,7 +1,12 @@
 package com.danieldogeanu.android.inventoryapp;
 
+import android.app.LoaderManager;
 import android.content.ContentValues;
+import android.content.CursorLoader;
 import android.content.Intent;
+import android.content.Loader;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -12,7 +17,6 @@ import android.view.View;
 import android.widget.ListView;
 
 import com.danieldogeanu.android.inventoryapp.data.Contract.TableEntry;
-import com.danieldogeanu.android.inventoryapp.data.Data;
 
 import java.util.ArrayList;
 
@@ -20,12 +24,13 @@ import java.util.ArrayList;
  * Displays a list of products that were entered and stored in the app.
  * This is the main entry point for the app.
  */
-public class InventoryActivity extends AppCompatActivity {
+public class InventoryActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final String LOG_TAG = InventoryActivity.class.getSimpleName();
+    private static final int PRODUCT_LOADER = 0;
 
-    // Data Holder
-    private Data mData;
+    // Cursor adapter used to populate the ListView with product data.
+    private ProdCursorAdapter mCursorAdapter;
 
     /**
      * Overrides the onCreate method to assemble and display the Inventory Activity.
@@ -36,12 +41,6 @@ public class InventoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory);
 
-        // Get Data Class Instance
-        mData = Data.getInstance();
-
-        // Get Data and Set the Adapter
-        displayData();
-
         // Attach Intent to open the Editor Activity.
         FloatingActionButton fab = findViewById(R.id.inventory_fab);
         fab.setOnClickListener(view -> {
@@ -49,13 +48,20 @@ public class InventoryActivity extends AppCompatActivity {
             startActivity(editorIntent);
         });
 
-    }
+        // Find the ListView which will be populated with product data.
+        ListView invListView = findViewById(R.id.inventory_list);
 
-    /** Override the onStart method to refresh the displayed data. */
-    @Override
-    protected void onStart() {
-        super.onStart();
-        displayData();
+        // Find and set empty state view on the ListView.
+        View emptyStateView = findViewById(R.id.empty_state_view);
+        invListView.setEmptyView(emptyStateView);
+
+        // Setup an Adapter to create a list of items with each row of product data in the Cursor.
+        // There is no product data yet (until the Loader finishes), so we pass in null for the Cursor.
+        mCursorAdapter = new ProdCursorAdapter(InventoryActivity.this, null);
+        invListView.setAdapter(mCursorAdapter);
+
+        // Initialize the Loader.
+        getLoaderManager().initLoader(PRODUCT_LOADER, null, InventoryActivity.this);
     }
 
     /**
@@ -80,31 +86,57 @@ public class InventoryActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_add_dummy_data:
-                mData.insertDummyData(InventoryActivity.this);
-                displayData();
+                insertDummyData();
                 return true;
             case R.id.action_delete_all_data:
-                mData.deleteAllData(InventoryActivity.this);
-                displayData();
+                deleteAllData();
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
     /**
-     * Method to display data from the database.
-     * Gets all products from the database and adds them to the ProductAdapter.
+     * Overrides the onCreateLoader method in order to create the projection
+     * that specifies the columns from the table that we care about.
+     * @return Returns a Loader that will execute the query on a background thread.
      */
-    private void displayData() {
-        // Get Data
-        ArrayList<Product> products = mData.getData(InventoryActivity.this);
+    @Override
+    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
+        String[] projection = {
+                TableEntry._ID,
+                TableEntry.COL_PRODUCT_NAME,
+                TableEntry.COL_AUTHOR,
+                TableEntry.COL_PRICE,
+                TableEntry.COL_QUANTITY,
+                TableEntry.COL_SUPPLIER_NAME
+        };
 
-        // Get the ListView and set the Adapter
-        ListView listView = findViewById(R.id.inventory_list);
-        View emptyView = findViewById(R.id.empty_state_view);
-        ProductAdapter adapter = new ProductAdapter(InventoryActivity.this, products);
-        listView.setAdapter(adapter);
-        listView.setEmptyView(emptyView);
+        return new CursorLoader(
+                InventoryActivity.this,
+                TableEntry.CONTENT_URI,
+                projection,
+                null,
+                null,
+                null
+        );
+    }
+
+    /**
+     * Overrides the onLoadFinished method in order to update the
+     * ProdCursorAdapter with this new Cursor containing updated product data.
+     */
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+        mCursorAdapter.swapCursor(cursor);
+    }
+
+    /**
+     * Overrides the onLoaderReset method in order to
+     * call this callback when the data needs to be deleted.
+     */
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        mCursorAdapter.swapCursor(null);
     }
 
     /** Insert dummy (demo) product data into the database. */
@@ -116,6 +148,9 @@ public class InventoryActivity extends AppCompatActivity {
         String[] dummyProductQuantities = getResources().getStringArray(R.array.dummy_prod_quantity);
         String[] dummySupplierNames = getResources().getStringArray(R.array.dummy_supl_names);
         String[] dummySupplierPhones = getResources().getStringArray(R.array.dummy_supl_phones);
+
+        // Create array to hold Uris for products added into the database.
+        ArrayList<Uri> prodUris = new ArrayList<>();
 
         // Insert dummy data into the database.
         for (int i = 0; i < dummyProductTitles.length; i++) {
@@ -129,7 +164,15 @@ public class InventoryActivity extends AppCompatActivity {
             values.put(TableEntry.COL_SUPPLIER_PHONE, dummySupplierPhones[i]);
 
             // Insert values into the database.
-            getContentResolver().insert(TableEntry.CONTENT_URI, values);
+            Uri newProdUri = getContentResolver().insert(TableEntry.CONTENT_URI, values);
+            prodUris.add(newProdUri);
+        }
+
+        // If the number of products added matches the number of Uris, display Toast and Log message.
+        if (prodUris.size() == dummyProductTitles.length) {
+            String dummyMsg = getString(R.string.insert_msg_dummy);
+            Utils.showToast(getApplicationContext(), dummyMsg);
+            Log.i(LOG_TAG, dummyMsg);
         }
     }
 
@@ -145,5 +188,4 @@ public class InventoryActivity extends AppCompatActivity {
             Log.i(LOG_TAG, deletionMsg);
         }
     }
-
 }
