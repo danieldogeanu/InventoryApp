@@ -75,14 +75,14 @@ public class ProdCursorAdapter extends CursorAdapter {
         if (TextUtils.isEmpty(productAuthor)) productAuthor = context.getString(R.string.unknown_author);
         if (TextUtils.isEmpty(productSupplier)) productSupplier = context.getString(R.string.unknown_supplier);
 
-        // Set Intent to open the current Product in the EditorActivity.
+        // Set Intent to open the current Product in the DetailsActivity.
         viewHolder.itemCard.setOnClickListener(item -> {
             // Form the content URI that represents this specific product that was clicked on.
             Uri currentProductUri = ContentUris.withAppendedId(TableEntry.CONTENT_URI, productID);
-            // Create new Intent to go to the EditorActivity with the current URI on the data field.
-            Intent editorIntent = new Intent(context, DetailsActivity.class);
-            editorIntent.setData(currentProductUri);
-            context.startActivity(editorIntent);
+            // Create new Intent to go to the DetailsActivity with the current URI on the data field.
+            Intent detailsIntent = new Intent(context, DetailsActivity.class);
+            detailsIntent.setData(currentProductUri);
+            context.startActivity(detailsIntent);
         });
 
         // Update the TextViews with the attributes for the current product.
