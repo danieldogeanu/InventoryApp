@@ -1,13 +1,14 @@
 package com.danieldogeanu.android.inventoryapp;
 
 import android.app.LoaderManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
@@ -52,6 +53,11 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
 
         // Initialize the loader to read the product data from the database and display the current values.
         getLoaderManager().initLoader(EXISTING_PRODUCT_LOADER, null, DetailsActivity.this);
+
+        // Setup the FAB to open the Editor Activity.
+        mEditFab.setOnClickListener(view -> {
+            launchEditorActivity(DetailsActivity.this);
+        });
     }
 
     @Override
@@ -86,6 +92,18 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
 
+    }
+
+    /**
+     * Method to launch the Editor Activity with the current product Uri.
+     * @param context The context from which this method is called.
+     */
+    private void launchEditorActivity(Context context) {
+        if (mCurrentProductUri != null) {
+            Intent editorIntent = new Intent(context, EditorActivity.class);
+            editorIntent.setData(mCurrentProductUri);
+            context.startActivity(editorIntent);
+        }
     }
 
 }
