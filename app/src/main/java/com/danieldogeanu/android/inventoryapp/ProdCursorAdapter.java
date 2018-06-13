@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 /**
  * Adapter class for the ListView that uses a Cursor of product data as its data source.
@@ -31,11 +33,42 @@ public class ProdCursorAdapter extends CursorAdapter {
      */
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        return LayoutInflater.from(context).inflate(R.layout.item, parent, false);
+        // Inflate the item layout.
+        View view = LayoutInflater.from(context).inflate(R.layout.item, parent, false);
+        // Create a new ViewHolder to hold all child views.
+        ViewHolder viewHolder = new ViewHolder(view);
+        // Set the ViewHolder as a tag to the newly inflated layout.
+        view.setTag(viewHolder);
+        // Return the inflated layout.
+        return view;
     }
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
+        // Get the ViewHolder from the tag set in the newView method.
+        ViewHolder viewHolder = (ViewHolder) view.getTag();
+    }
 
+    /** Class that caches all the child views necessary to build each item. */
+    private static class ViewHolder {
+        private RelativeLayout itemCard;
+        private TextView productNameTextView,
+                productAuthorTextView,
+                productPriceTextView,
+                productQuantityTextView,
+                supplierNameTextView;
+
+        /**
+         * Public constructor so we can find all the views necessary.
+         * @param view The parent view from which to find the children views.
+         */
+        private ViewHolder(View view) {
+            itemCard = view.findViewById(R.id.item_card);
+            productNameTextView = view.findViewById(R.id.item_product_name);
+            productAuthorTextView = view.findViewById(R.id.item_product_author);
+            productPriceTextView = view.findViewById(R.id.item_product_price);
+            productQuantityTextView = view.findViewById(R.id.item_product_quantity);
+            supplierNameTextView = view.findViewById(R.id.item_supplier_name);
+        }
     }
 }
