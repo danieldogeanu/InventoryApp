@@ -1,13 +1,19 @@
 package com.danieldogeanu.android.inventoryapp;
 
+import android.content.ContentUris;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.danieldogeanu.android.inventoryapp.data.Contract.TableEntry;
 
 /**
  * Adapter class for the ListView that uses a Cursor of product data as its data source.
@@ -47,6 +53,44 @@ public class ProdCursorAdapter extends CursorAdapter {
     public void bindView(View view, Context context, Cursor cursor) {
         // Get the ViewHolder from the tag set in the newView method.
         ViewHolder viewHolder = (ViewHolder) view.getTag();
+
+        // Find the columns of product attributes that we're interested in.
+        int indexProdID = cursor.getColumnIndex(TableEntry._ID);
+        int indexProdName = cursor.getColumnIndex(TableEntry.COL_PRODUCT_NAME);
+        int indexProdAuthor = cursor.getColumnIndex(TableEntry.COL_AUTHOR);
+        int indexProdPrice = cursor.getColumnIndex(TableEntry.COL_PRICE);
+        int indexProdQuantity = cursor.getColumnIndex(TableEntry.COL_QUANTITY);
+        int indexSupplName = cursor.getColumnIndex(TableEntry.COL_SUPPLIER_NAME);
+
+        // Read the attributes from the Cursor for the current product.
+        long productID = cursor.getLong(indexProdID);
+        String productName = cursor.getString(indexProdName);
+        String productAuthor = cursor.getString(indexProdAuthor);
+        float productPrice = cursor.getFloat(indexProdPrice);
+        int productQuantity = cursor.getInt(indexProdQuantity);
+        String productSupplier = cursor.getString(indexSupplName);
+
+        // If the product author and supplier are null or empty, set default values to display.
+        // We do this because those fields are not required and the user can leave them empty.
+        if (TextUtils.isEmpty(productAuthor)) productAuthor = context.getString(R.string.unknown_author);
+        if (TextUtils.isEmpty(productSupplier)) productSupplier = context.getString(R.string.unknown_supplier);
+
+        // Set Intent to open the current Product in the EditorActivity.
+        viewHolder.itemCard.setOnClickListener(item -> {
+            // Form the content URI that represents this specific product that was clicked on.
+            Uri currentProductUri = ContentUris.withAppendedId(TableEntry.CONTENT_URI, productID);
+            // Create new Intent to go to the EditorActivity with the current URI on the data field.
+            Intent editorIntent = new Intent(context, DetailsActivity.class);
+            editorIntent.setData(currentProductUri);
+            context.startActivity(editorIntent);
+        });
+
+        // Update the TextViews with the attributes for the current product.
+        viewHolder.productNameTextView.setText(productName);
+        viewHolder.productAuthorTextView.setText(productAuthor);
+        viewHolder.productPriceTextView.setText(Utils.formatPrice(productPrice));
+        viewHolder.productQuantityTextView.setText(Utils.formatQuantity(productQuantity));
+        viewHolder.supplierNameTextView.setText(productSupplier);
     }
 
     /** Class that caches all the child views necessary to build each item. */

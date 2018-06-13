@@ -18,6 +18,10 @@
     <!--ITEM-->
     <string name="item_sale_button">Sale</string>
 
+    <!--EMPTY ITEM VALUES-->
+    <string name="unknown_author">Unknown Author</string>
+    <string name="unknown_supplier">Unknown Supplier</string>
+
     <!--EDITOR ACTIVITY-->
     <string name="empty_editor_title">Add Product</string>
     <string name="full_editor_title">Edit Product</string>
