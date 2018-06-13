@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +21,8 @@ import java.util.ArrayList;
  * This is the main entry point for the app.
  */
 public class InventoryActivity extends AppCompatActivity {
+
+    private static final String LOG_TAG = InventoryActivity.class.getSimpleName();
 
     // Data Holder
     private Data mData;
@@ -129,4 +132,18 @@ public class InventoryActivity extends AppCompatActivity {
             getContentResolver().insert(TableEntry.CONTENT_URI, values);
         }
     }
+
+    /** Delete all products data from the database. */
+    private void deleteAllData() {
+        // Delete all products from the database.
+        int rowsDeleted = getContentResolver().delete(TableEntry.CONTENT_URI, null, null);
+
+        // Show Toast and Log the message.
+        String deletionMsg = getString(R.string.delete_msg_all);
+        if (rowsDeleted > 0) {
+            Utils.showToast(getApplicationContext(), deletionMsg);
+            Log.i(LOG_TAG, deletionMsg);
+        }
+    }
+
 }
