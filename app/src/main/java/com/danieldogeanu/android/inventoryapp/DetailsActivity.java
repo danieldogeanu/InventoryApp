@@ -148,9 +148,18 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
         }
     }
 
+    /**
+     * Overrides the onLoaderReset method in order to handle the case in which the Loader
+     * is invalidated. If that happens, we need to clear out the data from the views
+     */
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-
+        mProductName.setText("");
+        mProductAuthor.setText("");
+        mProductPrice.setText("");
+        mProductQuantity.setText("");
+        mSupplierName.setText("");
+        mSupplierPhone.setText("");
     }
 
     /**
