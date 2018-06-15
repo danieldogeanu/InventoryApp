@@ -1,6 +1,7 @@
 package com.danieldogeanu.android.inventoryapp;
 
 import android.app.LoaderManager;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Intent;
@@ -26,6 +27,7 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
 
     private Uri mCurrentProductUri;
     private int mCurrentQuantity;
+    private boolean mQuantityChanged = false;
 
     private TextView mProductName, mProductAuthor, mProductPrice,
             mProductQuantity, mSupplierName, mSupplierPhone;
@@ -63,6 +65,16 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
         // Set Click Listeners for the Increment and Decrement buttons.
         mIncrementBtn.setOnClickListener(view -> incrementQuantity());
         mDecrementBtn.setOnClickListener(view -> decrementQuantity());
+    }
+
+    /**
+     * Override onPause to save the quantity value to database when the user leaves the activity.
+     * We don't need a button for this, we can do it automatically.
+     */
+    @Override
+    protected void onPause() {
+        super.onPause();
+        updateQuantity();
     }
 
     @Override
@@ -199,6 +211,7 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
         if (mCurrentQuantity != Integer.MAX_VALUE) {
             mCurrentQuantity++;
             mProductQuantity.setText(Utils.formatQuantity(mCurrentQuantity));
+            mQuantityChanged = true;
         }
     }
 
@@ -207,6 +220,25 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
         if (mCurrentQuantity > 0) {
             mCurrentQuantity--;
             mProductQuantity.setText(Utils.formatQuantity(mCurrentQuantity));
+            mQuantityChanged = true;
+        }
+    }
+
+    /** Method to update the product quantity and save the new value into the database. */
+    private void updateQuantity() {
+        // Check if the quantity value has changed. If it did, we need to perform the update.
+        if (mQuantityChanged) {
+            // Create a ContentValues object and pass in the new quantity.
+            ContentValues values = new ContentValues();
+            values.put(TableEntry.COL_QUANTITY, mCurrentQuantity);
+            // Update the existing product with the new quantity.
+            int rowsAffected = getContentResolver().update(mCurrentProductUri, values, null, null);
+            // Get the strings for the messages.
+            String updateSuccessMsg = getString(R.string.update_msg_success);
+            String updateErrorMsg = getString(R.string.update_msg_error);
+            // Show a toast message and log the message, for whether or not the update was successful.
+            if (rowsAffected == 0) Utils.showToastAndLog(DetailsActivity.this, true, LOG_TAG, updateErrorMsg);
+            else Utils.showToastAndLog(DetailsActivity.this, false, LOG_TAG, updateSuccessMsg);
         }
     }
 
