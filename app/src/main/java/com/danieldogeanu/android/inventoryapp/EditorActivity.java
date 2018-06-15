@@ -254,12 +254,21 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
     /**
      * Method to check if there aren't empty fields so we can save the data into the database.
-     * @return Returns true if there aren't empty fields, false if there are.
+     * NOTE: The Author field is not required so we can ignore it.
+     * @return Returns true if there aren't empty fields and we can save to the database.
      */
     private boolean canSave() {
         boolean canSave = true;
 
-        // TODO: Finish canSave Method
+        // Get the Product from the user inputs.
+        Product product = getEditTextData();
+
+        // Check if the Product fields are empty.
+        if (product.getProductName().isEmpty()) canSave = false;
+        if (product.getProductPrice() == 0) canSave = false;
+        if (product.getProductQuantity() == 0) canSave = false;
+        if (product.getSupplierName().isEmpty()) canSave = false;
+        if (product.getSupplierPhone().isEmpty()) canSave = false;
 
         return canSave;
     }
