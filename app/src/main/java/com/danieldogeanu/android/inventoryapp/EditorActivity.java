@@ -1,6 +1,7 @@
 package com.danieldogeanu.android.inventoryapp;
 
 import android.app.LoaderManager;
+import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
@@ -9,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -242,6 +244,36 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                 supplierNameString,
                 supplierPhoneString
         );
+    }
+
+    /**
+     * Method to get and validate data from the EditText fields.
+     * @return Return the validated ContentValues that can be saved to the database.
+     */
+    private ContentValues getValidatedData() {
+        // Get data from the EditText fields.
+        Product product = getEditTextData();
+
+        // Extract data from the Product object.
+        String productName = product.getProductName();
+        String productAuthor = product.getProductAuthor();
+        float productPrice = product.getProductPrice();
+        int productQuantity = product.getProductQuantity();
+        String supplierName = product.getSupplierName();
+        String supplierPhone = product.getSupplierPhone();
+
+        // Create the ContentValues object.
+        // Column names are the keys, product attributes are the values.
+        ContentValues values = new ContentValues();
+        if (!TextUtils.isEmpty(productName)) values.put(TableEntry.COL_PRODUCT_NAME, productName);
+        values.put(TableEntry.COL_AUTHOR, productAuthor); // Can be empty.
+        if ((productPrice != 0) && (productPrice < Float.MAX_VALUE)) values.put(TableEntry.COL_PRICE, productPrice);
+        if ((productQuantity != 0) && (productQuantity < Integer.MAX_VALUE)) values.put(TableEntry.COL_QUANTITY, productQuantity);
+        if (!TextUtils.isEmpty(supplierName)) values.put(TableEntry.COL_SUPPLIER_NAME, supplierName);
+        if (!TextUtils.isEmpty(supplierPhone)) values.put(TableEntry.COL_SUPPLIER_PHONE, supplierPhone);
+
+        // Return validated values.
+        return values;
     }
 
     /**
