@@ -27,6 +27,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     // EditText Fields
     private EditText mProductNameEditText, mProductAuthorEditText, mProductPriceEditText,
             mProductQuantityEditText, mSupplierNameEditText, mSupplierPhoneEditText;
+    private FloatingActionButton mSaveFab;
 
 
     /**
@@ -38,21 +39,15 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor);
 
+        // Find the views.
+        findAllViews();
+
         // Get the intent that was used to launch this activity and extract the product Uri.
         Intent intent = getIntent();
         mExistingProductUri = intent.getData();
 
-        // Find all relevant views.
-        mProductNameEditText = findViewById(R.id.product_name);
-        mProductAuthorEditText = findViewById(R.id.product_author);
-        mProductPriceEditText = findViewById(R.id.product_price);
-        mProductQuantityEditText = findViewById(R.id.product_quantity);
-        mSupplierNameEditText = findViewById(R.id.supplier_name);
-        mSupplierPhoneEditText = findViewById(R.id.supplier_phone);
-        FloatingActionButton saveFab = findViewById(R.id.save_fab);
-
         // Save or update the product and exit the Editor Activity.
-        saveFab.setOnClickListener(view -> {
+        mSaveFab.setOnClickListener(view -> {
             if (canSave()) {
                 if (isExistingProduct()) updateProduct();
                 else saveProduct();
@@ -114,6 +109,17 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
 
+    }
+
+    /** Method to find all necessary views that we need to populate with product data. */
+    private void findAllViews() {
+        mProductNameEditText = findViewById(R.id.product_name);
+        mProductAuthorEditText = findViewById(R.id.product_author);
+        mProductPriceEditText = findViewById(R.id.product_price);
+        mProductQuantityEditText = findViewById(R.id.product_quantity);
+        mSupplierNameEditText = findViewById(R.id.supplier_name);
+        mSupplierPhoneEditText = findViewById(R.id.supplier_phone);
+        mSaveFab = findViewById(R.id.save_fab);
     }
 
     /** Method to save the data into the database as a new product. */
