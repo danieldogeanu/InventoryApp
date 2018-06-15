@@ -32,23 +32,16 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
     private TextView mProductName, mProductAuthor, mProductPrice,
             mProductQuantity, mSupplierName, mSupplierPhone;
     private Button mCallSupplierBtn;
+    private ImageButton mIncrementBtn, mDecrementBtn;
+    private FloatingActionButton mEditFab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
 
-        // Find all relevant views that we need to populate with product data.
-        mProductName = findViewById(R.id.details_product_name);
-        mProductAuthor = findViewById(R.id.details_product_author);
-        mProductPrice = findViewById(R.id.details_product_price);
-        mProductQuantity = findViewById(R.id.details_product_quantity);
-        mSupplierName = findViewById(R.id.details_supplier_name);
-        mSupplierPhone = findViewById(R.id.details_supplier_phone);
-        mCallSupplierBtn = findViewById(R.id.details_call_btn);
-        ImageButton incrementBtn = findViewById(R.id.details_incr_btn);
-        ImageButton decrementBtn = findViewById(R.id.details_decr_btn);
-        FloatingActionButton editFab = findViewById(R.id.edit_fab);
+        // Find the views.
+        findAllViews();
 
         // Get the intent that was used to launch this activity and extract the product Uri.
         Intent intent = getIntent();
@@ -58,11 +51,11 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
         getLoaderManager().initLoader(EXISTING_PRODUCT_LOADER, null, DetailsActivity.this);
 
         // Setup the FAB to open the Editor Activity.
-        editFab.setOnClickListener(view -> launchEditorActivity());
+        mEditFab.setOnClickListener(view -> launchEditorActivity());
 
         // Set Click Listeners for the Increment and Decrement buttons.
-        incrementBtn.setOnClickListener(view -> incrementQuantity());
-        decrementBtn.setOnClickListener(view -> decrementQuantity());
+        mIncrementBtn.setOnClickListener(view -> incrementQuantity());
+        mDecrementBtn.setOnClickListener(view -> decrementQuantity());
     }
 
     /**
@@ -178,6 +171,20 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
         mProductQuantity.setText("");
         mSupplierName.setText("");
         mSupplierPhone.setText("");
+    }
+
+    /** Method to find all necessary views that we need to populate with product data. */
+    private void findAllViews() {
+        mProductName = findViewById(R.id.details_product_name);
+        mProductAuthor = findViewById(R.id.details_product_author);
+        mProductPrice = findViewById(R.id.details_product_price);
+        mProductQuantity = findViewById(R.id.details_product_quantity);
+        mSupplierName = findViewById(R.id.details_supplier_name);
+        mSupplierPhone = findViewById(R.id.details_supplier_phone);
+        mCallSupplierBtn = findViewById(R.id.details_call_btn);
+        mIncrementBtn = findViewById(R.id.details_incr_btn);
+        mDecrementBtn = findViewById(R.id.details_decr_btn);
+        mEditFab = findViewById(R.id.edit_fab);
     }
 
     /** Method to launch the Editor Activity with the current product Uri. */
