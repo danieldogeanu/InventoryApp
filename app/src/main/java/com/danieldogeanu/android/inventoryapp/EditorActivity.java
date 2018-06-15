@@ -133,9 +133,42 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         );
     }
 
+    /**
+     * Overrides the onLoadFinished method in order to read product data from
+     * the database, and update the fields on the screen with the existing values.
+     */
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+        // Bail early if the Cursor is null or there it contains less than 1 row.
+        if (cursor == null || cursor.getCount() < 1) return;
 
+        // Proceed with moving to the first row of the cursor and reading data from it.
+        // This should be the only row in the cursor.
+        if (cursor.moveToFirst()) {
+            // Find the columns of product attributes that we're interested in.
+            int colIndexProductName = cursor.getColumnIndex(TableEntry.COL_PRODUCT_NAME);
+            int colIndexProductAuthor = cursor.getColumnIndex(TableEntry.COL_AUTHOR);
+            int colIndexProductPrice = cursor.getColumnIndex(TableEntry.COL_PRICE);
+            int colIndexProductQuantity = cursor.getColumnIndex(TableEntry.COL_QUANTITY);
+            int colIndexSupplierName = cursor.getColumnIndex(TableEntry.COL_SUPPLIER_NAME);
+            int colIndexSupplierPhone = cursor.getColumnIndex(TableEntry.COL_SUPPLIER_PHONE);
+
+            // Extract out the value from the Cursor for the given column index.
+            String productName = cursor.getString(colIndexProductName);
+            String productAuthor = cursor.getString(colIndexProductAuthor);
+            float productPrice = cursor.getFloat(colIndexProductPrice);
+            int productQuantity = cursor.getInt(colIndexProductQuantity);
+            String supplierName = cursor.getString(colIndexSupplierName);
+            String supplierPhone = cursor.getString(colIndexSupplierPhone);
+
+            // Update the views on the screen with the values from the database.
+            mProductNameEditText.setText(productName);
+            mProductAuthorEditText.setText(productAuthor);
+            mProductPriceEditText.setText(Utils.formatPrice(productPrice));
+            mProductQuantityEditText.setText(Utils.formatQuantity(productQuantity));
+            mSupplierNameEditText.setText(supplierName);
+            mSupplierPhoneEditText.setText(supplierPhone);
+        }
     }
 
     @Override
