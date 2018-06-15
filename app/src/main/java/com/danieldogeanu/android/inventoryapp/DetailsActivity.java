@@ -138,6 +138,9 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
             String supplierName = cursor.getString(colIndexSupplierName);
             String supplierPhone = cursor.getString(colIndexSupplierPhone);
 
+            // Update the global values for Quantity.
+            mCurrentQuantity = productQuantity;
+
             // Update the views on the screen with the values from the database.
             mProductName.setText(productName);
             mProductAuthor.setText(productAuthor);
@@ -145,6 +148,9 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
             mProductQuantity.setText(Utils.formatQuantity(productQuantity));
             mSupplierName.setText(supplierName);
             mSupplierPhone.setText(supplierPhone);
+
+            // Set Click Listener for the Call Supplier Button.
+            mCallBtn.setOnClickListener(view -> launchCall(supplierPhone));
         }
     }
 
@@ -171,6 +177,18 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
             Intent editorIntent = new Intent(context, EditorActivity.class);
             editorIntent.setData(mCurrentProductUri);
             context.startActivity(editorIntent);
+        }
+    }
+
+    /** Method to launch Phone Dialer app, to call the specified Supplier Phone number. */
+    private void launchCall(String phone) {
+        if (!phone.isEmpty()) {
+            Uri phoneNumber = Uri.parse("tel:" + phone);
+            Intent dialIntent = new Intent(Intent.ACTION_DIAL);
+            dialIntent.setData(phoneNumber);
+            if (dialIntent.resolveActivity(getPackageManager()) != null) {
+                startActivity(dialIntent);
+            }
         }
     }
 
