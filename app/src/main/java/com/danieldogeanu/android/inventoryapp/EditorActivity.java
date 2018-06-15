@@ -225,7 +225,12 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
     /** Method to delete the product from the database. */
     private void deleteProduct() {
-        // TODO: Complete deleteProduct Method
+        if (mExistingProductUri != null) {
+            int rowsDeleted = getContentResolver().delete(mExistingProductUri, null, null);
+            if (rowsDeleted == 0) Utils.showToastAndLog(EditorActivity.this, true, LOG_TAG, getString(R.string.delete_msg_error));
+            else Utils.showToastAndLog(EditorActivity.this, false, LOG_TAG, getString(R.string.delete_msg_success));
+        }
+        finish();
     }
 
     /**
