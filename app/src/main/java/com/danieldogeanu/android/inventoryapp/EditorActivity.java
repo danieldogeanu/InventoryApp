@@ -1,5 +1,6 @@
 package com.danieldogeanu.android.inventoryapp;
 
+import android.annotation.SuppressLint;
 import android.app.LoaderManager;
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -142,6 +143,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
      * Overrides the onLoadFinished method in order to read product data from
      * the database, and update the fields on the screen with the existing values.
      */
+    @SuppressLint("SetTextI18n")
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         // Bail early if the Cursor is null or there it contains less than 1 row.
@@ -169,8 +171,8 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             // Update the views on the screen with the values from the database.
             mProductNameEditText.setText(productName);
             mProductAuthorEditText.setText(productAuthor);
-            mProductPriceEditText.setText(Utils.formatPrice(productPrice));
-            mProductQuantityEditText.setText(Utils.formatQuantity(productQuantity));
+            mProductPriceEditText.setText(Float.toString(productPrice));
+            mProductQuantityEditText.setText(Integer.toString(productQuantity));
             mSupplierNameEditText.setText(supplierName);
             mSupplierPhoneEditText.setText(supplierPhone);
         }
@@ -215,7 +217,10 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
     /** Method to update the existing product details. */
     private void updateProduct() {
-        // TODO: Complete updateProduct Method
+        ContentValues values = getValidatedData();
+        int rowsAffected = getContentResolver().update(mExistingProductUri, values, null, null);
+        if (rowsAffected == 0) Utils.showToastAndLog(EditorActivity.this, true, LOG_TAG, getString(R.string.update_msg_error));
+        else Utils.showToastAndLog(EditorActivity.this, false, LOG_TAG, getString(R.string.update_msg_success));
     }
 
     /** Method to delete the product from the database. */
