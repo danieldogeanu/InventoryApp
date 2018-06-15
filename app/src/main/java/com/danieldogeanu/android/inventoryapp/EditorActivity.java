@@ -1,6 +1,7 @@
 package com.danieldogeanu.android.inventoryapp;
 
 import android.app.LoaderManager;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.Intent;
@@ -202,7 +203,14 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
     /** Method to save the data into the database as a new product. */
     private void saveProduct() {
-        // TODO: Complete saveProduct Method
+        ContentValues values = getValidatedData();
+        Uri newProductUri = getContentResolver().insert(TableEntry.CONTENT_URI, values);
+        if (newProductUri == null) {
+            Utils.showToastAndLog(EditorActivity.this, true, LOG_TAG, getString(R.string.insert_msg_error));
+        } else {
+            String saveSuccessMsg = getString(R.string.insert_msg_success) + String.valueOf(ContentUris.parseId(newProductUri));
+            Utils.showToastAndLog(EditorActivity.this, false, LOG_TAG, saveSuccessMsg);
+        }
     }
 
     /** Method to update the existing product details. */
