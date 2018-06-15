@@ -1,6 +1,7 @@
 package com.danieldogeanu.android.inventoryapp;
 
 import android.app.LoaderManager;
+import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
@@ -12,6 +13,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+
+import com.danieldogeanu.android.inventoryapp.data.Contract.TableEntry;
 
 /**
  * Activity class that allows the user to create a new product, or edit an existing one.
@@ -103,9 +106,31 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Overrides the onCreateLoader method in order to define
+     * the projection that contains all columns from the products table.
+     * @return Returns a Loader that will execute the query on a background thread.
+     */
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-        return null;
+        String[] projection = {
+                TableEntry._ID,
+                TableEntry.COL_PRODUCT_NAME,
+                TableEntry.COL_AUTHOR,
+                TableEntry.COL_PRICE,
+                TableEntry.COL_QUANTITY,
+                TableEntry.COL_SUPPLIER_NAME,
+                TableEntry.COL_SUPPLIER_PHONE
+        };
+
+        return new CursorLoader(
+                EditorActivity.this,
+                mExistingProductUri,
+                projection,
+                null,
+                null,
+                null
+        );
     }
 
     @Override
