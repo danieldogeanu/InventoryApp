@@ -29,8 +29,8 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
     private int mCurrentQuantity;
     private boolean mQuantityChanged = false;
 
-    private TextView mProductName, mProductAuthor, mProductPrice,
-            mProductQuantity, mSupplierName, mSupplierPhone;
+    private TextView mProductNameTextView, mProductAuthorTextView, mProductPriceTextView,
+            mProductQuantityTextView, mSupplierNameTextView, mSupplierPhoneTextView;
     private Button mCallSupplierBtn;
     private ImageButton mIncrementBtn, mDecrementBtn;
     private FloatingActionButton mEditFab;
@@ -146,12 +146,12 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
             mCurrentQuantity = productQuantity;
 
             // Update the views on the screen with the values from the database.
-            mProductName.setText(productName);
-            mProductAuthor.setText(productAuthor);
-            mProductPrice.setText(Utils.formatPrice(productPrice));
-            mProductQuantity.setText(Utils.formatQuantity(productQuantity));
-            mSupplierName.setText(supplierName);
-            mSupplierPhone.setText(supplierPhone);
+            mProductNameTextView.setText(productName);
+            mProductAuthorTextView.setText(productAuthor);
+            mProductPriceTextView.setText(Utils.formatPrice(productPrice));
+            mProductQuantityTextView.setText(Utils.formatQuantity(productQuantity));
+            mSupplierNameTextView.setText(supplierName);
+            mSupplierPhoneTextView.setText(supplierPhone);
 
             // Set Click Listener for the Call Supplier Button.
             // We do this here to make sure that we have the phone number.
@@ -165,22 +165,22 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
      */
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        mProductName.setText("");
-        mProductAuthor.setText("");
-        mProductPrice.setText("");
-        mProductQuantity.setText("");
-        mSupplierName.setText("");
-        mSupplierPhone.setText("");
+        mProductNameTextView.setText("");
+        mProductAuthorTextView.setText("");
+        mProductPriceTextView.setText("");
+        mProductQuantityTextView.setText("");
+        mSupplierNameTextView.setText("");
+        mSupplierPhoneTextView.setText("");
     }
 
     /** Method to find all necessary views that we need to populate with product data. */
     private void findAllViews() {
-        mProductName = findViewById(R.id.details_product_name);
-        mProductAuthor = findViewById(R.id.details_product_author);
-        mProductPrice = findViewById(R.id.details_product_price);
-        mProductQuantity = findViewById(R.id.details_product_quantity);
-        mSupplierName = findViewById(R.id.details_supplier_name);
-        mSupplierPhone = findViewById(R.id.details_supplier_phone);
+        mProductNameTextView = findViewById(R.id.details_product_name);
+        mProductAuthorTextView = findViewById(R.id.details_product_author);
+        mProductPriceTextView = findViewById(R.id.details_product_price);
+        mProductQuantityTextView = findViewById(R.id.details_product_quantity);
+        mSupplierNameTextView = findViewById(R.id.details_supplier_name);
+        mSupplierPhoneTextView = findViewById(R.id.details_supplier_phone);
         mCallSupplierBtn = findViewById(R.id.details_call_btn);
         mIncrementBtn = findViewById(R.id.details_incr_btn);
         mDecrementBtn = findViewById(R.id.details_decr_btn);
@@ -213,7 +213,7 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
     private void incrementQuantity() {
         if (mCurrentQuantity != Integer.MAX_VALUE) {
             mCurrentQuantity++;
-            mProductQuantity.setText(Utils.formatQuantity(mCurrentQuantity));
+            mProductQuantityTextView.setText(Utils.formatQuantity(mCurrentQuantity));
             mQuantityChanged = true;
         }
     }
@@ -222,7 +222,7 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
     private void decrementQuantity() {
         if (mCurrentQuantity > 0) {
             mCurrentQuantity--;
-            mProductQuantity.setText(Utils.formatQuantity(mCurrentQuantity));
+            mProductQuantityTextView.setText(Utils.formatQuantity(mCurrentQuantity));
             mQuantityChanged = true;
         }
     }
