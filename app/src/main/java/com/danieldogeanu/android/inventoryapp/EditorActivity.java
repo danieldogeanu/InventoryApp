@@ -54,6 +54,8 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             setTitle(R.string.empty_editor_title);
         } else {
             setTitle(R.string.full_editor_title);
+            // If it's an existing product, initialize the Loader to read the product data from database.
+            getLoaderManager().initLoader(EXISTING_PRODUCT_LOADER, null, EditorActivity.this);
         }
 
         // Save or update the product and exit the Editor Activity.
