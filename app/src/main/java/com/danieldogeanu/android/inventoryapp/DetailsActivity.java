@@ -89,7 +89,7 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
                 finish();
                 return true;
             case R.id.action_delete:
-                // Do something.
+                deleteProduct();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -232,13 +232,24 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
             values.put(TableEntry.COL_QUANTITY, mCurrentQuantity);
             // Update the existing product with the new quantity.
             int rowsAffected = getContentResolver().update(mCurrentProductUri, values, null, null);
-            // Get the strings for the messages.
-            String updateSuccessMsg = getString(R.string.update_msg_success);
-            String updateErrorMsg = getString(R.string.update_msg_error);
-            // Show a toast message and log the message, for whether or not the update was successful.
-            if (rowsAffected == 0) Utils.showToastAndLog(DetailsActivity.this, true, LOG_TAG, updateErrorMsg);
-            else Utils.showToastAndLog(DetailsActivity.this, false, LOG_TAG, updateSuccessMsg);
+            // Show a toast and log the message, for whether or not the update was successful.
+            if (rowsAffected == 0) Utils.showToastAndLog(DetailsActivity.this, true, LOG_TAG, getString(R.string.update_msg_error));
+            else Utils.showToastAndLog(DetailsActivity.this, false, LOG_TAG, getString(R.string.update_msg_success));
         }
+    }
+
+    /** Method to delete the product from the database. */
+    private void deleteProduct() {
+        // Only perform the delete action if there's an existing product.
+        if (mCurrentProductUri != null) {
+            // Call the ContentResolver to delete the product at the given content URI.
+            int rowsDeleted = getContentResolver().delete(mCurrentProductUri, null, null);
+            // Show a toast and log the message for whether or not the deletion was successful.
+            if (rowsDeleted == 0) Utils.showToastAndLog(DetailsActivity.this, true, LOG_TAG, getString(R.string.delete_msg_error));
+            else Utils.showToastAndLog(DetailsActivity.this, false, LOG_TAG, getString(R.string.delete_msg_success));
+        }
+        // Close the activity because the product doesn't exist anymore.
+        finish();
     }
 
 }
