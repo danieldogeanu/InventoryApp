@@ -58,9 +58,11 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
         getLoaderManager().initLoader(EXISTING_PRODUCT_LOADER, null, DetailsActivity.this);
 
         // Setup the FAB to open the Editor Activity.
-        mEditFab.setOnClickListener(view -> {
-            launchEditorActivity(DetailsActivity.this);
-        });
+        mEditFab.setOnClickListener(view -> launchEditorActivity(DetailsActivity.this));
+
+        // Set Click Listeners for the Increment and Decrement buttons.
+        mIncrementBtn.setOnClickListener(view -> incrementQuantity());
+        mDecrementBtn.setOnClickListener(view -> decrementQuantity());
     }
 
     @Override
@@ -189,6 +191,22 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
             if (dialIntent.resolveActivity(getPackageManager()) != null) {
                 startActivity(dialIntent);
             }
+        }
+    }
+
+    /** Method to increment the current product quantity by one. */
+    private void incrementQuantity() {
+        if (mCurrentQuantity != Integer.MAX_VALUE) {
+            mCurrentQuantity++;
+            mProductQuantity.setText(Utils.formatQuantity(mCurrentQuantity));
+        }
+    }
+
+    /** Method to decrement the current product quantity by one. */
+    private void decrementQuantity() {
+        if (mCurrentQuantity > 0) {
+            mCurrentQuantity--;
+            mProductQuantity.setText(Utils.formatQuantity(mCurrentQuantity));
         }
     }
 
