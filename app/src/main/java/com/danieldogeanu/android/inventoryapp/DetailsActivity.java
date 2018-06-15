@@ -1,5 +1,6 @@
 package com.danieldogeanu.android.inventoryapp;
 
+import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.ContentValues;
 import android.content.CursorLoader;
@@ -87,7 +88,7 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
                 launchEditorActivity();
                 return true;
             case R.id.action_delete:
-                deleteProduct();
+                showDeleteConfirmationDialog();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -238,6 +239,21 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
             else Utils.showToastAndLog(DetailsActivity.this, false, LOG_TAG, getString(R.string.delete_msg_success));
         }
         finish();
+    }
+
+    /** Method to show a confirmation dialog for the delete action. */
+    private void showDeleteConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(DetailsActivity.this);
+        builder.setMessage(R.string.delete_dialog_msg);
+        builder.setPositiveButton(R.string.delete, (dialogInterface, id) -> {
+            deleteProduct();
+        });
+        builder.setNegativeButton(R.string.cancel, (dialogInterface, id) -> {
+            if (dialogInterface != null) dialogInterface.dismiss();
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
 }

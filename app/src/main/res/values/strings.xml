@@ -14,6 +14,9 @@
     <string name="delete_msg_success">Product deleted successfully.</string>
     <string name="delete_msg_error">Error with deleting product.</string>
     <string name="delete_msg_all">All products deleted successfully.</string>
+    <string name="delete_dialog_msg">Are you sure you want to delete this product?</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
 
     <!--ITEM-->
     <string name="item_sale_button">Sale</string>
