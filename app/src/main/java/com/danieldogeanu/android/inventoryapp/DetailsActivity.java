@@ -2,7 +2,6 @@ package com.danieldogeanu.android.inventoryapp;
 
 import android.app.LoaderManager;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
@@ -58,7 +57,7 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
         getLoaderManager().initLoader(EXISTING_PRODUCT_LOADER, null, DetailsActivity.this);
 
         // Setup the FAB to open the Editor Activity.
-        editFab.setOnClickListener(view -> launchEditorActivity(DetailsActivity.this));
+        editFab.setOnClickListener(view -> launchEditorActivity());
 
         // Set Click Listeners for the Increment and Decrement buttons.
         incrementBtn.setOnClickListener(view -> incrementQuantity());
@@ -85,8 +84,7 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_edit:
-                launchEditorActivity(DetailsActivity.this);
-                finish();
+                launchEditorActivity();
                 return true;
             case R.id.action_delete:
                 deleteProduct();
@@ -181,16 +179,14 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
         mSupplierPhone.setText("");
     }
 
-    /**
-     * Method to launch the Editor Activity with the current product Uri.
-     * @param context The context from which this method is called.
-     */
-    private void launchEditorActivity(Context context) {
+    /** Method to launch the Editor Activity with the current product Uri. */
+    private void launchEditorActivity() {
         if (mCurrentProductUri != null) {
-            Intent editorIntent = new Intent(context, EditorActivity.class);
+            Intent editorIntent = new Intent(DetailsActivity.this, EditorActivity.class);
             editorIntent.setData(mCurrentProductUri);
-            context.startActivity(editorIntent);
+            startActivity(editorIntent);
         }
+        finish();
     }
 
     /** Method to launch Phone Dialer app, to call the specified Supplier Phone number. */
@@ -225,14 +221,10 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
 
     /** Method to update the product quantity and save the new value into the database. */
     private void updateQuantity() {
-        // Check if the quantity value has changed. If it did, we need to perform the update.
         if (mQuantityChanged) {
-            // Create a ContentValues object and pass in the new quantity.
             ContentValues values = new ContentValues();
             values.put(TableEntry.COL_QUANTITY, mCurrentQuantity);
-            // Update the existing product with the new quantity.
             int rowsAffected = getContentResolver().update(mCurrentProductUri, values, null, null);
-            // Show a toast and log the message, for whether or not the update was successful.
             if (rowsAffected == 0) Utils.showToastAndLog(DetailsActivity.this, true, LOG_TAG, getString(R.string.update_msg_error));
             else Utils.showToastAndLog(DetailsActivity.this, false, LOG_TAG, getString(R.string.update_msg_success));
         }
@@ -240,15 +232,11 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
 
     /** Method to delete the product from the database. */
     private void deleteProduct() {
-        // Only perform the delete action if there's an existing product.
         if (mCurrentProductUri != null) {
-            // Call the ContentResolver to delete the product at the given content URI.
             int rowsDeleted = getContentResolver().delete(mCurrentProductUri, null, null);
-            // Show a toast and log the message for whether or not the deletion was successful.
             if (rowsDeleted == 0) Utils.showToastAndLog(DetailsActivity.this, true, LOG_TAG, getString(R.string.delete_msg_error));
             else Utils.showToastAndLog(DetailsActivity.this, false, LOG_TAG, getString(R.string.delete_msg_success));
         }
-        // Close the activity because the product doesn't exist anymore.
         finish();
     }
 
