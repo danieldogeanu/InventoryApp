@@ -171,9 +171,18 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         }
     }
 
+    /**
+     * Overrides the onLoaderReset method in order to handle the case in which the Loader
+     * is invalidated. If that happens, we need to clear out the data from the fields.
+     */
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-
+        mProductNameEditText.setText("");
+        mProductAuthorEditText.setText("");
+        mProductPriceEditText.setText("");
+        mProductQuantityEditText.setText("");
+        mSupplierNameEditText.setText("");
+        mSupplierPhoneEditText.setText("");
     }
 
     /** Method to find all necessary views that we need to populate with product data. */
