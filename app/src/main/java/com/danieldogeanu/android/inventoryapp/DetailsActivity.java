@@ -31,9 +31,7 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
 
     private TextView mProductName, mProductAuthor, mProductPrice,
             mProductQuantity, mSupplierName, mSupplierPhone;
-    private ImageButton mIncrementBtn, mDecrementBtn;
-    private Button mCallBtn;
-    private FloatingActionButton mEditFab;
+    private Button mCallSupplierBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +45,10 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
         mProductQuantity = findViewById(R.id.details_product_quantity);
         mSupplierName = findViewById(R.id.details_supplier_name);
         mSupplierPhone = findViewById(R.id.details_supplier_phone);
-        mIncrementBtn = findViewById(R.id.details_incr_btn);
-        mDecrementBtn = findViewById(R.id.details_decr_btn);
-        mCallBtn = findViewById(R.id.details_call_btn);
-        mEditFab = findViewById(R.id.edit_fab);
+        mCallSupplierBtn = findViewById(R.id.details_call_btn);
+        ImageButton incrementBtn = findViewById(R.id.details_incr_btn);
+        ImageButton decrementBtn = findViewById(R.id.details_decr_btn);
+        FloatingActionButton editFab = findViewById(R.id.edit_fab);
 
         // Get the intent that was used to launch this activity and extract the product Uri.
         Intent intent = getIntent();
@@ -60,11 +58,11 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
         getLoaderManager().initLoader(EXISTING_PRODUCT_LOADER, null, DetailsActivity.this);
 
         // Setup the FAB to open the Editor Activity.
-        mEditFab.setOnClickListener(view -> launchEditorActivity(DetailsActivity.this));
+        editFab.setOnClickListener(view -> launchEditorActivity(DetailsActivity.this));
 
         // Set Click Listeners for the Increment and Decrement buttons.
-        mIncrementBtn.setOnClickListener(view -> incrementQuantity());
-        mDecrementBtn.setOnClickListener(view -> decrementQuantity());
+        incrementBtn.setOnClickListener(view -> incrementQuantity());
+        decrementBtn.setOnClickListener(view -> decrementQuantity());
     }
 
     /**
@@ -164,7 +162,8 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
             mSupplierPhone.setText(supplierPhone);
 
             // Set Click Listener for the Call Supplier Button.
-            mCallBtn.setOnClickListener(view -> launchCall(supplierPhone));
+            // We do this here to make sure that we have the phone number.
+            if (!supplierPhone.isEmpty()) mCallSupplierBtn.setOnClickListener(view -> launchCall(supplierPhone));
         }
     }
 
