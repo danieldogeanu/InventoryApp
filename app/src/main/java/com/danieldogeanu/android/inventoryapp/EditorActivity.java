@@ -46,6 +46,13 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         Intent intent = getIntent();
         mExistingProductUri = intent.getData();
 
+        // If the intent doesn't contain a product URI, then we know that we are creating a new product.
+        if (mExistingProductUri == null) {
+            setTitle(R.string.empty_editor_title);
+        } else {
+            setTitle(R.string.full_editor_title);
+        }
+
         // Save or update the product and exit the Editor Activity.
         mSaveFab.setOnClickListener(view -> {
             if (canSave()) {
