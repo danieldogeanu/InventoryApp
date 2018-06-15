@@ -214,6 +214,37 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     }
 
     /**
+     * Method to extract the text entered by the user into the EditText fields.
+     * @return Returns a new Product object to pass to other methods.
+     */
+    private Product getEditTextData() {
+        // Get the text from EditText fields.
+        String productNameString = mProductNameEditText.getText().toString().trim();
+        String productAuthorString = mProductAuthorEditText.getText().toString().trim();
+        String productPriceString = mProductPriceEditText.getText().toString().trim();
+        String productQuantityString = mProductQuantityEditText.getText().toString().trim();
+        String supplierNameString = mSupplierNameEditText.getText().toString().trim();
+        String supplierPhoneString = mSupplierPhoneEditText.getText().toString().trim();
+
+        // Convert the text to appropriate types.
+        final String EMPTY_STR = "0";
+        if (productPriceString.isEmpty()) productPriceString = EMPTY_STR;
+        if (productQuantityString.isEmpty()) productQuantityString = EMPTY_STR;
+        float productPriceFloat = Float.parseFloat(limitChars(productPriceString, 9));
+        int productQuantityInt = Integer.parseInt(limitChars(productQuantityString, 9));
+
+        // Return a new Product with the text entered/modified by the user.
+        return new Product(
+                productNameString,
+                productAuthorString,
+                productPriceFloat,
+                productQuantityInt,
+                supplierNameString,
+                supplierPhoneString
+        );
+    }
+
+    /**
      * Method to check if this is an existing product.
      * @return Returns true, if we have a product Uri.
      */
