@@ -1,6 +1,7 @@
 package com.danieldogeanu.android.inventoryapp;
 
 import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -9,6 +10,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -20,6 +22,8 @@ import com.danieldogeanu.android.inventoryapp.data.Contract.TableEntry;
  * This adapter knows how to create list items for each row of product data in the Cursor.
  */
 public class ProdCursorAdapter extends CursorAdapter {
+
+    private static final String LOG_TAG = ProdCursorAdapter.class.getSimpleName();
 
     /**
      * Constructor for a new ProdCursorAdapter.
@@ -70,6 +74,9 @@ public class ProdCursorAdapter extends CursorAdapter {
         int productQuantity = cursor.getInt(indexProdQuantity);
         String productSupplier = cursor.getString(indexSupplName);
 
+        // Form the content URI that represents this specific product.
+        Uri currentProductUri = ContentUris.withAppendedId(TableEntry.CONTENT_URI, productID);
+
         // If the product author and supplier are null or empty, set default values to display.
         // We do this because those fields are not required and the user can leave them empty.
         if (TextUtils.isEmpty(productAuthor)) productAuthor = context.getString(R.string.unknown_author);
@@ -77,9 +84,6 @@ public class ProdCursorAdapter extends CursorAdapter {
 
         // Set Intent to open the current Product in the DetailsActivity.
         viewHolder.itemCard.setOnClickListener(item -> {
-            // Form the content URI that represents this specific product that was clicked on.
-            Uri currentProductUri = ContentUris.withAppendedId(TableEntry.CONTENT_URI, productID);
-            // Create new Intent to go to the DetailsActivity with the current URI on the data field.
             Intent detailsIntent = new Intent(context, DetailsActivity.class);
             detailsIntent.setData(currentProductUri);
             context.startActivity(detailsIntent);
@@ -91,6 +95,23 @@ public class ProdCursorAdapter extends CursorAdapter {
         viewHolder.productPriceTextView.setText(Utils.formatPrice(productPrice));
         viewHolder.productQuantityTextView.setText(Utils.formatQuantity(productQuantity));
         viewHolder.supplierNameTextView.setText(productSupplier);
+
+        // Set Click Listener for the Sale button.
+        viewHolder.saleBtn.setOnClickListener(button -> {
+            int changedQuantity = productQuantity;
+            if (changedQuantity > 0) {
+                // Subtract one and display the quantity again.
+                changedQuantity--;
+                viewHolder.productQuantityTextView.setText(Utils.formatQuantity(changedQuantity));
+
+                // Update the database with the new quantity value.
+                ContentValues values = new ContentValues();
+                values.put(TableEntry.COL_QUANTITY, changedQuantity);
+                int rowsAffected = context.getContentResolver().update(currentProductUri, values, null, null);
+                if (rowsAffected == 0) Utils.showToastAndLog(context, true, LOG_TAG, context.getString(R.string.stock_msg_error));
+                else Utils.showToastAndLog(context, false, LOG_TAG, context.getString(R.string.stock_msg_success));
+            }
+        });
     }
 
     /** Class that caches all the child views necessary to build each item. */
@@ -101,6 +122,7 @@ public class ProdCursorAdapter extends CursorAdapter {
                 productPriceTextView,
                 productQuantityTextView,
                 supplierNameTextView;
+        private Button saleBtn;
 
         /**
          * Public constructor so we can find all the views necessary.
@@ -113,6 +135,7 @@ public class ProdCursorAdapter extends CursorAdapter {
             productPriceTextView = view.findViewById(R.id.item_product_price);
             productQuantityTextView = view.findViewById(R.id.item_product_quantity);
             supplierNameTextView = view.findViewById(R.id.item_supplier_name);
+            saleBtn = view.findViewById(R.id.item_sale_btn);
         }
     }
 }

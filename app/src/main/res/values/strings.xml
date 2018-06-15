@@ -9,6 +9,8 @@
     <!--UPDATE MESSAGES-->
     <string name="update_msg_success">Product updated successfully.</string>
     <string name="update_msg_error">Error with updating product.</string>
+    <string name="stock_msg_success">Stock updated successfully.</string>
+    <string name="stock_msg_error">Error with updating stock.</string>
 
     <!--DELETE MESSAGES-->
     <string name="delete_msg_success">Product deleted successfully.</string>
