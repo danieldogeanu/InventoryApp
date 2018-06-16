@@ -67,7 +67,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             if (canSave()) {
                 if (isExistingProduct()) updateProduct();
                 else saveProduct();
-                finish();
             } else {
                 showError();
             }
@@ -99,14 +98,12 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                 if (canSave()) {
                     if (isExistingProduct()) updateProduct();
                     else saveProduct();
-                    finish();
                 } else {
                     showError();
                 }
                 return true;
             case R.id.action_delete:
                 if (isExistingProduct()) deleteProduct();
-                finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -213,6 +210,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             String saveSuccessMsg = getString(R.string.insert_msg_success) + String.valueOf(ContentUris.parseId(newProductUri));
             Utils.showToastAndLog(EditorActivity.this, false, LOG_TAG, saveSuccessMsg);
         }
+        finish();
     }
 
     /** Method to update the existing product details. */
@@ -221,6 +219,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         int rowsAffected = getContentResolver().update(mExistingProductUri, values, null, null);
         if (rowsAffected == 0) Utils.showToastAndLog(EditorActivity.this, true, LOG_TAG, getString(R.string.update_msg_error));
         else Utils.showToastAndLog(EditorActivity.this, false, LOG_TAG, getString(R.string.update_msg_success));
+        finish();
     }
 
     /** Method to delete the product from the database. */
@@ -250,8 +249,8 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         final String EMPTY_STR = "0";
         if (productPriceString.isEmpty()) productPriceString = EMPTY_STR;
         if (productQuantityString.isEmpty()) productQuantityString = EMPTY_STR;
-        float productPriceFloat = Float.parseFloat(limitChars(productPriceString, 9));
-        int productQuantityInt = Integer.parseInt(limitChars(productQuantityString, 9));
+        float productPriceFloat = Float.parseFloat(limitChars(productPriceString, 5));
+        int productQuantityInt = Integer.parseInt(limitChars(productQuantityString, 5));
 
         // Return a new Product with the text entered/modified by the user.
         return new Product(
@@ -339,11 +338,9 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
      */
     public String limitChars(String string, int limit) {
         String limitedStr;
-        String errorMsg = getString(R.string.number_too_large);
         if (string.length() > limit) {
             limitedStr = string.substring(0, limit);
-            Utils.showToast(EditorActivity.this, errorMsg);
-            Log.e(LOG_TAG, errorMsg);
+            Utils.showToastAndLog(EditorActivity.this, true, LOG_TAG, getString(R.string.number_too_large));
         } else {
             limitedStr = string;
         }
