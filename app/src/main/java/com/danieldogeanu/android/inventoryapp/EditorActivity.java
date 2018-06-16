@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 
 import com.danieldogeanu.android.inventoryapp.data.Contract.TableEntry;
@@ -33,11 +34,20 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     // Boolean to keep track if we can save or not.
     private boolean mCanSave = true;
 
+    // Boolean flag that keeps track of whether or not the product has been edited.
+    private boolean mHasChanged = false;
+
     // EditText Fields
     private EditText mProductNameEditText, mProductAuthorEditText, mProductPriceEditText,
             mProductQuantityEditText, mSupplierNameEditText, mSupplierPhoneEditText;
     private FloatingActionButton mSaveFab;
 
+    // Touch listener to detect when the user modified the view.
+    @SuppressLint("ClickableViewAccessibility")
+    private View.OnTouchListener mTouchListener = (view, motionEvent) -> {
+        mHasChanged = true;
+        return false;
+    };
 
     /**
      * Overrides the onCreate method to assemble and display the Editor Activity.
@@ -69,6 +79,9 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             if (isExistingProduct()) updateProduct();
             else saveProduct();
         });
+
+        // Set touch listeners for all EditText fields.
+        setTouchListeners();
     }
 
     /**
@@ -192,6 +205,21 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         mSupplierNameEditText = findViewById(R.id.supplier_name);
         mSupplierPhoneEditText = findViewById(R.id.supplier_phone);
         mSaveFab = findViewById(R.id.save_fab);
+    }
+
+    /**
+     * Method to attach OnTouchListeners to all EditText inputs fields, so we can determine
+     * if the user has touched or modified the field. This will let us know if there are
+     * unsaved changes or not, if the user tries to leave the editor without saving.
+     */
+    @SuppressLint("ClickableViewAccessibility")
+    private void setTouchListeners() {
+        mProductNameEditText.setOnTouchListener(mTouchListener);
+        mProductAuthorEditText.setOnTouchListener(mTouchListener);
+        mProductPriceEditText.setOnTouchListener(mTouchListener);
+        mProductQuantityEditText.setOnTouchListener(mTouchListener);
+        mSupplierNameEditText.setOnTouchListener(mTouchListener);
+        mSupplierPhoneEditText.setOnTouchListener(mTouchListener);
     }
 
     /** Method to save the data into the database as a new product. */
