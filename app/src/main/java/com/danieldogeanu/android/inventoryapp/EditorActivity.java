@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -33,6 +32,9 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
     // Boolean to keep track if we can save or not.
     private boolean mCanSave = true;
+
+    // Boolean to keep track if we've already shown number too large error.
+    private boolean mNumberTooLarge = false;
 
     // EditText Fields
     private EditText mProductNameEditText, mProductAuthorEditText, mProductPriceEditText,
@@ -67,12 +69,8 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
         // Save or update the product and exit the Editor Activity.
         mSaveFab.setOnClickListener(view -> {
-            if (canSave()) {
-                if (isExistingProduct()) updateProduct();
-                else saveProduct();
-            } else {
-                showError();
-            }
+            if (isExistingProduct()) updateProduct();
+            else saveProduct();
         });
     }
 
@@ -98,12 +96,8 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_save:
-                if (canSave()) {
-                    if (isExistingProduct()) updateProduct();
-                    else saveProduct();
-                } else {
-                    showError();
-                }
+                if (isExistingProduct()) updateProduct();
+                else saveProduct();
                 return true;
             case R.id.action_delete:
                 if (isExistingProduct()) deleteProduct();
@@ -206,23 +200,37 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     /** Method to save the data into the database as a new product. */
     private void saveProduct() {
         ContentValues values = getValidatedData();
-        Uri newProductUri = getContentResolver().insert(TableEntry.CONTENT_URI, values);
-        if (newProductUri == null) {
-            Utils.showToastAndLog(EditorActivity.this, true, LOG_TAG, getString(R.string.insert_msg_error));
+        if (mCanSave) {
+            Uri newProductUri = getContentResolver().insert(TableEntry.CONTENT_URI, values);
+            if (newProductUri == null) {
+                Utils.showToastAndLog(EditorActivity.this, true, LOG_TAG, getString(R.string.insert_msg_error));
+            } else {
+                String saveSuccessMsg = getString(R.string.insert_msg_success) + String.valueOf(ContentUris.parseId(newProductUri));
+                Utils.showToastAndLog(EditorActivity.this, false, LOG_TAG, saveSuccessMsg);
+            }
+            finish();
         } else {
-            String saveSuccessMsg = getString(R.string.insert_msg_success) + String.valueOf(ContentUris.parseId(newProductUri));
-            Utils.showToastAndLog(EditorActivity.this, false, LOG_TAG, saveSuccessMsg);
+            if (!mNumberTooLarge) {
+                String errorMsg = getString(R.string.error_can_not_save) + "\n" + getString(R.string.error_fields_empty);
+                Utils.showToastAndLog(EditorActivity.this, true, LOG_TAG, errorMsg);
+            }
         }
-        finish();
     }
 
     /** Method to update the existing product details. */
     private void updateProduct() {
         ContentValues values = getValidatedData();
-        int rowsAffected = getContentResolver().update(mExistingProductUri, values, null, null);
-        if (rowsAffected == 0) Utils.showToastAndLog(EditorActivity.this, true, LOG_TAG, getString(R.string.update_msg_error));
-        else Utils.showToastAndLog(EditorActivity.this, false, LOG_TAG, getString(R.string.update_msg_success));
-        finish();
+        if (mCanSave) {
+            int rowsAffected = getContentResolver().update(mExistingProductUri, values, null, null);
+            if (rowsAffected == 0) Utils.showToastAndLog(EditorActivity.this, true, LOG_TAG, getString(R.string.update_msg_error));
+            else Utils.showToastAndLog(EditorActivity.this, false, LOG_TAG, getString(R.string.update_msg_success));
+            finish();
+        } else {
+            if (!mNumberTooLarge) {
+                String errorMsg = getString(R.string.error_can_not_save) + "\n" + getString(R.string.error_fields_empty);
+                Utils.showToastAndLog(EditorActivity.this, true, LOG_TAG, errorMsg);
+            }
+        }
     }
 
     /** Method to delete the product from the database. */
@@ -252,8 +260,8 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         final String EMPTY_STR = "0";
         if (productPriceString.isEmpty()) productPriceString = EMPTY_STR;
         if (productQuantityString.isEmpty()) productQuantityString = EMPTY_STR;
-        float productPriceFloat = Float.parseFloat(limitChars(productPriceString, 5));
-        int productQuantityInt = Integer.parseInt(limitChars(productQuantityString, 5));
+        float productPriceFloat = Float.parseFloat(limitChars(productPriceString, 7));
+        int productQuantityInt = Integer.parseInt(limitChars(productQuantityString, 7));
 
         // Return a new Product with the text entered/modified by the user.
         return new Product(
@@ -317,34 +325,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     }
 
     /**
-     * Method to check if there aren't empty fields so we can save the data into the database.
-     * NOTE: The Author field is not required so we can ignore it.
-     * @return Returns true if there aren't empty fields and we can save to the database.
-     */
-    private boolean canSave() {
-        boolean canSave = true;
-
-        // Get the Product from the user inputs.
-        Product product = getEditTextData();
-
-        // Check if the Product fields are empty.
-        if (product.getProductName().isEmpty()) canSave = false;
-        if (product.getProductPrice() == 0) canSave = false;
-        if (product.getProductQuantity() == 0) canSave = false;
-        if (product.getSupplierName().isEmpty()) canSave = false;
-        if (product.getSupplierPhone().isEmpty()) canSave = false;
-
-        return canSave;
-    }
-
-    /** Method to show the error message in case we can't save. */
-    private void showError() {
-        String errorMsg = getString(R.string.can_not_save);
-        Utils.showToast(EditorActivity.this, errorMsg);
-        Log.e(LOG_TAG, errorMsg);
-    }
-
-    /**
      * Method to limit the length of the string that is
      * intended to be converted to float or int.
      * @param string The String to limit.
@@ -354,11 +334,19 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     public String limitChars(String string, int limit) {
         String limitedStr;
         if (string.length() > limit) {
+            mCanSave = false;
+            mNumberTooLarge = true;
             limitedStr = string.substring(0, limit);
-            Utils.showToastAndLog(EditorActivity.this, true, LOG_TAG, getString(R.string.number_too_large));
+            String errorMsg = getString(R.string.error_can_not_save) + "\n" + getString(R.string.error_number_too_large);
+            Utils.showToastAndLog(EditorActivity.this, true, LOG_TAG, errorMsg);
         } else {
+            mCanSave = true;
+            mNumberTooLarge = false;
             limitedStr = string;
         }
         return limitedStr;
     }
+
+    // TODO: Fix the price number too large issue. It errors out, but it saves to database anyway.
+
 }
