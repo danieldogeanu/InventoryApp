@@ -31,6 +31,9 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     // Existing Product Uri
     private Uri mExistingProductUri;
 
+    // Boolean to keep track if we can save or not.
+    private boolean mCanSave = true;
+
     // EditText Fields
     private EditText mProductNameEditText, mProductAuthorEditText, mProductPriceEditText,
             mProductQuantityEditText, mSupplierNameEditText, mSupplierPhoneEditText;
@@ -282,12 +285,24 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         // Create the ContentValues object.
         // Column names are the keys, product attributes are the values.
         ContentValues values = new ContentValues();
-        if (!TextUtils.isEmpty(productName)) values.put(TableEntry.COL_PRODUCT_NAME, productName);
-        values.put(TableEntry.COL_AUTHOR, productAuthor); // Can be empty.
-        if ((productPrice != 0) && (productPrice < Float.MAX_VALUE)) values.put(TableEntry.COL_PRICE, productPrice);
-        if ((productQuantity != 0) && (productQuantity < Integer.MAX_VALUE)) values.put(TableEntry.COL_QUANTITY, productQuantity);
-        if (!TextUtils.isEmpty(supplierName)) values.put(TableEntry.COL_SUPPLIER_NAME, supplierName);
-        if (!TextUtils.isEmpty(supplierPhone)) values.put(TableEntry.COL_SUPPLIER_PHONE, supplierPhone);
+        if (!TextUtils.isEmpty(productName)) {
+            values.put(TableEntry.COL_PRODUCT_NAME, productName);
+        } else { mCanSave = false; }
+        if (!TextUtils.isEmpty(productAuthor)) {
+            values.put(TableEntry.COL_AUTHOR, productAuthor);
+        } else { mCanSave = false; }
+        if ((productPrice != 0) && (productPrice < Float.MAX_VALUE)) {
+            values.put(TableEntry.COL_PRICE, productPrice);
+        } else { mCanSave = false; }
+        if ((productQuantity != 0) && (productQuantity < Integer.MAX_VALUE)) {
+            values.put(TableEntry.COL_QUANTITY, productQuantity);
+        } else { mCanSave = false; }
+        if (!TextUtils.isEmpty(supplierName)) {
+            values.put(TableEntry.COL_SUPPLIER_NAME, supplierName);
+        } else { mCanSave = false; }
+        if (!TextUtils.isEmpty(supplierPhone)) {
+            values.put(TableEntry.COL_SUPPLIER_PHONE, supplierPhone);
+        } else { mCanSave = false; }
 
         // Return validated values.
         return values;
