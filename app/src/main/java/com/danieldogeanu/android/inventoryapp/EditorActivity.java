@@ -33,9 +33,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     // Boolean to keep track if we can save or not.
     private boolean mCanSave = true;
 
-    // Boolean to keep track if we've already shown number too large error.
-    private boolean mNumberTooLarge = false;
-
     // EditText Fields
     private EditText mProductNameEditText, mProductAuthorEditText, mProductPriceEditText,
             mProductQuantityEditText, mSupplierNameEditText, mSupplierPhoneEditText;
@@ -210,10 +207,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             }
             finish();
         } else {
-            if (!mNumberTooLarge) {
-                String errorMsg = getString(R.string.error_can_not_save) + "\n" + getString(R.string.error_fields_empty);
-                Utils.showToastAndLog(EditorActivity.this, true, LOG_TAG, errorMsg);
-            }
+            Utils.showToastAndLog(EditorActivity.this, true, LOG_TAG, getString(R.string.error_can_not_save));
         }
     }
 
@@ -226,10 +220,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             else Utils.showToastAndLog(EditorActivity.this, false, LOG_TAG, getString(R.string.update_msg_success));
             finish();
         } else {
-            if (!mNumberTooLarge) {
-                String errorMsg = getString(R.string.error_can_not_save) + "\n" + getString(R.string.error_fields_empty);
-                Utils.showToastAndLog(EditorActivity.this, true, LOG_TAG, errorMsg);
-            }
+            Utils.showToastAndLog(EditorActivity.this, true, LOG_TAG, getString(R.string.error_can_not_save));
         }
     }
 
@@ -260,8 +251,8 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         final String EMPTY_STR = "0";
         if (productPriceString.isEmpty()) productPriceString = EMPTY_STR;
         if (productQuantityString.isEmpty()) productQuantityString = EMPTY_STR;
-        float productPriceFloat = Float.parseFloat(limitChars(productPriceString, 7));
-        int productQuantityInt = Integer.parseInt(limitChars(productQuantityString, 7));
+        float productPriceFloat = Float.parseFloat(productPriceString);
+        int productQuantityInt = Integer.parseInt(productQuantityString);
 
         // Return a new Product with the text entered/modified by the user.
         return new Product(
@@ -323,30 +314,5 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     private boolean isExistingProduct() {
         return (mExistingProductUri != null);
     }
-
-    /**
-     * Method to limit the length of the string that is
-     * intended to be converted to float or int.
-     * @param string The String to limit.
-     * @param limit The limit to set.
-     * @return Returns the limited String.
-     */
-    public String limitChars(String string, int limit) {
-        String limitedStr;
-        if (string.length() > limit) {
-            mCanSave = false;
-            mNumberTooLarge = true;
-            limitedStr = string.substring(0, limit);
-            String errorMsg = getString(R.string.error_can_not_save) + "\n" + getString(R.string.error_number_too_large);
-            Utils.showToastAndLog(EditorActivity.this, true, LOG_TAG, errorMsg);
-        } else {
-            mCanSave = true;
-            mNumberTooLarge = false;
-            limitedStr = string;
-        }
-        return limitedStr;
-    }
-
-    // TODO: Fix the price number too large issue. It errors out, but it saves to database anyway.
 
 }
