@@ -2,14 +2,12 @@ package com.danieldogeanu.android.inventoryapp;
 
 /**
  * Class that models the Product object.
+ * This class is only used to transfer data between methods and not actually
+ * to display or store the products from the database.
  */
 public class Product {
 
-    // Placeholder constant for the ID.
-    private static final int NO_ID = -1;
-
     // Product Fields
-    private int mProductID = NO_ID;
     private String mProductName;
     private String mProductAuthor;
     private float mProductPrice;
@@ -18,27 +16,7 @@ public class Product {
     private String mSupplierPhone;
 
     /**
-     * The Product object constructor for the cases we have products in the database.
-     * @param productID The product ID.
-     * @param productName The name of the product.
-     * @param productAuthor The product author.
-     * @param price The product price.
-     * @param quantity How many products we have.
-     * @param supplierName The name of the supplier.
-     * @param supplierPhone The supplier's phone number.
-     */
-    public Product(int productID, String productName, String productAuthor, float price, int quantity, String supplierName, String supplierPhone) {
-        mProductID = productID;
-        mProductName = productName;
-        mProductAuthor = productAuthor;
-        mProductPrice = price;
-        mProductQuantity = quantity;
-        mSupplierName = supplierName;
-        mSupplierPhone = supplierPhone;
-    }
-
-    /**
-     * The Product object constructor for new products (we don't have an ID yet).
+     * The Product object constructor.
      * @param productName The name of the product.
      * @param productAuthor The product author.
      * @param price The product price.
@@ -53,11 +31,6 @@ public class Product {
         mProductQuantity = quantity;
         mSupplierName = supplierName;
         mSupplierPhone = supplierPhone;
-    }
-
-    /** @return Returns the Product ID. */
-    public int getProductID() {
-        return mProductID;
     }
 
     /** @return Returns the Product name. */
@@ -97,7 +70,6 @@ public class Product {
     @Override
     public String toString() {
         return "Product {" +
-                "mProductID=" + mProductID + ", " +
                 "mProductName='" + mProductName + "', " +
                 "mProductAuthor='" + mProductAuthor + "', " +
                 "mProductPrice=" + mProductPrice + ", " +
