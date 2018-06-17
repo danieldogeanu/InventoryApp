@@ -20,6 +20,11 @@
     <string name="delete">Delete</string>
     <string name="cancel">Cancel</string>
 
+    <!--DISCARD MESSAGES-->
+    <string name="unsaved_changes_dialog_msg">Discard your changes and quit editing?</string>
+    <string name="discard">Discard</string>
+    <string name="keep_editing">Keep Editing</string>
+
     <!--ITEM-->
     <string name="item_sale_button">Sale</string>
 
