@@ -68,6 +68,9 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         // If the intent doesn't contain a product URI, then we know that we are creating a new product.
         if (mExistingProductUri == null) {
             setTitle(R.string.empty_editor_title);
+            // Invalidate the options menu, so the "Delete" menu option can be hidden.
+            // It doesn't make sense to delete a product that hasn't been created yet.
+            invalidateOptionsMenu();
         } else {
             setTitle(R.string.full_editor_title);
             // If it's an existing product, initialize the Loader to read the product data from database.
@@ -82,6 +85,21 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
         // Set touch listeners for all EditText fields.
         setTouchListeners();
+    }
+
+    /**
+     * This method is called after invalidateOptionsMenu(), so that the
+     * menu can be updated (some menu items can be hidden or made visible).
+     */
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        // If this is a new product, hide the "Delete" menu item.
+        if (mExistingProductUri == null) {
+            MenuItem menuItem = menu.findItem(R.id.action_delete);
+            menuItem.setVisible(false);
+        }
+        return true;
     }
 
     /**
