@@ -131,7 +131,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                 else saveProduct();
                 return true;
             case R.id.action_delete:
-                if (isExistingProduct()) deleteProduct();
+                if (isExistingProduct()) showDeleteConfirmationDialog();
                 return true;
             case android.R.id.home:
                 if (!mHasChanged) {
@@ -405,6 +405,18 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         });
 
         // Create and show the AlertDialog.
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    /** Show a dialog that warns the user that he's about to delete the product. */
+    private void showDeleteConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(EditorActivity.this);
+        builder.setMessage(R.string.delete_dialog_msg);
+        builder.setPositiveButton(R.string.delete, (dialogInterface, id) -> deleteProduct());
+        builder.setNegativeButton(R.string.cancel, (dialogInterface, id) -> {
+            if (dialogInterface != null) dialogInterface.dismiss();
+        });
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
