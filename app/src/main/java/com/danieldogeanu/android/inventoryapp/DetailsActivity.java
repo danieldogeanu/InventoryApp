@@ -19,16 +19,20 @@ import android.widget.TextView;
 
 import com.danieldogeanu.android.inventoryapp.data.Contract.TableEntry;
 
+/**
+ * Activity class that allows the user to visualize the details of an existing product.
+ */
 public class DetailsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final String LOG_TAG = DetailsActivity.class.getSimpleName();
-
     private static final int EXISTING_PRODUCT_LOADER = 0;
 
+    // Values that we need to keep track of.
     private Uri mCurrentProductUri;
     private int mCurrentQuantity;
     private boolean mQuantityChanged = false;
 
+    // Define all the necessary views.
     private TextView mProductNameTextView, mProductAuthorTextView, mProductPriceTextView,
             mProductQuantityTextView, mSupplierNameTextView, mSupplierPhoneTextView;
     private Button mCallSupplierBtn;
@@ -68,12 +72,24 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
         updateQuantity();
     }
 
+    /**
+     * Override the onCreateOptionsMenu method in order to
+     * create the options menu for the Details Activity.
+     * @param menu The menu to create.
+     * @return Returns true if the menu was created successfully.
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_details, menu);
         return true;
     }
 
+    /**
+     * Override the onOptionsItemSelected method in order to
+     * detect which menu item was clicked and to execute the selected option.
+     * @param item The item that was clicked in the menu.
+     * @return Executes the action and returns the clicked item from the menu.
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
