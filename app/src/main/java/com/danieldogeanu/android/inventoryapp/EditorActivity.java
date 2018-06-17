@@ -216,6 +216,21 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         mSupplierPhoneEditText.setText("");
     }
 
+    /**
+     * This method is called when the back button is pressed.
+     * If the product hasn't changed, we continue with handling back button press,
+     * otherwise if there are unsaved changes, we setup a dialog to warn the user.
+     */
+    @Override
+    public void onBackPressed() {
+        if (!mHasChanged) {
+            super.onBackPressed();
+            return;
+        }
+        DialogInterface.OnClickListener discardButtonClickListener = (dialogInterface, id) -> finish();
+        showUnsavedChangesDialog(discardButtonClickListener);
+    }
+
     /** Method to find all necessary views that we need to populate with product data. */
     private void findAllViews() {
         mProductNameEditText = findViewById(R.id.product_name);
@@ -365,15 +380,15 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
     /**
      * Show a dialog that warns the user there are unsaved changes that will be lost if they leave the editor.
-     * @param discardButtonClickListener This is the click listener for what to do when the user confirms
-     *                                   they want to discard their changes
+     * @param clickListener This is the click listener for what to do when the user confirms
+     *                      they want to discard their changes
      */
-    private void showUnsavedChangesDialog(DialogInterface.OnClickListener discardButtonClickListener) {
+    private void showUnsavedChangesDialog(DialogInterface.OnClickListener clickListener) {
         // Create an AlertDialog.Builder and set the message, and click listeners
         // for the positive and negative buttons on the dialog.
         AlertDialog.Builder builder = new AlertDialog.Builder(EditorActivity.this);
         builder.setMessage(R.string.unsaved_changes_dialog_msg);
-        builder.setPositiveButton(R.string.discard, discardButtonClickListener);
+        builder.setPositiveButton(R.string.discard, clickListener);
         builder.setNegativeButton(R.string.keep_editing, (dialogInterface, id) -> {
             // User clicked "Keep Editing", so dismiss the dialog and continue editing product.
             if (dialogInterface != null) dialogInterface.dismiss();
