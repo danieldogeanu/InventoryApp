@@ -2,33 +2,42 @@
 
 This is just a practice app for [Google Developer Scholarship: Android Basics Nanodegree](https://www.udacity.com/google-scholarships). Please ignore.
 
-#### [See Video Demo Here](https://youtu.be/GK1_i1oqwcQ)
+#### [See Video Demo Here](https://youtu.be/IblGRyvH-b8)
 
 ![Inventory App Main Screen](https://github.com/danieldogeanu/InventoryApp/blob/master/screenshots/inventoryapp_main.jpg)
+![Inventory App Details Screen](https://github.com/danieldogeanu/InventoryApp/blob/master/screenshots/inventoryapp_details.jpg)
+
 ![Inventory App Editor Screen](https://github.com/danieldogeanu/InventoryApp/blob/master/screenshots/inventoryapp_editor.jpg)
+![Inventory App Empty Screen](https://github.com/danieldogeanu/InventoryApp/blob/master/screenshots/inventoryapp_empty.jpg)
 
 ### Working Files Are:
 ##### Manifests
 * [AndroidManifest.xml](https://github.com/danieldogeanu/InventoryApp/blob/master/app/src/main/AndroidManifest.xml)
 ##### Java
 * [Contract.java](https://github.com/danieldogeanu/InventoryApp/blob/master/app/src/main/java/com/danieldogeanu/android/inventoryapp/data/Contract.java)
-* [Data.java](https://github.com/danieldogeanu/InventoryApp/blob/master/app/src/main/java/com/danieldogeanu/android/inventoryapp/data/Data.java)
 * [DbHelper.java](https://github.com/danieldogeanu/InventoryApp/blob/master/app/src/main/java/com/danieldogeanu/android/inventoryapp/data/DbHelper.java)
+* [Provider.java](https://github.com/danieldogeanu/InventoryApp/blob/master/app/src/main/java/com/danieldogeanu/android/inventoryapp/data/Provider.java)
+* [DetailsActivity.java](https://github.com/danieldogeanu/InventoryApp/blob/master/app/src/main/java/com/danieldogeanu/android/inventoryapp/DetailsActivity.java)
 * [EditorActivity.java](https://github.com/danieldogeanu/InventoryApp/blob/master/app/src/main/java/com/danieldogeanu/android/inventoryapp/EditorActivity.java)
 * [InventoryActivity.java](https://github.com/danieldogeanu/InventoryApp/blob/master/app/src/main/java/com/danieldogeanu/android/inventoryapp/InventoryActivity.java)
 * [Product.java](https://github.com/danieldogeanu/InventoryApp/blob/master/app/src/main/java/com/danieldogeanu/android/inventoryapp/Product.java)
-* [ProductAdapter.java](https://github.com/danieldogeanu/InventoryApp/blob/master/app/src/main/java/com/danieldogeanu/android/inventoryapp/ProductAdapter.java)
+* [ProductCursorAdapter.java](https://github.com/danieldogeanu/InventoryApp/blob/master/app/src/main/java/com/danieldogeanu/android/inventoryapp/ProductCursorAdapter.java)
 * [Utils.java](https://github.com/danieldogeanu/InventoryApp/blob/master/app/src/main/java/com/danieldogeanu/android/inventoryapp/Utils.java)
 ##### Layout
+* [activity_details.xml](https://github.com/danieldogeanu/InventoryApp/blob/master/app/src/main/res/layout/activity_details.xml)
 * [activity_editor.xml](https://github.com/danieldogeanu/InventoryApp/blob/master/app/src/main/res/layout/activity_editor.xml)
 * [activity_inventory.xml](https://github.com/danieldogeanu/InventoryApp/blob/master/app/src/main/res/layout/activity_inventory.xml)
+* [empty_state.xml](https://github.com/danieldogeanu/InventoryApp/blob/master/app/src/main/res/layout/empty_state.xml)
+* [empty_state.xml (landscape)](https://github.com/danieldogeanu/InventoryApp/blob/master/app/src/main/res/layout-land/empty_state.xml)
 * [item.xml](https://github.com/danieldogeanu/InventoryApp/blob/master/app/src/main/res/layout/item.xml)
 ##### Menus
+* [menu_details.xml](https://github.com/danieldogeanu/InventoryApp/blob/master/app/src/main/res/menu/menu_details.xml)
 * [menu_editor.xml](https://github.com/danieldogeanu/InventoryApp/blob/master/app/src/main/res/menu/menu_editor.xml)
 * [menu_inventory.xml](https://github.com/danieldogeanu/InventoryApp/blob/master/app/src/main/res/menu/menu_inventory.xml)
 ##### Values
 * [arrays.xml](https://github.com/danieldogeanu/InventoryApp/blob/master/app/src/main/res/values/arrays.xml)
 * [colors.xml](https://github.com/danieldogeanu/InventoryApp/blob/master/app/src/main/res/values/colors.xml)
+* [dimens.xml](https://github.com/danieldogeanu/InventoryApp/blob/master/app/src/main/res/values/dimens.xml)
 * [strings.xml](https://github.com/danieldogeanu/InventoryApp/blob/master/app/src/main/res/values/strings.xml)
 * [styles.xml](https://github.com/danieldogeanu/InventoryApp/blob/master/app/src/main/res/values/styles.xml)
 ##### Drawables
