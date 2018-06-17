@@ -30,7 +30,7 @@ public class InventoryActivity extends AppCompatActivity implements LoaderManage
     private static final int PRODUCT_LOADER = 0;
 
     // Cursor adapter used to populate the ListView with product data.
-    private ProdCursorAdapter mCursorAdapter;
+    private ProductCursorAdapter mCursorAdapter;
 
     /**
      * Overrides the onCreate method to assemble and display the Inventory Activity.
@@ -57,7 +57,7 @@ public class InventoryActivity extends AppCompatActivity implements LoaderManage
 
         // Setup an Adapter to create a list of items with each row of product data in the Cursor.
         // There is no product data yet (until the Loader finishes), so we pass in null for the Cursor.
-        mCursorAdapter = new ProdCursorAdapter(InventoryActivity.this, null);
+        mCursorAdapter = new ProductCursorAdapter(InventoryActivity.this, null);
         invListView.setAdapter(mCursorAdapter);
 
         // Initialize the Loader.
@@ -123,7 +123,7 @@ public class InventoryActivity extends AppCompatActivity implements LoaderManage
 
     /**
      * Overrides the onLoadFinished method in order to update the
-     * ProdCursorAdapter with this new Cursor containing updated product data.
+     * ProductCursorAdapter with this new Cursor containing updated product data.
      */
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {

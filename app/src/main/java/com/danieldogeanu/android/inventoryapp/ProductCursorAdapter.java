@@ -21,16 +21,16 @@ import com.danieldogeanu.android.inventoryapp.data.Contract.TableEntry;
  * Adapter class for the ListView that uses a Cursor of product data as its data source.
  * This adapter knows how to create list items for each row of product data in the Cursor.
  */
-public class ProdCursorAdapter extends CursorAdapter {
+public class ProductCursorAdapter extends CursorAdapter {
 
-    private static final String LOG_TAG = ProdCursorAdapter.class.getSimpleName();
+    private static final String LOG_TAG = ProductCursorAdapter.class.getSimpleName();
 
     /**
-     * Constructor for a new ProdCursorAdapter.
+     * Constructor for a new ProductCursorAdapter.
      * @param context The context from which this class is instantiated.
      * @param cursor The cursor from which to get the data.
      */
-    public ProdCursorAdapter(Context context, Cursor cursor) {
+    public ProductCursorAdapter(Context context, Cursor cursor) {
         super(context, cursor, 0);
     }
 
